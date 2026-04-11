@@ -106,9 +106,36 @@ export function blogPostPath(post: WpPostWithSource): string {
   return `/blog/${post.source}/${encodeURIComponent(post.slug)}`;
 }
 
+function decodeHtmlEntities(input: string): string {
+  const namedEntities: Record<string, string> = {
+    amp: "&",
+    nbsp: " ",
+    quot: '"',
+    apos: "'",
+    lt: "<",
+    gt: ">",
+    ndash: "–",
+    mdash: "—",
+  };
+
+  return input
+    .replace(/&#(\d+);/g, (_, dec: string) => {
+      const codePoint = Number.parseInt(dec, 10);
+      return Number.isNaN(codePoint) ? _ : String.fromCodePoint(codePoint);
+    })
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex: string) => {
+      const codePoint = Number.parseInt(hex, 16);
+      return Number.isNaN(codePoint) ? _ : String.fromCodePoint(codePoint);
+    })
+    .replace(/&([a-zA-Z]+);/g, (_, name: string) => namedEntities[name] ?? _);
+}
+
 /** Plain text from WordPress HTML fields */
 export function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+  return decodeHtmlEntities(html.replace(/<[^>]*>/g, ""))
+    .replace(/[–—−]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function decodeBasicEntities(input: string): string {
