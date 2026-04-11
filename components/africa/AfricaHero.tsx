@@ -43,8 +43,8 @@ export function AfricaHero({ featuredPost, upcomingEvent }: Props) {
   return (
     <section className={au.hero.section} aria-labelledby="africa-hero-heading">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <div className="absolute inset-0 bg-[url('/assets/map.jpg')] bg-center bg-cover bg-no-repeat opacity-45 dark:opacity-55" />
-        <div className="absolute inset-0 bg-black/50 dark:bg-black/60" />
+        <div className="absolute inset-0 bg-[url('/assets/map.jpg')] bg-center bg-cover bg-no-repeat opacity-40 dark:opacity-48" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/62 via-black/52 to-black/38 dark:from-black/72 dark:via-black/62 dark:to-black/45" />
       </div>
       <div className={au.hero.overlay} aria-hidden />
       <div className={au.hero.texture} aria-hidden />
