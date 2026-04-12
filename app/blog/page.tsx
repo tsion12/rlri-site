@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { BlogSourceBadge } from "@/components/blog/BlogSourceBadge";
-import { blogPostPath, getPosts } from "@/lib/wp";
+import { blogPostPath, getAfricaPosts } from "@/lib/wp";
 
 export default async function BlogPage() {
-  const posts = await getPosts();
+  const posts = await getAfricaPosts();
 
   return (
     <div className="mx-auto max-w-2xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16">
@@ -14,7 +14,7 @@ export default async function BlogPage() {
         Blog
       </h1>
       <p className="mb-12 max-w-lg text-lg leading-relaxed text-stone-600 dark:text-zinc-400">
-        Stories and updates from Real Life Institute and Africa programs.
+        Stories and updates from the Real Life Research Institute Africa Program.
       </p>
 
       <ul className="flex flex-col gap-3 sm:gap-4">

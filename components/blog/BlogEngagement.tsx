@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 /* ── types ────────────────────────────────────────────────────────── */
 type ReactionKey = "insightful" | "inspiring" | "important" | "bookmark";
@@ -132,47 +132,50 @@ type Props = {
   title: string;
 };
 
+const DEFAULT_REACTIONS: Record<ReactionKey, number> = {
+  insightful: 0,
+  inspiring: 0,
+  important: 0,
+  bookmark: 0,
+};
+
+function readStoredReactions(storageKey: string) {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return null;
+    return JSON.parse(raw) as {
+      r: Record<ReactionKey, number>;
+      a: ReactionKey[];
+    };
+  } catch {
+    return null;
+  }
+}
+
 /* ── Main component ───────────────────────────────────────────────── */
 export function BlogEngagement({ slug, source, title }: Props) {
   const storageKey = `rlri-reactions-${source}-${slug}`;
-  const [reactions, setReactions] = useState<Record<ReactionKey, number>>({
-    insightful: 0,
-    inspiring: 0,
-    important: 0,
-    bookmark: 0,
-  });
-  const [active, setActive] = useState<Set<ReactionKey>>(new Set());
+  const [reactions, setReactions] = useState<Record<ReactionKey, number>>(
+    () => readStoredReactions(storageKey)?.r ?? DEFAULT_REACTIONS,
+  );
+  const [active, setActive] = useState<Set<ReactionKey>>(
+    () => new Set(readStoredReactions(storageKey)?.a ?? []),
+  );
   const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
   const [thoughts, setThoughts] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [pageUrl, setPageUrl] = useState("");
-  const initialized = useRef(false);
-
-  /* Hydrate from localStorage + capture URL client-side only */
-  useEffect(() => {
-    setPageUrl(window.location.href);
-    if (initialized.current) return;
-    initialized.current = true;
-    try {
-      const raw = localStorage.getItem(storageKey);
-      if (raw) {
-        const { r, a } = JSON.parse(raw) as {
-          r: Record<ReactionKey, number>;
-          a: ReactionKey[];
-        };
-        setReactions(r);
-        setActive(new Set(a));
-      }
-    } catch {
-      // ignore
-    }
-  }, [storageKey]);
+  const pageUrl = typeof window !== "undefined" ? window.location.href : "";
 
   function toggleReaction(key: ReactionKey) {
     setActive((prev) => {
       const next = new Set(prev);
       const wasActive = next.has(key);
-      wasActive ? next.delete(key) : next.add(key);
+      if (wasActive) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
       setReactions((r) => {
         const updated = { ...r, [key]: r[key] + (wasActive ? -1 : 1) };
         try {

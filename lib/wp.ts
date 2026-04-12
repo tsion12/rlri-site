@@ -58,6 +58,7 @@ type WpApiPost = Omit<WpPost, "featuredImage"> & {
         id?: number;
         taxonomy?: string;
         name?: string;
+        slug?: string;
       }>
     >;
   };
@@ -81,10 +82,17 @@ type WpApiPage = {
   };
 };
 
+type WpApiCategory = {
+  id: number;
+  name?: string;
+  slug?: string;
+};
+
 const API: Record<WpSource, string> = {
   main: "https://reallifeinstitute.org/wp-json/wp/v2",
-  africa: "https://africa-programs.reallifeinstitute.org/wp-json/wp/v2",
+  africa: "https://cms-programs.reallifeinstitute.or/wp-json/wp/v2",
 };
+const AFRICA_API_FALLBACK = "https://cms-programs.reallifeinstitute.org/wp-json/wp/v2";
 
 const WP_REVALIDATE_SECONDS = 300;
 const WP_TIMEOUT_MS = 12000;
@@ -314,11 +322,22 @@ async function wpFetchJson<T>(url: string): Promise<T | null> {
   }
 }
 
+async function wpFetchJsonWithAfricaFallback<T>(url: string): Promise<T | null> {
+  const primary = await wpFetchJson<T>(url);
+  if (primary !== null) return primary;
+  if (!url.startsWith(API.africa)) return null;
+  const fallbackUrl = url.replace(API.africa, AFRICA_API_FALLBACK);
+  if (fallbackUrl === url) return null;
+  return wpFetchJson<T>(fallbackUrl);
+}
+
 async function fetchPostsForSource(source: WpSource): Promise<WpPostWithSource[]> {
   const url = new URL(`${API[source]}/posts`);
   url.searchParams.set("per_page", String(WP_POSTS_PER_PAGE));
   url.searchParams.set("_embed", "author,wp:term");
-  const posts = await wpFetchJson<WpApiPost[]>(url.toString());
+  const posts = source === "africa"
+    ? await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString())
+    : await wpFetchJson<WpApiPost[]>(url.toString());
   if (!Array.isArray(posts)) return [];
   return posts.map((p) => normalizePost(source, p));
 }
@@ -334,18 +353,119 @@ export async function getPosts(): Promise<WpPostWithSource[]> {
 
 /** Category IDs on the Africa Programs WordPress site. */
 const AFRICA_CAT = {
-  blogAp: 42,     // "Blog AP"
-  storiesAp: 43,  // "Stories AP"
+  blogAp: 42,     // Legacy "Blog AP" ID; fallback by category name/slug is applied.
+  storiesAp: 43,  // Legacy "Stories AP" ID; fallback by category name/slug is applied.
 } as const;
+
+const BLOG_AP_CATEGORY_NAMES = new Set(["blog ap"]);
+const STORIES_AP_CATEGORY_NAMES = new Set(["stories ap"]);
+const AFRICA_CATEGORY_PAGE_SIZE = 100;
+const AFRICA_POST_MAX_PAGES = 4;
+const africaCategoryIdCache = new Map<string, number | null>();
+
+function getPostCategoryTerms(post: WpApiPost) {
+  const terms = post._embedded?.["wp:term"] ?? [];
+  return terms
+    .flatMap((group) => group ?? [])
+    .filter((term) => term.taxonomy === "category");
+}
+
+function postHasCategory(
+  post: WpApiPost,
+  { id, names }: { id?: number; names?: ReadonlySet<string> },
+) {
+  if (typeof id === "number") {
+    if (Array.isArray(post.categories) && post.categories.includes(id)) return true;
+    if (getPostCategoryTerms(post).some((term) => term.id === id)) return true;
+  }
+  if (!names || names.size === 0) return false;
+  return getPostCategoryTerms(post).some((term) => {
+    const normName = term.name ? normCategoryName(term.name) : "";
+    const normSlug = term.slug ? normCategoryName(term.slug) : "";
+    return names.has(normName) || names.has(normSlug);
+  });
+}
+
+async function fetchAfricaPostsRaw(categoryId?: number): Promise<WpApiPost[]> {
+  const all: WpApiPost[] = [];
+  for (let page = 1; page <= AFRICA_POST_MAX_PAGES; page += 1) {
+    const url = new URL(`${API.africa}/posts`);
+    if (typeof categoryId === "number") {
+      url.searchParams.set("categories", String(categoryId));
+    }
+    url.searchParams.set("per_page", "50");
+    url.searchParams.set("page", String(page));
+    url.searchParams.set("_embed", "author,wp:term");
+    const posts = await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString());
+    if (!Array.isArray(posts) || posts.length === 0) break;
+    all.push(...posts);
+    if (posts.length < 50) break;
+  }
+  return dedupePosts(all);
+}
+
+function dedupePosts(posts: WpApiPost[]) {
+  const seen = new Set<number>();
+  return posts.filter((post) => {
+    if (seen.has(post.id)) return false;
+    seen.add(post.id);
+    return true;
+  });
+}
+
+async function fetchAfricaCategories(): Promise<WpApiCategory[]> {
+  const all: WpApiCategory[] = [];
+  for (let page = 1; page <= AFRICA_POST_MAX_PAGES; page += 1) {
+    const url = new URL(`${API.africa}/categories`);
+    url.searchParams.set("per_page", String(AFRICA_CATEGORY_PAGE_SIZE));
+    url.searchParams.set("page", String(page));
+    const categories = await wpFetchJsonWithAfricaFallback<WpApiCategory[]>(url.toString());
+    if (!Array.isArray(categories) || categories.length === 0) break;
+    all.push(...categories);
+    if (categories.length < AFRICA_CATEGORY_PAGE_SIZE) break;
+  }
+  return all;
+}
+
+function categoryMatchesNames(category: WpApiCategory, names: ReadonlySet<string>) {
+  const normalizedName = category.name ? normCategoryName(category.name) : "";
+  const normalizedSlug = category.slug ? normCategoryName(category.slug) : "";
+  return names.has(normalizedName) || names.has(normalizedSlug);
+}
+
+async function resolveAfricaCategoryId(primaryId: number, names: ReadonlySet<string>): Promise<number | null> {
+  const cacheKey = `${primaryId}:${Array.from(names).sort().join(",")}`;
+  if (africaCategoryIdCache.has(cacheKey)) {
+    return africaCategoryIdCache.get(cacheKey) ?? null;
+  }
+
+  const categories = await fetchAfricaCategories();
+  if (categories.length === 0) {
+    africaCategoryIdCache.set(cacheKey, primaryId);
+    return primaryId;
+  }
+
+  const hasPrimary = categories.some((category) => category.id === primaryId);
+  if (hasPrimary) {
+    africaCategoryIdCache.set(cacheKey, primaryId);
+    return primaryId;
+  }
+
+  const matched = categories.find((category) => categoryMatchesNames(category, names));
+  const resolved = matched?.id ?? null;
+  africaCategoryIdCache.set(cacheKey, resolved);
+  return resolved;
+}
 
 /** Africa "Blog-AP" category posts, newest first. Safe on fetch failure (empty list). */
 export async function getAfricaPosts(): Promise<WpPostWithSource[]> {
-  const url = new URL(`${API.africa}/posts`);
-  url.searchParams.set("categories", String(AFRICA_CAT.blogAp));
-  url.searchParams.set("per_page", "50");
-  url.searchParams.set("_embed", "author,wp:term");
-  const posts = await wpFetchJson<WpApiPost[]>(url.toString());
-  if (!Array.isArray(posts)) return [];
+  const resolvedCategory = await resolveAfricaCategoryId(AFRICA_CAT.blogAp, BLOG_AP_CATEGORY_NAMES);
+  let posts = resolvedCategory ? await fetchAfricaPostsRaw(resolvedCategory) : [];
+  if (posts.length === 0) {
+    posts = (await fetchAfricaPostsRaw()).filter((post) =>
+      postHasCategory(post, { id: resolvedCategory ?? AFRICA_CAT.blogAp, names: BLOG_AP_CATEGORY_NAMES }),
+    );
+  }
   return posts
     .map((p) => normalizePost("africa", p))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -353,12 +473,13 @@ export async function getAfricaPosts(): Promise<WpPostWithSource[]> {
 
 /** Africa "Stories-AP" category posts, newest first. Safe on fetch failure (empty list). */
 export async function getAfricaStories(): Promise<WpPostWithSource[]> {
-  const url = new URL(`${API.africa}/posts`);
-  url.searchParams.set("categories", String(AFRICA_CAT.storiesAp));
-  url.searchParams.set("per_page", "50");
-  url.searchParams.set("_embed", "author,wp:term");
-  const posts = await wpFetchJson<WpApiPost[]>(url.toString());
-  if (!Array.isArray(posts)) return [];
+  const resolvedCategory = await resolveAfricaCategoryId(AFRICA_CAT.storiesAp, STORIES_AP_CATEGORY_NAMES);
+  let posts = resolvedCategory ? await fetchAfricaPostsRaw(resolvedCategory) : [];
+  if (posts.length === 0) {
+    posts = (await fetchAfricaPostsRaw()).filter((post) =>
+      postHasCategory(post, { id: resolvedCategory ?? AFRICA_CAT.storiesAp, names: STORIES_AP_CATEGORY_NAMES }),
+    );
+  }
   return posts
     .map((p) => normalizePost("africa", p))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -385,7 +506,9 @@ export async function getPost(
   url.searchParams.set("slug", slug);
   url.searchParams.set("_embed", "author,wp:term");
 
-  const posts = await wpFetchJson<WpApiPost[]>(url.toString());
+  const posts = source === "africa"
+    ? await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString())
+    : await wpFetchJson<WpApiPost[]>(url.toString());
   if (!Array.isArray(posts)) return null;
   const post = posts[0];
   if (!post) return null;
@@ -461,7 +584,7 @@ export async function getUpcomingEventsPage(): Promise<WpPageHighlight | null> {
   const url = new URL(`${API.africa}/pages`);
   url.searchParams.set("slug", "upcoming-events");
 
-  const pages = await wpFetchJson<WpApiPage[]>(url.toString());
+  const pages = await wpFetchJsonWithAfricaFallback<WpApiPage[]>(url.toString());
   if (!Array.isArray(pages) || pages.length === 0) return null;
 
   const candidates = pages.map((page) => {

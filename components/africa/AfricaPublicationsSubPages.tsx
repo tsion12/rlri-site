@@ -152,7 +152,7 @@ export function AfricaPolicyBriefsPage() {
         "IMPROVING WATER AND SANITATION SERVICE DELIVERY IN CAMEROON, ETHIOPIA, KENYA, AND ZIMBABWE: WHAT IS WORKING, WHAT ISN'T, AND WHY?",
       description:
         "Evidence-informed policy brief from RLRI Africa Program. Download the full PDF for findings and recommendations.",
-      href: "https://africa-programs.reallifeinstitute.org/wp-content/uploads/2026/04/Policy-Brief-FEBRUARY-1.pdf",
+      href: "https://cms-programs.reallifeinstitute.or/wp-content/uploads/2026/04/Policy-Brief-FEBRUARY-1.pdf",
       date: "April 2026",
       format: "PDF",
     },

@@ -1,24 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function BlogSharePanel({ title, fallbackPath }: { title: string; fallbackPath: string }) {
-  const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    setUrl(window.location.href || `${window.location.origin}${fallbackPath}`);
-  }, [fallbackPath]);
-
-  const shareUrl = url || fallbackPath;
+  const shareUrl = typeof window !== "undefined"
+    ? window.location.href || `${window.location.origin}${fallbackPath}`
+    : fallbackPath;
   const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`;
   const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
 
   async function handleCopy() {
     try {
-      const toCopy = url || (typeof window !== "undefined" ? `${window.location.origin}${fallbackPath}` : fallbackPath);
-      await navigator.clipboard.writeText(toCopy);
+      await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1800);
     } catch {

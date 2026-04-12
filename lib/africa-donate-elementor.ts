@@ -1,9 +1,9 @@
 /**
  * Elementor Pro donation form on Africa Programs WordPress.
- * Submissions must match https://africa-programs.reallifeinstitute.org/get-involved/donations/
+ * Submissions must match https://cms-programs.reallifeinstitute.or/get-involved/donations/
  */
 export const ELEMENTOR_DONATE_AJAX =
-  "https://africa-programs.reallifeinstitute.org/wp-admin/admin-ajax.php";
+  "https://cms-programs.reallifeinstitute.or/wp-admin/admin-ajax.php";
 
 export const ELEMENTOR_DONATE_FORM = {
   postId: "414",

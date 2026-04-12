@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { africaEmails, africaRoutes } from "@/lib/africa-routes";
-import { getLatestPosts, stripHtml } from "@/lib/wp";
+import { getAfricaPosts, stripHtml } from "@/lib/wp";
 import { AboutValuePillars } from "./AboutValuePillars";
-import { au } from "./africa-ui";
 
 const POLICIES = [
   { date: "Aug 23", name: "Finance Management Policy", excerpt: "High standards of financial accountability across all programs." },
@@ -18,7 +17,7 @@ const POLICIES = [
 
 /* ── Main component ───────────────────────────────────────────────────── */
 export async function AfricaAboutPage() {
-  const [latestPost] = await getLatestPosts(1);
+  const [latestPost] = await getAfricaPosts();
   const aboutBandImage = latestPost?.featuredImage ?? null;
   const aboutBandAlt = latestPost ? stripHtml(latestPost.title.rendered) : "RLRI Africa impact infographic";
 

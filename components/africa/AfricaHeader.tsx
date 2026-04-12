@@ -75,10 +75,6 @@ export function AfricaHeader() {
   const pubRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       const t = e.target as Node;
       if (pubRef.current && !pubRef.current.contains(t)) setPubOpen(false);

@@ -78,8 +78,8 @@ export async function POST(req: Request) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         "X-Requested-With": "XMLHttpRequest",
-        Referer: "https://africa-programs.reallifeinstitute.org/get-involved/donations/",
-        Origin: "https://africa-programs.reallifeinstitute.org",
+        Referer: "https://cms-programs.reallifeinstitute.or/get-involved/donations/",
+        Origin: "https://cms-programs.reallifeinstitute.or",
       },
       body: params.toString(),
     });

@@ -10,7 +10,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "africa-programs.reallifeinstitute.org",
+        hostname: "cms-programs.reallifeinstitute.or",
+        pathname: "/wp-content/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cms-programs.reallifeinstitute.org",
         pathname: "/wp-content/uploads/**",
       },
       {
