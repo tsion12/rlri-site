@@ -8,8 +8,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const src  = path.resolve(__dirname, "../public/assets/africa-program-logo.png");
-const dest = path.resolve(__dirname, "../public/assets/africa-program-logo-transparent.png");
+const src  = path.resolve(__dirname, "../public/assets/RLRL-AP-Logo.png");
+const dest = path.resolve(__dirname, "../public/assets/RLRL-AP-Logo.png");
 
 const { data, info } = await sharp(src)
   .ensureAlpha()

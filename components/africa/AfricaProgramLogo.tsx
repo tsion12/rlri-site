@@ -4,15 +4,15 @@ import { africaRoutes } from "@/lib/africa-routes";
 
 const sizeClasses = {
   header:
-    "h-20 w-auto sm:h-24 md:h-[104px] lg:h-28 xl:h-[10rem] max-w-[min(100%,30rem)]",
+    "h-16 w-auto sm:h-20 md:h-24 lg:h-[6.5rem] xl:h-28 max-w-[min(100%,24rem)]",
   footer:
-    "h-11 w-auto sm:h-12 md:h-14 max-w-[min(100%,16rem)] lg:max-w-[min(100%,18rem)]",
+    "h-9 w-auto sm:h-10 md:h-11 max-w-[min(100%,14rem)] lg:max-w-[min(100%,16rem)]",
 } as const;
 
 type LogoVariant = keyof typeof sizeClasses;
 
 /**
- * Africa Program lockup — transparent PNG from `scripts/strip-logo-bg.mjs`.
+ * Africa Program lockup asset in `public/assets`.
  */
 export function AfricaProgramLogo({
   variant = "header",
@@ -31,10 +31,10 @@ export function AfricaProgramLogo({
       aria-label="Real Life Research Institute — Africa Program — Home"
     >
       <Image
-        src="/assets/africa-program-logo-transparent.png"
+        src="/assets/RLRL-AP-Logo.png"
         alt="Real Life Research Institute — Africa Program"
-        width={1024}
-        height={1024}
+        width={1600}
+        height={900}
         priority={variant === "header"}
         quality={95}
         sizes={sizesAttr}
