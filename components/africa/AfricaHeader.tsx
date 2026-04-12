@@ -100,7 +100,7 @@ export function AfricaHeader() {
   return (
     <header className={au.header.outer}>
       <div className={au.header.inner}>
-        <div className="flex min-w-0 shrink items-center gap-3 lg:gap-5">
+        <div className="flex min-w-0 shrink items-center gap-2 lg:gap-3">
           <AfricaProgramLogo />
           <span
             className="hidden h-8 w-px shrink-0 bg-zinc-200/90 lg:block dark:bg-zinc-700/80"
@@ -232,7 +232,7 @@ export function AfricaHeader() {
           </div>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <ThemeToggle className="!h-10 !w-10 !rounded-lg !border-zinc-200/80 !shadow-sm dark:!border-zinc-700" />
 
           <button

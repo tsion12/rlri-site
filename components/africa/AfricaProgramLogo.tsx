@@ -4,7 +4,7 @@ import { africaRoutes } from "@/lib/africa-routes";
 
 const sizeClasses = {
   header:
-    "h-14 w-auto sm:h-16 md:h-[72px] lg:h-20 xl:h-[5.5rem] max-w-[min(100%,22rem)]",
+    "h-20 w-auto sm:h-24 md:h-[104px] lg:h-28 xl:h-[10rem] max-w-[min(100%,30rem)]",
   footer:
     "h-11 w-auto sm:h-12 md:h-14 max-w-[min(100%,16rem)] lg:max-w-[min(100%,18rem)]",
 } as const;
@@ -22,7 +22,7 @@ export function AfricaProgramLogo({
   const sizesAttr =
     variant === "footer"
       ? "(max-width: 640px) 200px, 260px"
-      : "(max-width: 640px) 220px, (max-width: 1024px) 280px, 320px";
+      : "(max-width: 640px) 300px, (max-width: 1024px) 380px, 460px";
 
   return (
     <Link

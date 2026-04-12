@@ -8,7 +8,7 @@ export const au = {
     outer:
       "sticky top-0 z-50 border-b border-zinc-200/60 bg-white/80 shadow-[0_1px_0_0_rgba(255,255,255,0.8)_inset,0_4px_24px_-8px_rgba(15,23,42,0.06)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:border-zinc-800/80 dark:bg-zinc-950/85 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04),0_8px_32px_-12px_rgba(0,0,0,0.45)]",
     inner:
-      "mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 py-2.5 sm:min-h-[4.25rem] sm:gap-5 sm:px-6 lg:min-h-[4.5rem] lg:gap-8 lg:px-8",
+      "mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-2 px-3 py-1.5 sm:min-h-[4rem] sm:gap-3 sm:px-4 sm:py-2 lg:min-h-[4.25rem] lg:gap-5 lg:px-6",
     navTrack:
       "flex items-center gap-0.5 rounded-xl border border-zinc-200/70 bg-zinc-100/60 p-1 shadow-inner shadow-zinc-900/5 dark:border-zinc-800/80 dark:bg-zinc-900/40 dark:shadow-none",
     navItem:
