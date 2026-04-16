@@ -49,8 +49,13 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     [
       {
         name: "Dr. Chris Begealawuh",
-        role: "Author",
+        role: "Co-author",
         linkedin: "https://www.linkedin.com/in/nchongayi-christantus-020827a1/",
+      },
+      {
+        name: "Lloyd George Banda, PhD",
+        role: "Co-author",
+        linkedin: "https://www.linkedin.com/in/lloydgeorgeii/",
       },
     ],
   "cameroon-hosted-the-wtos-ministers-were-ldcs-able-to-reshape-the-rules": [
@@ -86,7 +91,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   ],
   "cameroon-celebrates-national-dialogue-anniversary-but-critics-say-dialogue-outcomes-remain-unmet":
     CHRIS_SOLO,
-  "mjadala-afrika-the-au-chairperson-elections-2024-candidate-debate": CHRIS_SOLO,
+  "mjadala-afrika-the-au-chairperson-elections-2024-candidate-debate":
+    CHRIS_SOLO,
   "3784-2": CHRIS_SOLO,
   "digital-risks-and-opportunities-for-women-in-east-africa": [
     {
