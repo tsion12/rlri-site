@@ -4,6 +4,7 @@ import type { WpPostWithSource } from "@/lib/wp";
 import { blogPostPath, stripHtml } from "@/lib/wp";
 import { africaRoutes } from "@/lib/africa-routes";
 import { PubSubNav } from "./AfricaPublicationsNav";
+import { PolicyBriefTrackingLinks } from "./PolicyBriefTrackingLinks";
 
 function themeBadge(post: WpPostWithSource) {
   const t = post.theme?.trim();
@@ -195,23 +196,7 @@ export function AfricaPolicyBriefsPage() {
                   {brief.title}
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{brief.description}</p>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <a
-                    href={brief.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-600"
-                  >
-                    Read policy brief
-                  </a>
-                  <a
-                    href={brief.href}
-                    download
-                    className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                  >
-                    Download PDF
-                  </a>
-                </div>
+                <PolicyBriefTrackingLinks href={brief.href} briefTitle={brief.title} />
               </article>
             ))}
           </div>
