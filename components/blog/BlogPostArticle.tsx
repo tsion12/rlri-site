@@ -109,17 +109,19 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
       linkedin: "https://www.linkedin.com/in/oru-allens-agbor-127673209/",
     },
   ],
-  "empowering-roots-why-the-world-trade-organization-wto-agreement-on-fisheries-subsidies-matters-for-small-scale-fisheries": [
-    {
-      name: "Richard A. Nyiawung, PhD",
-      role: "Co-author",
-      linkedin: "https://www.linkedin.com/in/richard-nyiawung-phd-67165b87/",
-    },
-    {
-      name: "Maurice Besseng, PhD",
-      role: "Co-author",
-    },
-  ],
+  "empowering-roots-why-the-world-trade-organization-wto-agreement-on-fisheries-subsidies-matters-for-small-scale-fisheries":
+    [
+      {
+        name: "Richard A. Nyiawung, PhD",
+        role: "Co-author",
+        linkedin: "https://www.linkedin.com/in/richard-nyiawung-phd-67165b87/",
+      },
+      {
+        name: "Maurice Besseng, PhD",
+        role: "Co-author",
+        linkedin: "https://www.linkedin.com/in/mbeseng/",
+      },
+    ],
 };
 
 /** Normalize titles so WP punctuation/spacing variants still match overrides. */
