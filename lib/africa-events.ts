@@ -80,7 +80,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     supportMonth: "april",
     tags: ["Security", "Digital Infrastructure"],
     policyBriefHref: null,
-    recordingHref: null,
+    recordingHref: "https://youtu.be/tf52SsxgKAs",
   },
   {
     id: "rethinking-climate-adaptation-africa-2026",
