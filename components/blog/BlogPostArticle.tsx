@@ -71,6 +71,15 @@ const CHRIS_SOLO: AuthorProfile[] = [
   },
 ];
 
+/** Solomon Kimaita — same bio as April 2026 webinar speaker profile. */
+const SOLOMON_KIMAITA_AUTHOR: AuthorProfile = {
+  name: "Solomon Kimaita",
+  role: "Author",
+  linkedin: "https://www.linkedin.com/in/solomon-kimaita-5802021a8/",
+  avatar: "/assets/april/Solomon.webp",
+  bio: "Solomon Kimaita is an accomplished Lecturer of International Relations and Diplomacy at Zetech University in Nairobi, Kenya, specializing in Peace and Conflict Studies. He holds an M.A. in International Relations from the United States International University-Africa, and a B.A. in Social Studies – Government and Public Administration from Moi University in Eldoret, Kenya. Solomon’s teaching portfolio covers topics such as Development Dynamics in Africa, Regional Integration, and International Conflict Management. He is a Certified Professional Mediator and has certifications in pedagogy and academic quality assurance. His experience spans significant roles in humanitarian work with UNHCR and project management with USIU’s Development Partnerships in Higher Education Project. He has contributed to multiple academic conferences and published in peer-reviewed journals on emerging themes like AI in conflict prevention, youth participation in climate resilience and digital diplomacy. A committed academic, Solomon actively contributes to curriculum development and mentorship as the patron of the UNESCO Club at Zetech. His professional affiliations include membership in the Christian Professional Mediators Association of Kenya (CPMAK) and the International Relations Society of Kenya (IRSK).",
+};
+
 const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "shaping-development-policies-in-the-sahel-through-evidence-based-synthesis-progress-from-a-baobab-clare-programme-funded-team":
     [
@@ -181,6 +190,7 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
         linkedin: "https://www.linkedin.com/in/lloydgeorgeii/",
       },
     ],
+  "shrinking-aid-rising-instability-the-future-of-peacebuilding-in-sub-saharan-africa": [SOLOMON_KIMAITA_AUTHOR],
   "aid-for-trade-and-development-cuts-how-donor-policy-shifts-are-deepening-the-climate-conflict-crisis-in-the-sahel":
     [
       {
@@ -258,13 +268,10 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     ],
   [normalizeTitleKey(
     "From Data Cables to Conflict Corridors: How Middle East Instability is Reshaping Africa's Security and Political Landscape",
-  )]: [
-    {
-      name: "Solomon Kimaita",
-      role: "Author",
-      linkedin: "https://www.linkedin.com/in/solomon-kimaita-5802021a8/",
-    },
-  ],
+  )]: [SOLOMON_KIMAITA_AUTHOR],
+  [normalizeTitleKey(
+    "Shrinking Aid, Rising Instability: The Future of Peacebuilding in Sub-Saharan Africa",
+  )]: [SOLOMON_KIMAITA_AUTHOR],
   [normalizeTitleKey("Africa’s Digital Infrastructure Is More Exposed Than It Appears")]: [
     {
       name: "Alvin Korkie",
