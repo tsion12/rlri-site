@@ -22,6 +22,30 @@ function estimateReadingMinutes(html: string) {
   return Math.max(1, Math.round(words / 200));
 }
 
+function authorBylineName(name: string) {
+  return name.replace(/^Dr\.\s+/i, "").replace(/,?\s*Ph\.?D\.?$/i, "").trim();
+}
+
+function CalendarIcon() {
+  return (
+    <svg className="h-3.5 w-3.5 shrink-0 text-stone-400 dark:text-zinc-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+      <path d="M5.25 3.5A.75.75 0 0 1 6 4.25V5h8v-.75a.75.75 0 0 1 1.5 0V5h.75A2.25 2.25 0 0 1 18.5 7.25v9A2.25 2.25 0 0 1 16.25 18.5h-12.5A2.25 2.25 0 0 1 1.5 16.25v-9A2.25 2.25 0 0 1 3.75 5H4.5v-.75A.75.75 0 0 1 6 4.25V5h8v-.75a.75.75 0 0 1 1.5 0V5h.75Zm-1 4.5v7.25c0 .414.336.75.75.75h12.5a.75.75 0 0 0 .75-.75v-7.25H4.25Z" />
+    </svg>
+  );
+}
+
+function AuthorIcon() {
+  return (
+    <svg className="h-3.5 w-3.5 shrink-0 text-stone-400 dark:text-zinc-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+      <path d="M13.586 3.586a2 2 0 1 1 2.828 2.828l-.793.793-2.828-2.828.793-.793ZM11.379 5.793 3 14.172V17h2.828l8.38-8.379-2.83-2.828Z" />
+    </svg>
+  );
+}
+
+function MetaDivider() {
+  return <span aria-hidden className="text-stone-300 dark:text-zinc-600">·</span>;
+}
+
 const FOCUS_PROGRAMS = [
   { n: "01", label: "Oceans", icon: "🌊" },
   { n: "02", label: "Digital Futures", icon: "🧠" },
@@ -287,6 +311,12 @@ export function BlogPostArticle({ post }: { post: WpPostWithSource }) {
     stripAuthorsBio: showAuthorsSection && authorsForSection.some((author) => author.bio),
   });
   const minutes = estimateReadingMinutes(bodyHtml);
+  const themeLabel = post.programLabel ?? post.theme?.trim() ?? null;
+  const showAuthorByline = !isGenericFallback;
+  const bylineAuthors = authors.map((author) => ({
+    name: authorBylineName(author.name),
+    linkedin: author.linkedin,
+  }));
 
   return (
     <article className="relative mx-auto max-w-3xl px-4 pb-28 pt-6 sm:px-6 sm:pt-8">
@@ -323,13 +353,54 @@ export function BlogPostArticle({ post }: { post: WpPostWithSource }) {
           {stripHtml(post.title.rendered)}
         </h1>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-stone-500 dark:text-zinc-500">
-          <time dateTime={post.date} className="font-medium text-stone-700 dark:text-zinc-300">
-            {dateLabel}
-          </time>
-          <span aria-hidden className="text-stone-300 dark:text-zinc-600">
-            ·
+        <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-stone-500 dark:text-zinc-500">
+          {themeLabel ? (
+            <>
+              <span>
+                In{" "}
+                <span className="font-medium text-teal-800 dark:text-teal-300">{themeLabel}</span>
+              </span>
+              <MetaDivider />
+            </>
+          ) : null}
+          <span className="inline-flex items-center gap-1.5">
+            <CalendarIcon />
+            <time dateTime={post.date} className="font-medium text-stone-700 dark:text-zinc-300">
+              {dateLabel}
+            </time>
           </span>
+          {showAuthorByline && bylineAuthors.length > 0 ? (
+            <>
+              <MetaDivider />
+              <span className="inline-flex flex-wrap items-center gap-1.5">
+                <AuthorIcon />
+                <span className="inline-flex flex-wrap items-center gap-x-1">
+                  {bylineAuthors.map((author, index) => (
+                    <span key={author.name} className="inline-flex items-center">
+                      {index > 0 ? (
+                        <span className="mr-1 text-stone-400 dark:text-zinc-500">
+                          {index === bylineAuthors.length - 1 ? "and " : ", "}
+                        </span>
+                      ) : null}
+                      {author.linkedin ? (
+                        <a
+                          href={author.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-medium text-teal-800 underline-offset-2 hover:underline dark:text-teal-300"
+                        >
+                          {author.name}
+                        </a>
+                      ) : (
+                        <span className="font-medium text-teal-800 dark:text-teal-300">{author.name}</span>
+                      )}
+                    </span>
+                  ))}
+                </span>
+              </span>
+            </>
+          ) : null}
+          <MetaDivider />
           <span>{minutes} min read</span>
         </div>
 
