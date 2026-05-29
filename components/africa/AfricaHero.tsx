@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { blogPostPath, stripHtml, type WpPostWithSource } from "@/lib/wp";
 import { africaRoutes } from "@/lib/africa-routes";
-import { HeroEventLiveBadge } from "@/components/africa/HeroEventLiveBadge";
+import { EventWebinarStatus } from "@/components/africa/EventWebinarStatus";
+import { HeroEventCta } from "@/components/africa/HeroEventCta";
 import { au } from "./africa-ui";
 
 
@@ -11,6 +12,7 @@ type HeroEventHighlight = {
   modified: string;
   eventDateISO?: string | null;
   eventEndISO?: string | null;
+  registerHref?: string | null;
   link?: string;
 };
 
@@ -104,24 +106,39 @@ export function AfricaHero({ featuredPost, upcomingEvent }: Props) {
               <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-600 dark:text-zinc-400">
                 Featured announcement
               </p>
-              {upcomingEvent?.eventDateISO && upcomingEvent.eventEndISO ? (
-                <HeroEventLiveBadge
-                  startISO={upcomingEvent.eventDateISO}
-                  endISO={upcomingEvent.eventEndISO}
-                />
-              ) : null}
               <h2 className="mt-3 font-serif text-2xl leading-tight text-zinc-900 dark:text-zinc-100">
                 {featuredAnnouncementTitle}
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
                 {featuredAnnouncementText}
               </p>
-              <div className="mt-4 border-t border-zinc-200 pt-3 text-xs font-medium uppercase tracking-[0.12em] text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
+              {prioritizeEvent && upcomingEvent?.eventDateISO && upcomingEvent.eventEndISO ? (
+                <div className="mt-3">
+                  <EventWebinarStatus
+                    variant="card"
+                    showTitle={false}
+                    startISO={upcomingEvent.eventDateISO}
+                    endISO={upcomingEvent.eventEndISO}
+                    title={upcomingEvent.title}
+                    registerHref={upcomingEvent.registerHref}
+                  />
+                </div>
+              ) : null}
+              <div className="mt-3 border-t border-zinc-200 pt-3 text-xs font-medium uppercase tracking-[0.12em] text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
                 {featuredAnnouncementMeta}
               </div>
-              <Link href={featuredAnnouncementHref} className="mt-5 inline-flex text-sm font-semibold text-emerald-800 hover:underline dark:text-emerald-300">
-                {prioritizeEvent ? "Register for event" : "Review event schedule"}
-              </Link>
+              {prioritizeEvent && upcomingEvent?.eventDateISO && upcomingEvent.eventEndISO ? (
+                <HeroEventCta
+                  startISO={upcomingEvent.eventDateISO}
+                  endISO={upcomingEvent.eventEndISO}
+                  eventHref={featuredAnnouncementHref}
+                  registerHref={upcomingEvent.registerHref}
+                />
+              ) : (
+                <Link href={featuredAnnouncementHref} className="mt-3 inline-flex text-sm font-semibold text-emerald-800 hover:underline dark:text-emerald-300">
+                  {prioritizeEvent ? "Register for event" : "Review event schedule"}
+                </Link>
+              )}
             </article>
 
             <article className="mt-4 border border-zinc-300 bg-zinc-50 p-5 dark:border-zinc-700 dark:bg-zinc-900/70">
