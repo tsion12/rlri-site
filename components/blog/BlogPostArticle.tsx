@@ -6,8 +6,10 @@ import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSup
 import { africaRoutes, programsAnchor } from "@/lib/africa-routes";
 import { resolveAuthorPhoto } from "@/lib/blog-author-photos";
 import { finalizeBlogBodyHtml } from "@/lib/strip-blog-html";
-import { mainAboutSectionHref } from "@/lib/main-routes";
 import { blogPostPath, postIsMainPolicy, stripHtml, type WpPostWithSource } from "@/lib/wp";
+
+/** Main-site policies list anchor (no main-routes module on Africa-only deploys). */
+const MAIN_POLICIES_LIST_HREF = "/aboutus#institute-policies";
 
 function formatPostDate(iso: string) {
   return new Intl.DateTimeFormat("en-US", {
@@ -346,7 +348,7 @@ function DownloadIcon() {
 
 export function BlogPostArticle({ post }: { post: WpPostWithSource }) {
   const isPolicy = postIsMainPolicy(post);
-  const policiesListHref = mainAboutSectionHref("policies");
+  const policiesListHref = MAIN_POLICIES_LIST_HREF;
   const dateLabel = formatPostDate(post.date);
   const titlePlain = stripHtml(post.title.rendered);
   const canonicalPath = blogPostPath(post);

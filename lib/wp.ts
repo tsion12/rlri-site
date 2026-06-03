@@ -1,5 +1,4 @@
 export type WpSource = "main" | "africa";
-import type { Locale } from "@/lib/i18n/config";
 import { request as httpsRequest } from "node:https";
 
 export type AfricaProgramKey =
@@ -35,14 +34,6 @@ export type WpPost = {
   authorName?: string | null;
   authorBio?: string | null;
   authorAvatar?: string | null;
-  /** Main-site policy category posts (reallifeinstitute.org). */
-  isPolicy?: boolean;
-  /** First PDF link found in post content, when `isPolicy`. */
-  downloadUrl?: string | null;
-  /** Main-site publication posts (reallifeinstitute.org). */
-  isPublication?: boolean;
-  /** External “Find it” URL from WordPress `link` / `_links_to` meta. */
-  externalUrl?: string | null;
 };
 
 export type WpPostWithSource = WpPost & { source: WpSource };
@@ -78,12 +69,6 @@ type WpApiPost = Omit<WpPost, "featuredImage"> & {
     og_image?: Array<{
       url?: string;
     }>;
-  };
-  /** WP permalink; for publications this is often the external publisher URL. */
-  link?: string;
-  meta?: {
-    _links_to?: string;
-    _links_to_target?: string;
   };
 };
 
@@ -125,40 +110,11 @@ export function isWpSource(s: string): s is WpSource {
 }
 
 /**
- * WordPress sometimes stores slugs as percent-encoded syllabics (e.g. `%e1%96%83…`).
- * Decode for URLs and API queries so we do not double-encode `%` via URLSearchParams.
- */
-export function normalizeWpSlug(slug: string): string {
-  let value = slug.trim();
-  for (let i = 0; i < 3; i += 1) {
-    if (!value.includes("%")) break;
-    try {
-      const decoded = decodeURIComponent(value);
-      if (decoded === value) break;
-      value = decoded;
-    } catch {
-      break;
-    }
-  }
-  return value;
-}
-
-/** Slug variants to try when resolving a post (route param vs WP storage). */
-function wpSlugLookupCandidates(slug: string): string[] {
-  const trimmed = slug.trim();
-  const normalized = normalizeWpSlug(trimmed);
-  const out: string[] = [];
-  for (const candidate of [normalized, trimmed]) {
-    if (candidate && !out.includes(candidate)) out.push(candidate);
-  }
-  return out;
-}
-
-/**
- * Internal URL for a journal post.
+ * Internal URL for a journal post. Encodes the slug so literal `%` (common on
+ * some WP installs) and other reserved characters survive path parsing.
  */
 export function blogPostPath(post: WpPostWithSource): string {
-  return `/blog/${post.source}/${encodeURIComponent(normalizeWpSlug(post.slug))}`;
+  return `/blog/${post.source}/${encodeURIComponent(post.slug)}`;
 }
 
 function decodeHtmlEntities(input: string): string {
@@ -238,7 +194,7 @@ const GENERIC_CATEGORY_NAMES = new Set([
 ]);
 
 function parseAfricaProgramFromCategories(
-  categories: Array<{ id?: number; name: string; slug?: string }>,
+  categories: Array<{ id?: number; name: string }>,
 ): AfricaProgramKey | null {
   for (const cat of categories) {
     if (typeof cat.id === "number") {
@@ -255,33 +211,6 @@ function parseAfricaProgramFromCategories(
   return null;
 }
 
-const MAIN_PUBLICATION_EXTERNAL_FALLBACK: Record<string, string> = {
-  "women-and-peacebuilding":
-    "https://www.tandfonline.com/doi/full/10.1080/14678802.2025.2510675",
-  "investments-you-must-make-before-40":
-    "https://www.amazon.ca/Investments-You-Must-Make-Before/dp/B0DNT618ZZ",
-};
-
-function isExternalMainSiteUrl(url: string): boolean {
-  try {
-    const host = new URL(url).hostname.toLowerCase();
-    return !host.endsWith("reallifeinstitute.org");
-  } catch {
-    return false;
-  }
-}
-
-function resolveMainExternalUrl(post: WpApiPost): string | null {
-  const candidates = [post.meta?._links_to, post.link].filter((v): v is string =>
-    Boolean(v?.trim()),
-  );
-  for (const raw of candidates) {
-    const url = raw.replace(/&amp;/g, "&");
-    if (isExternalMainSiteUrl(url)) return url;
-  }
-  return MAIN_PUBLICATION_EXTERNAL_FALLBACK[post.slug] ?? null;
-}
-
 function normalizePost(source: WpSource, post: WpApiPost): WpPostWithSource {
   const terms = post._embedded?.["wp:term"] ?? [];
   const allTerms = terms.flatMap((group) => group ?? []);
@@ -289,30 +218,10 @@ function normalizePost(source: WpSource, post: WpApiPost): WpPostWithSource {
   const avatarCandidates = author?.avatar_urls ? Object.values(author.avatar_urls) : [];
   const categories = allTerms
     .filter((term) => term.taxonomy === "category" && term.name && term.name.trim().length > 0)
-    .map((term) => ({
-      id: term.id,
-      name: decodeBasicEntities(term.name!.trim()),
-      slug: term.slug?.trim(),
-    }));
+    .map((term) => ({ id: term.id, name: decodeBasicEntities(term.name!.trim()) }));
   const programKey = source === "africa" ? parseAfricaProgramFromCategories(categories) : null;
   const programLabel = programKey ? AFRICA_PROGRAM_META[programKey].label : null;
   const category = categories.find((cat) => !GENERIC_CATEGORY_NAMES.has(normCategoryName(cat.name)));
-  const isPolicy =
-    source === "main" &&
-    categories.some((cat) => {
-      const name = normCategoryName(cat.name);
-      const slug = cat.slug ? normCategoryName(cat.slug) : "";
-      return MAIN_POLICY_CATEGORY_NAMES.has(name) || MAIN_POLICY_CATEGORY_NAMES.has(slug);
-    });
-  const downloadUrl = isPolicy ? extractPolicyDownloadUrl(post.content.rendered) : null;
-  const isPublication =
-    source === "main" &&
-    categories.some((cat) => {
-      const name = normCategoryName(cat.name);
-      const slug = cat.slug ? normCategoryName(cat.slug) : "";
-      return MAIN_PUBLICATION_CATEGORY_NAMES.has(name) || MAIN_PUBLICATION_CATEGORY_NAMES.has(slug);
-    });
-  const externalUrl = isPublication ? resolveMainExternalUrl(post) : null;
 
   return {
     id: post.id,
@@ -322,17 +231,13 @@ function normalizePost(source: WpSource, post: WpApiPost): WpPostWithSource {
     content: post.content,
     excerpt: post.excerpt,
     featuredImage: post.yoast_head_json?.og_image?.[0]?.url ?? null,
-    theme: isPolicy ? "Policy" : programLabel ?? category?.name?.trim() ?? null,
+    theme: programLabel ?? category?.name?.trim() ?? null,
     programKey,
     programLabel,
     authorName: author?.name?.trim() ?? null,
     authorBio: author?.description?.trim() ?? null,
     authorAvatar: avatarCandidates[0] ?? null,
     source,
-    isPolicy,
-    downloadUrl,
-    isPublication,
-    externalUrl,
   };
 }
 
@@ -589,236 +494,6 @@ export async function getAfricaStories(): Promise<WpPostWithSource[]> {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-const MAIN_POLICY_CATEGORY_ID = 28;
-const MAIN_POLICY_CATEGORY_NAMES = new Set(["policy", "policies", "policy en"]);
-
-/** First PDF hyperlink in WordPress post HTML (policy documents). */
-export function extractPolicyDownloadUrl(html: string): string | null {
-  const urls: string[] = [];
-  const hrefRe = /href=["'](https?:\/\/[^"']+\.pdf[^"']*)["']/gi;
-  let match: RegExpExecArray | null;
-  while ((match = hrefRe.exec(html)) !== null) {
-    urls.push(match[1].replace(/&amp;/g, "&"));
-  }
-  return urls[0] ?? null;
-}
-
-export function postIsMainPolicy(post: Pick<WpPostWithSource, "source" | "isPolicy">): boolean {
-  return post.source === "main" && post.isPolicy === true;
-}
-const MAIN_CATEGORY_PAGE_SIZE = 100;
-const MAIN_POST_MAX_PAGES = 4;
-const mainCategoryIdCache = new Map<string, number | null>();
-
-async function fetchMainCategories(): Promise<WpApiCategory[]> {
-  const all: WpApiCategory[] = [];
-  for (let page = 1; page <= MAIN_POST_MAX_PAGES; page += 1) {
-    const url = new URL(`${API.main}/categories`);
-    url.searchParams.set("per_page", String(MAIN_CATEGORY_PAGE_SIZE));
-    url.searchParams.set("page", String(page));
-    const categories = await wpFetchJson<WpApiCategory[]>(url.toString());
-    if (!Array.isArray(categories) || categories.length === 0) break;
-    all.push(...categories);
-    if (categories.length < MAIN_CATEGORY_PAGE_SIZE) break;
-  }
-  return all;
-}
-
-async function fetchMainPostsRaw(categoryId?: number | number[]): Promise<WpApiPost[]> {
-  const all: WpApiPost[] = [];
-  const categoryParam =
-    typeof categoryId === "number"
-      ? String(categoryId)
-      : Array.isArray(categoryId) && categoryId.length > 0
-        ? categoryId.join(",")
-        : null;
-
-  for (let page = 1; page <= MAIN_POST_MAX_PAGES; page += 1) {
-    const url = new URL(`${API.main}/posts`);
-    if (categoryParam) {
-      url.searchParams.set("categories", categoryParam);
-    }
-    url.searchParams.set("per_page", "50");
-    url.searchParams.set("page", String(page));
-    url.searchParams.set("_embed", "author,wp:term");
-    const posts = await wpFetchJson<WpApiPost[]>(url.toString());
-    if (!Array.isArray(posts) || posts.length === 0) break;
-    all.push(...posts);
-    if (posts.length < 50) break;
-  }
-  return dedupePosts(all);
-}
-
-async function resolveMainCategoryId(names: ReadonlySet<string>): Promise<number | null> {
-  const cacheKey = `main:${Array.from(names).sort().join(",")}`;
-  if (mainCategoryIdCache.has(cacheKey)) {
-    return mainCategoryIdCache.get(cacheKey) ?? null;
-  }
-
-  const categories = await fetchMainCategories();
-  const matched = categories.find((category) => categoryMatchesNames(category, names));
-  const resolved = matched?.id ?? null;
-  mainCategoryIdCache.set(cacheKey, resolved);
-  return resolved;
-}
-
-const MAIN_PUBLICATION_CATEGORY_ID = 31;
-const MAIN_PUBLICATION_CATEGORY_NAMES = new Set([
-  "publication",
-  "publications",
-  "publication en",
-]);
-
-const MAIN_BLOG_CATEGORY_ID = 1;
-const MAIN_BLOG_CATEGORY_NAMES = new Set(["blog"]);
-
-const MAIN_BLOG_IU_CATEGORY_ID = 39;
-const MAIN_BLOG_IU_CATEGORY_NAMES = new Set(["blog iu", "blog-iu"]);
-
-function sortMainPostsNewest(posts: WpPostWithSource[]): WpPostWithSource[] {
-  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-}
-
-async function fetchMainBlogPostsFiltered(options: {
-  categoryIds: number[];
-  names: ReadonlySet<string>[];
-}): Promise<WpPostWithSource[]> {
-  const primaryId = options.categoryIds[0];
-  const primaryNames = options.names[0];
-
-  let posts =
-    options.categoryIds.length === 1
-      ? await fetchMainPostsRaw(primaryId)
-      : await fetchMainPostsRaw(options.categoryIds);
-
-  if (posts.length === 0) {
-    posts = (await fetchMainPostsRaw()).filter((post) =>
-      options.categoryIds.some((id, index) =>
-        postHasCategory(post, { id, names: options.names[index] }),
-      ),
-    );
-  }
-
-  return sortMainPostsNewest(posts.map((p) => normalizePost("main", p)));
-}
-
-/**
- * Main site journal posts by locale:
- * - `en`: WordPress category **Blog** only
- * - `fr` / `iu`: **Blog-IU** only
- */
-export async function getMainBlogPosts(locale: Locale): Promise<WpPostWithSource[]> {
-  try {
-    const blogCategoryId =
-      (await resolveMainCategoryId(MAIN_BLOG_CATEGORY_NAMES)) ?? MAIN_BLOG_CATEGORY_ID;
-    const blogIuCategoryId =
-      (await resolveMainCategoryId(MAIN_BLOG_IU_CATEGORY_NAMES)) ?? MAIN_BLOG_IU_CATEGORY_ID;
-
-    if (locale === "fr" || locale === "iu") {
-      return fetchMainBlogPostsFiltered({
-        categoryIds: [blogIuCategoryId],
-        names: [MAIN_BLOG_IU_CATEGORY_NAMES],
-      });
-    }
-
-    return fetchMainBlogPostsFiltered({
-      categoryIds: [blogCategoryId],
-      names: [MAIN_BLOG_CATEGORY_NAMES],
-    });
-  } catch {
-    return [];
-  }
-}
-
-/** Main site posts in the WordPress "Publication" category, newest first. */
-export async function getMainPublicationPosts(): Promise<WpPostWithSource[]> {
-  try {
-    const resolvedCategory =
-      (await resolveMainCategoryId(MAIN_PUBLICATION_CATEGORY_NAMES)) ??
-      MAIN_PUBLICATION_CATEGORY_ID;
-    let posts = await fetchMainPostsRaw(resolvedCategory);
-    if (posts.length === 0) {
-      posts = (await fetchMainPostsRaw()).filter((post) =>
-        postHasCategory(post, { id: resolvedCategory, names: MAIN_PUBLICATION_CATEGORY_NAMES }),
-      );
-    }
-    return posts
-      .map((p) => normalizePost("main", p))
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  } catch {
-    return [];
-  }
-}
-
-/** Main site posts in the WordPress "Policy" category, newest first. */
-export async function getMainPolicyPosts(): Promise<WpPostWithSource[]> {
-  try {
-    const resolvedCategory =
-      (await resolveMainCategoryId(MAIN_POLICY_CATEGORY_NAMES)) ?? MAIN_POLICY_CATEGORY_ID;
-    let posts = await fetchMainPostsRaw(resolvedCategory);
-    if (posts.length === 0) {
-      posts = (await fetchMainPostsRaw()).filter((post) =>
-        postHasCategory(post, { id: resolvedCategory, names: MAIN_POLICY_CATEGORY_NAMES }),
-      );
-    }
-    return posts
-      .map((p) => normalizePost("main", p))
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  } catch {
-    return [];
-  }
-}
-
-export function formatWpPostDate(iso: string, locale = "en-CA"): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "";
-  return d.toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" });
-}
-
-/** Day + short month for publication card badges (e.g. 31 / Jul). */
-export function formatWpPostDateBadge(
-  iso: string,
-  locale = "en-CA",
-): { day: string; month: string } | null {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return null;
-  return {
-    day: d.toLocaleDateString(locale, { day: "numeric" }),
-    month: d.toLocaleDateString(locale, { month: "short" }),
-  };
-}
-
-/** External publisher URL for publication cards; falls back to journal path. */
-export function publicationFindItUrl(post: Pick<WpPostWithSource, "slug" | "source" | "externalUrl">): string {
-  if (post.externalUrl) return post.externalUrl;
-  if (post.source === "main" && MAIN_PUBLICATION_EXTERNAL_FALLBACK[post.slug]) {
-    return MAIN_PUBLICATION_EXTERNAL_FALLBACK[post.slug];
-  }
-  return blogPostPath(post as WpPostWithSource);
-}
-
-export function wpPostAuthorSlug(post: Pick<WpPostWithSource, "authorName">): string {
-  const name = post.authorName?.trim();
-  if (!name) return "real-life-institute";
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-export function wpPostExcerpt(post: WpPost, maxLength = 160): string {
-  const raw = post.excerpt?.rendered || post.content.rendered || "";
-  const text = stripHtml(raw);
-  if (text.length <= maxLength) return text;
-  const trimmed = text.slice(0, maxLength);
-  const lastSpace = trimmed.lastIndexOf(" ");
-  return `${(lastSpace > 40 ? trimmed.slice(0, lastSpace) : trimmed).trim()}…`;
-}
-
-export function wpPostTitle(post: WpPost): string {
-  return stripHtml(post.title.rendered || "");
-}
-
 /** Newest first, merged from both sites. Safe on fetch failure (empty list). */
 export async function getLatestPosts(limit = 6): Promise<WpPostWithSource[]> {
   try {
@@ -836,21 +511,18 @@ export async function getPost(
   source: WpSource,
   slug: string,
 ): Promise<WpPostWithSource | null> {
-  for (const candidate of wpSlugLookupCandidates(slug)) {
-    const url = new URL(`${API[source]}/posts`);
-    url.searchParams.set("slug", candidate);
-    url.searchParams.set("_embed", "author,wp:term");
+  const url = new URL(`${API[source]}/posts`);
+  url.searchParams.set("slug", slug);
+  url.searchParams.set("_embed", "author,wp:term");
 
-    const posts =
-      source === "africa"
-        ? await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString())
-        : await wpFetchJson<WpApiPost[]>(url.toString());
-    if (!Array.isArray(posts) || !posts[0]) continue;
+  const posts = source === "africa"
+    ? await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString())
+    : await wpFetchJson<WpApiPost[]>(url.toString());
+  if (!Array.isArray(posts)) return null;
+  const post = posts[0];
+  if (!post) return null;
 
-    return normalizePost(source, posts[0]);
-  }
-
-  return null;
+  return normalizePost(source, post);
 }
 
 /** Headings that are UI chrome, not webinar titles (Elementor / ElementsKit). */
@@ -977,4 +649,11 @@ export async function getUpcomingEventsPage(): Promise<WpPageHighlight | null> {
     featuredImage: preferred.yoast_head_json?.og_image?.[0]?.url ?? null,
     eventDateISO: null,
   };
+}
+
+/** True for main-site policy detail pages when `isPolicy` is set on the post. */
+export function postIsMainPolicy(
+  post: Pick<WpPostWithSource, "source"> & { isPolicy?: boolean },
+): boolean {
+  return post.source === "main" && post.isPolicy === true;
 }
