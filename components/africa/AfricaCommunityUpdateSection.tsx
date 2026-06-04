@@ -29,7 +29,7 @@ export function AfricaCommunityUpdateSection() {
                 href={africaRoutes.eventEbolaDrc}
                 className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-5 text-sm font-semibold text-white transition hover:bg-teal-600"
               >
-                June 9 webinar
+                June 12 webinar
               </Link>
               <Link
                 href={africaRoutes.stories}

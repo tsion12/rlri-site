@@ -117,14 +117,14 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     title:
       "How Conflict, Aid Cuts, and Misinformation are Redefining Ebola Responses in DRC",
     subtitle: "What Past Outbreaks Should Have Already Taught Us",
-    locationDate: "Online webinar | Tuesday, June 9, 2026",
+    locationDate: "Online webinar | Friday, June 12, 2026",
     timezoneLine:
-      "Ottawa: 8:00 – 9:00 AM (EDT) | UK: 1:00 – 2:00 PM | West Africa: 1:00 – 2:00 PM | Central & Southern Africa: 2:00 – 3:00 PM | East Africa: 3:00 – 4:00 PM",
+      "Ottawa: 9:00 – 10:30 AM (EDT) | West Africa: 2:00 – 3:30 PM | Central & Southern Africa: 3:00 – 4:30 PM | East Africa: 4:00 – 5:30 PM",
     summary:
       "Nearly five decades after Ebola was first identified in Yambuku, DRC, the country faces its 17th outbreak—driven by misinformation, conflict, and aid cuts. This webinar asks why Ebola persists despite decades of response experience and what must change to stop outbreaks at their source.",
-    isoDate: "2026-06-09T08:00:00-04:00",
+    isoDate: "2026-06-12T09:00:00-04:00",
     durationMinutes: 90,
-    time: "8:00 AM – 9:00 AM (Ottawa, EDT)",
+    time: "9:00 AM – 10:30 AM (Ottawa, EDT)",
     format: "Online Webinar",
     href: africaRoutes.eventEbolaDrc,
     registerHref: "https://forms.gle/1bn8g7Tu2ZQGcMm36",
