@@ -110,7 +110,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     supportProgram: "03",
     tags: ["Climate Adaptation", "Information Integrity"],
     policyBriefHref: null,
-    recordingHref: null,
+    recordingHref: "https://youtu.be/Vqeuq92azaQ",
   },
   {
     id: "ebola-drc-responses-2026",
