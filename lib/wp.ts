@@ -15,9 +15,12 @@ const AFRICA_PROGRAM_META: Record<AfricaProgramKey, { label: string; categoryId:
   peacebuilding: { label: "Peacebuilding & Inclusive Dialogues", categoryId: 47 },
   "health-systems-equity-social-transformation": {
     label: "Health Systems, Equity, and Social Transformation",
-    categoryId: 48,
+    categoryId: 49,
   },
 };
+
+/** Legacy WP category folded into the health systems program. */
+const FOOD_ENVIRONMENT_CATEGORY_ID = 48;
 
 export type WpPost = {
   id: number;
@@ -202,6 +205,9 @@ function parseAfricaProgramFromCategories(
 ): AfricaProgramKey | null {
   for (const cat of categories) {
     if (typeof cat.id === "number") {
+      if (cat.id === FOOD_ENVIRONMENT_CATEGORY_ID) {
+        return "health-systems-equity-social-transformation";
+      }
       const key = (Object.keys(AFRICA_PROGRAM_META) as AfricaProgramKey[]).find(
         (k) => AFRICA_PROGRAM_META[k].categoryId === cat.id,
       );

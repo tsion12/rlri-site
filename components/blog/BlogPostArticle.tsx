@@ -225,6 +225,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     [CHRISTELLE_NFOR_AUTHOR],
   "rethinking-climate-adaptation-in-africa-why-local-knowledge-and-information-integrity-cannot-be-separated":
     [CHRISTELLE_NFOR_AUTHOR],
+  "menstrual-poverty-in-cameroons-northwest-region-a-hidden-crisis-in-a-conflict-zone":
+    [CHRISTELLE_NFOR_AUTHOR],
   "the-next-digital-divide-why-africa-risks-becoming-an-ai-consumer-rather-than-an-ai-creator":
     [
       {
