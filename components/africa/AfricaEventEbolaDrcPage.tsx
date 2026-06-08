@@ -51,8 +51,8 @@ export function AfricaEventEbolaDrcPage() {
             Online webinar | Friday, June 12, 2026
           </p>
           <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Ottawa: 9:00 – 10:30 AM (EDT) | West Africa: 2:00 – 3:30 PM | Central &amp; Southern Africa: 3:00
-            – 4:30 PM | East Africa: 4:00 – 5:30 PM
+            Ottawa: 8:30 – 10:00 AM (EDT) | West Africa: 1:30 – 3:00 PM | Central &amp; Southern Africa: 2:30
+            – 4:00 PM | East Africa: 3:30 – 5:00 PM
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">

@@ -119,12 +119,12 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     subtitle: "What Past Outbreaks Should Have Already Taught Us",
     locationDate: "Online webinar | Friday, June 12, 2026",
     timezoneLine:
-      "Ottawa: 9:00 – 10:30 AM (EDT) | West Africa: 2:00 – 3:30 PM | Central & Southern Africa: 3:00 – 4:30 PM | East Africa: 4:00 – 5:30 PM",
+      "Ottawa: 8:30 – 10:00 AM (EDT) | West Africa: 1:30 – 3:00 PM | Central & Southern Africa: 2:30 – 4:00 PM | East Africa: 3:30 – 5:00 PM",
     summary:
       "Nearly five decades after Ebola was first identified in Yambuku, DRC, the country faces its 17th outbreak—driven by misinformation, conflict, and aid cuts. This webinar asks why Ebola persists despite decades of response experience and what must change to stop outbreaks at their source.",
-    isoDate: "2026-06-12T09:00:00-04:00",
+    isoDate: "2026-06-12T08:30:00-04:00",
     durationMinutes: 90,
-    time: "9:00 AM – 10:30 AM (Ottawa, EDT)",
+    time: "8:30 AM – 10:00 AM (Ottawa, EDT)",
     format: "Online Webinar",
     href: africaRoutes.eventEbolaDrc,
     registerHref: "https://forms.gle/1bn8g7Tu2ZQGcMm36",
