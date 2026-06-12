@@ -14,6 +14,7 @@ export const africaRoutes = {
   eventNextWebinar: "/africa/events/tensions-middle-east-security-digital-infrastructure",
   eventClimateAdaptation: "/africa/events/rethinking-climate-adaptation-in-africa",
   eventEbolaDrc: "/africa/events/ebola-responses-drc-conflict-aid-misinformation",
+  eventTeachingForViews: "/africa/events/teaching-for-views-social-media-african-classrooms",
   programs: "/africa/programs",
   publications: "/africa/publications",
   blogs: "/africa/publications/blogs",

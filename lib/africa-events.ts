@@ -133,6 +133,25 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     policyBriefHref: null,
     recordingHref: null,
   },
+  {
+    id: "teaching-for-views-2026",
+    title: "Teaching for Views: Social Media and the Emerging Digital Risks in African Classrooms",
+    locationDate: "Location: Online | Friday, June 26, 2026",
+    timezoneLine:
+      "Ottawa (EDT): 9:00 am – 10:00 am | South Africa (SAST): 3:00 pm – 4:00 pm | Kenya / Ethiopia (EAT): 4:00 pm – 5:00 pm | Cameroon/Nigeria (WAT): 2:00 pm – 3:00 pm",
+    summary:
+      "Across Africa, Gen Z educators equipped with smartphones are transforming classrooms into content-creation studios. This webinar brings together digital futures experts, researchers, educators, and parents to examine the trend of using students for social media content, its risks to children's digital rights and dignity, and lessons from both good practice and harmful misuse.",
+    isoDate: "2026-06-26T09:00:00-04:00",
+    durationMinutes: 60,
+    time: "9:00 AM – 10:00 AM (Ottawa, EDT)",
+    format: "Online Webinar",
+    href: africaRoutes.eventTeachingForViews,
+    registerHref: null,
+    supportProgram: "02",
+    tags: ["Digital Rights", "Education", "Child Protection"],
+    policyBriefHref: null,
+    recordingHref: null,
+  },
 ];
 
 function toMillis(isoDate: string) {

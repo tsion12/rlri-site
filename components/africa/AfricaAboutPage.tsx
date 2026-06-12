@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { africaEmails, africaRoutes } from "@/lib/africa-routes";
-import { getAfricaPosts, stripHtml } from "@/lib/wp";
+import { getAfricaPostsPreview, stripHtml } from "@/lib/wp";
 import { AboutValuePillars } from "./AboutValuePillars";
 
 const POLICIES = [
@@ -57,7 +57,7 @@ const POLICIES = [
 
 /* ── Main component ───────────────────────────────────────────────────── */
 export async function AfricaAboutPage() {
-  const [latestPost] = await getAfricaPosts();
+  const [latestPost] = await getAfricaPostsPreview(1);
   const aboutBandImage = latestPost?.featuredImage ?? null;
   const aboutBandAlt = latestPost ? stripHtml(latestPost.title.rendered) : "RLRI Africa impact infographic";
 
