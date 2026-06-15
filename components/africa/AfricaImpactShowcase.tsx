@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { africaCollaborators, africaPresenceCountries } from "@/lib/africa-collaborators";
 import { au } from "./africa-ui";
 
 const GEO_URL = "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
@@ -17,6 +19,23 @@ const AFRICAN_COUNTRIES = new Set([
   "Uganda", "Zambia", "Zimbabwe", "Western Sahara",
 ]);
 
+const PRESENCE_COUNTRIES = new Set<string>(africaPresenceCountries);
+
+function countryFill(country: string, isHovered: boolean) {
+  const isAfrica = AFRICAN_COUNTRIES.has(country);
+  const isPresence = PRESENCE_COUNTRIES.has(country);
+
+  if (isPresence) {
+    return isHovered ? "#2dd4bf" : "#0f766e";
+  }
+
+  if (isAfrica) {
+    return isHovered ? "#5eead4" : "#99f6e4";
+  }
+
+  return isHovered ? "#cbd5e1" : "#e5e7eb";
+}
+
 export function AfricaImpactShowcase() {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
 
@@ -26,10 +45,18 @@ export function AfricaImpactShowcase() {
       <h2 id="africa-impact-map-heading" className={au.home.title}>
         Africa footprint
       </h2>
+      <p className={au.home.lead}>
+        Field teams and active partnerships across Kenya, Zimbabwe, Ethiopia, Cameroon, Nigeria, and Ghana—with
+        research and webinar collaborators across the continent.
+      </p>
 
       <div className="relative mt-8 overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/90 p-3 shadow-sm ring-1 ring-zinc-900/5 dark:border-zinc-800/80 dark:bg-zinc-900/50 dark:ring-white/5">
         <div className="pointer-events-none absolute right-5 top-5 z-10 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm backdrop-blur dark:bg-zinc-900/85 dark:text-zinc-200">
-          {hoveredCountry ?? "Hover a country"}
+          {hoveredCountry
+            ? PRESENCE_COUNTRIES.has(hoveredCountry)
+              ? `${hoveredCountry} · Active presence`
+              : hoveredCountry
+            : "Hover a country"}
         </div>
         <ComposableMap
           projection="geoMercator"
@@ -41,23 +68,16 @@ export function AfricaImpactShowcase() {
               geographies.map((geo) => {
                 const country = String(geo.properties.name ?? "");
                 const isAfrica = AFRICAN_COUNTRIES.has(country);
+                const isPresence = PRESENCE_COUNTRIES.has(country);
                 const isHovered = hoveredCountry === country;
-
-                const fill = isAfrica
-                  ? isHovered
-                    ? "#2dd4bf"
-                    : "#14b8a6"
-                  : isHovered
-                    ? "#cbd5e1"
-                    : "#e5e7eb";
 
                 return (
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    fill={fill}
-                    stroke={isAfrica ? "#0f766e" : "#94a3b8"}
-                    strokeWidth={isAfrica ? 0.6 : 0.3}
+                    fill={countryFill(country, isHovered)}
+                    stroke={isPresence ? "#115e59" : isAfrica ? "#14b8a6" : "#94a3b8"}
+                    strokeWidth={isPresence ? 0.9 : isAfrica ? 0.6 : 0.3}
                     aria-label={country}
                     onMouseEnter={() => setHoveredCountry(country)}
                     onMouseLeave={() => setHoveredCountry(null)}
@@ -67,13 +87,58 @@ export function AfricaImpactShowcase() {
                       pressed: { outline: "none" },
                     }}
                   >
-                    <title>{country}</title>
+                    <title>
+                      {isPresence ? `${country} — RLRI Africa Program presence` : country}
+                    </title>
                   </Geography>
                 );
               })
             }
           </Geographies>
         </ComposableMap>
+        <div className="mt-3 flex flex-wrap items-center gap-4 border-t border-zinc-200/80 px-2 py-3 text-xs text-zinc-600 dark:border-zinc-800/80 dark:text-zinc-400">
+          <span className="inline-flex items-center gap-2">
+            <span className="inline-block h-3 w-3 rounded-sm bg-[#0f766e] ring-1 ring-[#115e59]" aria-hidden />
+            Active presence
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <span className="inline-block h-3 w-3 rounded-sm bg-[#99f6e4] ring-1 ring-[#14b8a6]" aria-hidden />
+            Pan-African reach
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-12" aria-labelledby="africa-collaborators-heading">
+        <p className={au.home.eyebrow}>Network</p>
+        <h3 id="africa-collaborators-heading" className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+          Collaborators &amp; partners
+        </h3>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+          Organizations that contribute expertise to RLRI Africa Program webinars, research, and policy dialogue.
+        </p>
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {africaCollaborators.map((collaborator) => (
+            <li
+              key={collaborator.name}
+              className="flex flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm dark:border-zinc-800/80 dark:bg-zinc-900/55"
+            >
+              <div
+                className={`flex min-h-30 items-center justify-center px-6 py-5 ${collaborator.tileClassName ?? "bg-zinc-50 dark:bg-zinc-900/80"}`}
+              >
+                <Image
+                  src={collaborator.logoSrc}
+                  alt={collaborator.logoAlt}
+                  width={320}
+                  height={120}
+                  className="max-h-16 w-auto max-w-full object-contain"
+                />
+              </div>
+              <p className="border-t border-zinc-200/80 px-4 py-3 text-center text-sm font-medium text-zinc-700 dark:border-zinc-800/80 dark:text-zinc-300">
+                {collaborator.name}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
