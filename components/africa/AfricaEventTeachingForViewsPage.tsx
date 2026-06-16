@@ -3,6 +3,8 @@ import Link from "next/link";
 import { africaRoutes } from "@/lib/africa-routes";
 import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSupportLine";
 
+const REGISTER_URL = "https://forms.gle/nMUV9DLcBfuufU4Q7";
+
 const SPEAKERS = [
   {
     name: "Alvin Lontum Ndzewiyi",
@@ -51,6 +53,14 @@ export function AfricaEventTeachingForViewsPage() {
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href={REGISTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
+            >
+              Register now
+            </a>
             <Link
               href={africaRoutes.events}
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600"

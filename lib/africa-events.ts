@@ -146,7 +146,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     time: "9:00 AM – 10:00 AM (Ottawa, EDT)",
     format: "Online Webinar",
     href: africaRoutes.eventTeachingForViews,
-    registerHref: null,
+    registerHref: "https://forms.gle/nMUV9DLcBfuufU4Q7",
     supportProgram: "02",
     tags: ["Digital Rights", "Education", "Child Protection"],
     policyBriefHref: null,
