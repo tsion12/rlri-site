@@ -9,11 +9,6 @@ export type AfricaCollaborator = {
 /** Partner organizations featured across RLRI Africa Program webinars and research. */
 export const africaCollaborators = [
   {
-    name: "African Paradiplomacy Network",
-    logoSrc: "/assets/collaborators/african-paradiplomacy-network.png",
-    logoAlt: "African Paradiplomacy Network logo",
-  },
-  {
     name: "WaSh Voice",
     logoSrc: "/assets/collaborators/wash-voice.png",
     logoAlt: "WaSh Voice logo",
@@ -41,6 +36,18 @@ export const africaCollaborators = [
     logoSrc: "/assets/collaborators/uottawa.jpeg",
     logoAlt: "University of Ottawa Professional Development Institute and Centre for Information Integrity logo",
   },
+  {
+    name: "University of Ottawa — Centre for International Policy Studies (CIPS)",
+    logoSrc: "/assets/collaborators/cips-uottawa.png",
+    logoAlt: "University of Ottawa Centre for International Policy Studies (CIPS / CEPI) logo",
+    tileClassName: "bg-white",
+  },
+  {
+    name: "Research Network on Women Peace and Security (RN-WPS)",
+    logoSrc: "/assets/collaborators/rn-wps.png",
+    logoAlt: "Research Network on Women Peace and Security logo",
+    tileClassName: "bg-white",
+  },
 ] satisfies readonly AfricaCollaborator[];
 
 /** Countries where RLRI Africa Program maintains field teams and active partnerships. */
@@ -51,4 +58,8 @@ export const africaPresenceCountries = [
   "Cameroon",
   "Nigeria",
   "Ghana",
+  "Morocco",
+  "South Africa",
+  "Democratic Republic of the Congo",
+  "Sierra Leone",
 ] as const;

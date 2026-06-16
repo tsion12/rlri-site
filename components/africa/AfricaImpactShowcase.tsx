@@ -11,12 +11,13 @@ const GEO_URL = "https://raw.githubusercontent.com/datasets/geo-countries/master
 const AFRICAN_COUNTRIES = new Set([
   "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde",
   "Cameroon", "Central African Republic", "Chad", "Comoros", "Congo", "Democratic Republic of the Congo",
-  "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia",
+  "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "eSwatini", "Ethiopia", "Gabon", "Gambia",
   "Ghana", "Guinea", "Guinea-Bissau", "Ivory Coast", "Côte d'Ivoire", "Kenya", "Lesotho", "Liberia",
   "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique",
-  "Namibia", "Niger", "Nigeria", "Rwanda", "Sao Tome and Principe", "Senegal", "Seychelles",
-  "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia",
-  "Uganda", "Zambia", "Zimbabwe", "Western Sahara",
+  "Namibia", "Niger", "Nigeria", "Rwanda", "Republic of the Congo", "Sao Tome and Principe",
+  "São Tomé and Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan",
+  "Sudan", "Tanzania", "United Republic of Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe",
+  "Western Sahara",
 ]);
 
 const PRESENCE_COUNTRIES = new Set<string>(africaPresenceCountries);
@@ -46,8 +47,8 @@ export function AfricaImpactShowcase() {
         Africa footprint
       </h2>
       <p className={au.home.lead}>
-        Field teams and active partnerships across Kenya, Zimbabwe, Ethiopia, Cameroon, Nigeria, and Ghana—with
-        research and webinar collaborators across the continent.
+        Field teams and active partnerships across Kenya, Zimbabwe, Ethiopia, Cameroon, Nigeria, Ghana, Morocco,
+        South Africa, the DRC, and Sierra Leone—with research and webinar collaborators across the continent.
       </p>
 
       <div className="relative mt-8 overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/90 p-3 shadow-sm ring-1 ring-zinc-900/5 dark:border-zinc-800/80 dark:bg-zinc-900/50 dark:ring-white/5">
@@ -60,8 +61,8 @@ export function AfricaImpactShowcase() {
         </div>
         <ComposableMap
           projection="geoMercator"
-          projectionConfig={{ scale: 160, center: [20, 8] }}
-          className="h-[420px] w-full bg-linear-to-br from-teal-50 via-emerald-50 to-cyan-50 dark:from-teal-950/60 dark:via-zinc-950 dark:to-emerald-950/40"
+          projectionConfig={{ scale: 145, center: [18, 4] }}
+          className="h-[460px] w-full bg-linear-to-br from-teal-50 via-emerald-50 to-cyan-50 dark:from-teal-950/60 dark:via-zinc-950 dark:to-emerald-950/40"
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
