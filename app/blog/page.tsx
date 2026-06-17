@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { BlogSourceBadge } from "@/components/blog/BlogSourceBadge";
-import { blogPostPath, getAfricaPosts, stripHtml } from "@/lib/wp";
+import { blogPostPath, getAfricaPosts, isAfricaWpAvailable, stripHtml } from "@/lib/wp";
 
 export default async function BlogPage() {
-  const posts = await getAfricaPosts();
+  const [posts, isAfricaCmsAvailable] = await Promise.all([getAfricaPosts(), isAfricaWpAvailable()]);
 
   return (
     <div className="mx-auto max-w-2xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16">
@@ -16,6 +16,11 @@ export default async function BlogPage() {
       <p className="mb-12 max-w-lg text-lg leading-relaxed text-stone-600 dark:text-zinc-400">
         Stories and updates from the Real Life Research Institute Africa Program.
       </p>
+      {!isAfricaCmsAvailable && posts.length === 0 ? (
+        <p className="mb-6 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-900/40 dark:bg-amber-950/30 dark:text-amber-200">
+          We are temporarily unable to load blog posts from the CMS. Please try again shortly.
+        </p>
+      ) : null}
 
       <ul className="flex flex-col gap-3 sm:gap-4">
         {posts.map((post) => (

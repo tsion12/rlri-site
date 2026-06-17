@@ -9,6 +9,7 @@ const AUTHOR_PHOTO_BY_NAME: Record<string, string> = {
   "nfor christelle mugha": "/assets/Team/christelle.jpeg",
   "christelle nfor mugha": "/assets/Team/christelle.jpeg",
   "christelle nfor": "/assets/Team/christelle.jpeg",
+  christeelle: "/assets/Team/christelle.jpeg",
   "roselyn ruvimbo kwaramba": "/assets/Team/Roselyn.webp",
   "tsion mengistu ademe": "/assets/Team/Tsion.webp",
   "maria ayuk": "/assets/authors/maria%20pp.jpeg",

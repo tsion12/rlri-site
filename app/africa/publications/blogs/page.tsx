@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AfricaBlogsPage } from "@/components/africa/AfricaBlogsPage";
-import { getAfricaProgramLabel, getAfricaPosts, parseAfricaProgram, postMatchesAfricaProgram } from "@/lib/wp";
+import { getAfricaProgramLabel, getAfricaPosts, isAfricaWpAvailable, parseAfricaProgram, postMatchesAfricaProgram } from "@/lib/wp";
 
 export const metadata: Metadata = {
   title: "Blogs & Op-eds | Africa Program – Real Life Research Institute",
@@ -15,7 +15,7 @@ type BlogsPageProps = {
 };
 
 export default async function BlogsPage({ searchParams }: BlogsPageProps) {
-  const [posts, params] = await Promise.all([getAfricaPosts(), searchParams]);
+  const [posts, params, isAfricaCmsAvailable] = await Promise.all([getAfricaPosts(), searchParams, isAfricaWpAvailable()]);
   const rawProgram = Array.isArray(params.program) ? params.program[0] : params.program;
   const activeProgram = parseAfricaProgram(rawProgram);
   const filteredPosts = activeProgram
@@ -26,6 +26,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
     <AfricaBlogsPage
       posts={filteredPosts}
       activeProgramLabel={activeProgram ? getAfricaProgramLabel(activeProgram) : null}
+      isServiceUnavailable={!isAfricaCmsAvailable && posts.length === 0}
     />
   );
 }

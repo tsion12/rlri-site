@@ -107,6 +107,7 @@ const API: Record<WpSource, string> = {
 const WP_REVALIDATE_SECONDS = 300;
 const WP_TIMEOUT_MS = 12000;
 const WP_POSTS_PER_PAGE = 50;
+const WP_RETRY_DELAYS_MS = [350, 900];
 
 export function sourceDisplay(source: WpSource): string {
   return source === "main" ? "Main" : "Africa";
@@ -327,18 +328,45 @@ async function fetchJsonViaHttpsIpv4<T>(url: string): Promise<T | null> {
   });
 }
 
-async function wpFetchJson<T>(url: string): Promise<T | null> {
-  try {
-    const res = await fetch(url, {
-      next: { revalidate: WP_REVALIDATE_SECONDS },
-    });
-    if (!res.ok) return null;
-    return (await res.json()) as T;
-  } catch {
-    // Fallback path for environments where undici fetch intermittently times out
-    // on dual-stack DNS routes; forcing IPv4 is typically more reliable.
-    return fetchJsonViaHttpsIpv4<T>(url);
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithRetry(url: string): Promise<Response | null> {
+  for (let attempt = 0; attempt <= WP_RETRY_DELAYS_MS.length; attempt += 1) {
+    try {
+      const res = await fetch(url, {
+        next: { revalidate: WP_REVALIDATE_SECONDS },
+      });
+      if (res.ok) return res;
+
+      // Retry transient infra/CMS responses like 5xx/429/408.
+      if (![408, 429].includes(res.status) && (res.status < 500 || res.status >= 600)) {
+        return null;
+      }
+    } catch {
+      // handled below by IPv4 fallback and retry delay
+    }
+
+    if (attempt < WP_RETRY_DELAYS_MS.length) {
+      await sleep(WP_RETRY_DELAYS_MS[attempt]);
+    }
   }
+  return null;
+}
+
+async function wpFetchJson<T>(url: string): Promise<T | null> {
+  const res = await fetchWithRetry(url);
+  if (res?.ok) {
+    try {
+      return (await res.json()) as T;
+    } catch {
+      return null;
+    }
+  }
+  // Fallback path for environments where undici fetch intermittently times out
+  // on dual-stack DNS routes; forcing IPv4 is typically more reliable.
+  return fetchJsonViaHttpsIpv4<T>(url);
 }
 
 async function wpFetchJsonWithAfricaFallback<T>(url: string): Promise<T | null> {
@@ -480,9 +508,27 @@ async function getAfricaPostsUncached(): Promise<WpPostWithSource[]> {
 }
 
 export async function getAfricaPosts(): Promise<WpPostWithSource[]> {
-  return unstable_cache(getAfricaPostsUncached, ["africa-posts"], {
+  const posts = await unstable_cache(getAfricaPostsUncached, ["africa-posts"], {
     revalidate: WP_REVALIDATE_SECONDS,
   })();
+  // Avoid serving a stale empty list from a prior CMS outage.
+  if (posts.length === 0) return getAfricaPostsUncached();
+  return posts;
+}
+
+/** Quick health probe to distinguish an empty feed from a CMS outage. */
+export async function isAfricaWpAvailable(): Promise<boolean> {
+  return unstable_cache(
+    async () => {
+      const url = new URL(`${API.africa}/posts`);
+      url.searchParams.set("per_page", "1");
+      url.searchParams.set("_fields", "id");
+      const posts = await wpFetchJsonWithAfricaFallback<Array<{ id: number }>>(url.toString());
+      return Array.isArray(posts);
+    },
+    ["africa-wp-health"],
+    { revalidate: 60 },
+  )();
 }
 
 /** Lightweight fetch for homepage cards — one CMS request, small payload. */

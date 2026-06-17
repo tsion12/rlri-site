@@ -139,9 +139,11 @@ function EmptyState() {
 export function AfricaBlogsPage({
   posts,
   activeProgramLabel,
+  isServiceUnavailable = false,
 }: {
   posts: WpPostWithSource[];
   activeProgramLabel?: string | null;
+  isServiceUnavailable?: boolean;
 }) {
   const [featured, ...rest] = posts;
 
@@ -180,6 +182,11 @@ export function AfricaBlogsPage({
             <span className="font-medium text-zinc-900 dark:text-zinc-200">{posts.length}</span> article
             {posts.length !== 1 ? "s" : ""} in this section
           </p>
+          {isServiceUnavailable ? (
+            <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-900/40 dark:bg-amber-950/30 dark:text-amber-200">
+              We are temporarily unable to load blog posts from the CMS. Please try again shortly.
+            </p>
+          ) : null}
         </div>
       </section>
 

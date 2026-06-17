@@ -227,6 +227,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     [CHRISTELLE_NFOR_AUTHOR],
   "menstrual-poverty-in-cameroons-northwest-region-a-hidden-crisis-in-a-conflict-zone":
     [CHRISTELLE_NFOR_AUTHOR],
+  "what-central-african-laws-say-about-sexual-and-reproductive-health-and-rights-and-what-they-do-not":
+    [CHRISTELLE_NFOR_AUTHOR],
   "the-next-digital-divide-why-africa-risks-becoming-an-ai-consumer-rather-than-an-ai-creator":
     [
       {
