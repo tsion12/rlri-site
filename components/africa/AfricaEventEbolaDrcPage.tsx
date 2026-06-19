@@ -3,7 +3,8 @@ import Link from "next/link";
 import { africaRoutes } from "@/lib/africa-routes";
 import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSupportLine";
 
-const REGISTRATION_HREF = "https://forms.gle/1bn8g7Tu2ZQGcMm36";
+const RECORDING_HREF = "https://www.youtube.com/watch?v=7ZUWJGUmvvE";
+const RECORDING_EMBED_HREF = "https://www.youtube.com/embed/7ZUWJGUmvvE";
 
 const SPEAKERS = [
   {
@@ -57,12 +58,12 @@ export function AfricaEventEbolaDrcPage() {
 
           <div className="mt-6 flex flex-wrap gap-3">
             <a
-              href={REGISTRATION_HREF}
+              href={RECORDING_HREF}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
             >
-              Register now
+              Watch recording
             </a>
             <Link
               href={africaRoutes.events}
@@ -70,6 +71,24 @@ export function AfricaEventEbolaDrcPage() {
             >
               Back to events
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-200/80 bg-zinc-50 py-12 dark:border-zinc-800 dark:bg-zinc-950 sm:py-16">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">Webinar recording</h2>
+          <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            Watch the full session from Friday, June 12, 2026.
+          </p>
+          <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-950 shadow-sm dark:border-zinc-800">
+            <iframe
+              className="aspect-video w-full"
+              src={RECORDING_EMBED_HREF}
+              title="How Conflict, Aid Cuts, and Misinformation are Redefining Ebola Responses in DRC — webinar recording"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
           </div>
         </div>
       </section>

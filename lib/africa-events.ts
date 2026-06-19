@@ -131,7 +131,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     supportProgram: "05",
     tags: ["Public Health", "DRC", "Conflict & Governance"],
     policyBriefHref: null,
-    recordingHref: null,
+    recordingHref: "https://www.youtube.com/watch?v=7ZUWJGUmvvE",
   },
   {
     id: "teaching-for-views-2026",
