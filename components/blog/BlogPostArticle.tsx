@@ -137,6 +137,13 @@ const CHRISTELLE_NFOR_AUTHOR: AuthorProfile = {
   bio: "Christelle Nfor Mugha is a journalist and communications professional specialising in strategic communications, content development, and stakeholder engagement. She holds a Bachelor of Arts degree in Journalism from the Advanced School of Mass Communications, Yaoundé. Her work focuses on amplifying underrepresented voices and advancing public interest narratives, particularly around gender, governance, and social justice. She currently serves as Program Assistant at the Real Life Research Institute Africa Program, where she supports communications, digital engagement, and the dissemination of research and policy outputs across Africa. Her work bridges research and practice, translating complex policy and development issues into accessible, impactful content for diverse audiences across the continent and beyond.",
 };
 
+const EKUA_AGYEMANG_AUTHOR: AuthorProfile = {
+  name: "Dr. Ekua Agyemang",
+  role: "Author",
+  avatar: "/assets/june/Ekua Agyemang.png",
+  bio: "Dr. Ekua Agyemang is a Public Health and Preventive Medicine specialist currently serving as Chief Public Health Officer for the Government of Nunavut, Canada, and Vice President of the Canadian Society for Circumpolar Health. In her role, she provides strategic leadership across surveillance, infectious disease prevention, outbreak response, and emergency preparedness, while advising the Government of Nunavut on the complex social, environmental, and climate-related factors shaping health outcomes in northern communities. Her expertise spans environmental health, infectious and chronic disease prevention, and climate-sensitive health challenges, including tuberculosis, zoonotic diseases, and food and water security. Dr. Agyemang began her medical career in Ghana, where she focused on tuberculosis, HIV, and high-impact infectious diseases, before pursuing advanced training in Canada, where she earned a Master of Public Health and completed her residency at the University of Alberta. Her international background and deep respect for Inuit knowledge systems and community-driven solutions shape her equity-focused approach to public health leadership.",
+};
+
 const LLOYD_GEORGE_BANDA_AUTHOR: AuthorProfile = {
   name: "Lloyd George Banda, PhD",
   role: "Postdoctoral Research Fellow",
@@ -229,6 +236,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     [CHRISTELLE_NFOR_AUTHOR],
   "what-central-african-laws-say-about-sexual-and-reproductive-health-and-rights-and-what-they-do-not":
     [CHRISTELLE_NFOR_AUTHOR],
+  "why-ebola-outbreaks-persist-shifting-the-focus-from-emergency-to-community":
+    [EKUA_AGYEMANG_AUTHOR],
   "the-next-digital-divide-why-africa-risks-becoming-an-ai-consumer-rather-than-an-ai-creator":
     [
       {
