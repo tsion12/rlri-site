@@ -171,7 +171,7 @@ export function MainAboutValuePillars({
   pillars,
   coreLabel,
 }: Props) {
-  const heroImage = mainGallerySrc("WhatsApp Image 2026-01-01 at 17.18.10.jpeg");
+  const heroImage = mainGallerySrc("REAL LIFE INSTITUTE 1-9 (1).jpg");
 
   return (
     <section

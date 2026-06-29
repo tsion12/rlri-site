@@ -80,15 +80,20 @@ export function MainPartners() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
+  // Carousel windowing duplicates items to fill the row, so only run it when
+  // there are enough partners to fill the visible window. Otherwise show a
+  // simple centered static row.
+  const isCarousel = count > 5;
+
   const goTo = useCallback((index: number) => setActiveIndex(mod(index, count)), [count]);
 
   useEffect(() => {
-    if (paused || count <= 1) return;
+    if (paused || !isCarousel) return;
     const timer = window.setInterval(() => {
       setActiveIndex((i) => (i + 1) % count);
     }, MAIN_PARTNERS_AUTOPLAY_MS);
     return () => window.clearInterval(timer);
-  }, [paused, count]);
+  }, [paused, isCarousel, count]);
 
   const windowRadius = 2;
   const slots: { partner: MainPartner; distance: number; index: number }[] = [];
@@ -120,44 +125,52 @@ export function MainPartners() {
           <p className="mt-3 text-lg text-zinc-500 dark:text-zinc-400">{t("home.partners.lead")}</p>
         </header>
 
-        <div
-          className="relative mx-auto mt-12 max-w-6xl sm:mt-14"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label={t("home.partners.carouselLabel")}
-          id={carouselId}
-        >
-          <div className="flex items-center justify-center gap-3 overflow-hidden px-4 sm:gap-5 sm:px-8">
-            {slots.map(({ partner, distance, index }) => (
-              <PartnerCard
-                key={`${partner.id}-${index}`}
-                partner={partner}
-                distance={distance}
-                isCenter={distance === 0}
-              />
+        {isCarousel ? (
+          <div
+            className="relative mx-auto mt-12 max-w-6xl sm:mt-14"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label={t("home.partners.carouselLabel")}
+            id={carouselId}
+          >
+            <div className="flex items-center justify-center gap-3 overflow-hidden px-4 sm:gap-5 sm:px-8">
+              {slots.map(({ partner, distance, index }) => (
+                <PartnerCard
+                  key={`${partner.id}-${index}`}
+                  partner={partner}
+                  distance={distance}
+                  isCenter={distance === 0}
+                />
+              ))}
+            </div>
+
+            <div className="mt-10 flex items-center justify-center gap-2">
+              {MAIN_PARTNER_PLACEHOLDERS.map((partner, index) => {
+                const isActive = index === activeIndex;
+                return (
+                  <button
+                    key={partner.id}
+                    type="button"
+                    className={`rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 focus-visible:ring-offset-2 ${
+                      isActive
+                        ? "h-2 w-8 bg-teal-600 dark:bg-teal-500"
+                        : "size-2 bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500"
+                    }`}
+                    aria-label={`${t("home.partners.goToSlide")} ${index + 1}`}
+                    aria-current={isActive ? "true" : undefined}
+                    onClick={() => goTo(index)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="mx-auto mt-12 flex max-w-4xl flex-wrap items-center justify-center gap-5 sm:mt-14 sm:gap-8">
+            {MAIN_PARTNER_PLACEHOLDERS.map((partner) => (
+              <PartnerCard key={partner.id} partner={partner} distance={0} isCenter />
             ))}
           </div>
-
-          <div className="mt-10 flex items-center justify-center gap-2">
-            {MAIN_PARTNER_PLACEHOLDERS.map((partner, index) => {
-              const isActive = index === activeIndex;
-              return (
-                <button
-                  key={partner.id}
-                  type="button"
-                  className={`rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 focus-visible:ring-offset-2 ${
-                    isActive
-                      ? "h-2 w-8 bg-teal-600 dark:bg-teal-500"
-                      : "size-2 bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500"
-                  }`}
-                  aria-label={`${t("home.partners.goToSlide")} ${index + 1}`}
-                  aria-current={isActive ? "true" : undefined}
-                  onClick={() => goTo(index)}
-                />
-              );
-            })}
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

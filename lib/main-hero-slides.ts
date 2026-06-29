@@ -26,7 +26,7 @@ export type MainHeroSlide = {
 export const MAIN_HERO_SLIDES: MainHeroSlide[] = [
   {
     id: "primary",
-    image: mainGallerySrc("WhatsApp Image 2026-01-01 at 17.18.35.jpeg"),
+    image: mainGallerySrc("REAL LIFE INSTITUTE DAY 1-1.jpg"),
     imageAltKey: "home.heroSlides.primary.imageAlt",
     eyebrowKey: "home.heroSlides.primary.eyebrow",
     titleKey: "home.heroSlides.primary.title",

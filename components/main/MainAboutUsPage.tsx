@@ -18,7 +18,7 @@ type Props = { locale: Locale };
 
 export async function MainAboutUsPage({ locale }: Props) {
   const [t, policyPosts] = await Promise.all([getTranslator(locale), getMainPolicyPosts(locale)]);
-  const storyImage = mainGallerySrc("WhatsApp Image 2026-01-01 at 17.17.49.jpeg");
+  const storyImage = mainGallerySrc("REAL LIFE INSTITUTE DAY 1-13.jpg");
 
   const timelineChapters = [
     {

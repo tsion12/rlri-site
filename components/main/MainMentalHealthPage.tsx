@@ -7,9 +7,9 @@ import { MainLink } from "@/components/main/MainLink";
 
 type Props = { locale: Locale };
 
-const HERO_IMAGE = "WhatsApp Image 2026-01-01 at 17.18.10.jpeg";
-const APPROACH_IMAGE = "WhatsApp Image 2026-01-01 at 17.17.49.jpeg";
-const BANNER_IMAGE = "WhatsApp Image 2026-01-01 at 17.18.14.jpeg";
+const HERO_IMAGE = "REAL LIFE INSTITUTE DAY 1-11.jpg";
+const APPROACH_IMAGE = "REAL LIFE INSTITUTE 1-4.jpg";
+const BANNER_IMAGE = "REAL LIFE INSTITUTE 1-7 (2).jpg";
 
 export async function MainMentalHealthPage({ locale }: Props) {
   const t = await getTranslator(locale);
