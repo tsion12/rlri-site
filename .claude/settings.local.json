@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git rm *)",
+      "Read(//Users/natnaellakachew/**)",
+      "Read(//Users/natnaellakachew/node_modules/**)",
+      "Bash(sysctl vm.swapusage)",
+      "Bash(memory_pressure)",
+      "Bash(vm_stat)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(pkill -f \"next-server\")",
+      "Read(//private/tmp/**)"
+    ]
+  }
+}

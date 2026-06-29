@@ -90,7 +90,6 @@ export function navItemActiveMain(
   if (href.startsWith("http")) return false;
   const pathOnly = href.split("#")[0] || href;
   const resolved = mainHref(pathOnly, { base, locale });
-  const home = mainHref(mainRoutes.home, { base, locale });
   if (href === mainRoutes.home) {
     return pathname === resolved || pathname === `${resolved}/`;
   }
