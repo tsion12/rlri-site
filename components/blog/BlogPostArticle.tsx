@@ -144,6 +144,13 @@ const EKUA_AGYEMANG_AUTHOR: AuthorProfile = {
   bio: "Dr. Ekua Agyemang is a Public Health and Preventive Medicine specialist currently serving as Chief Public Health Officer for the Government of Nunavut, Canada, and Vice President of the Canadian Society for Circumpolar Health. In her role, she provides strategic leadership across surveillance, infectious disease prevention, outbreak response, and emergency preparedness, while advising the Government of Nunavut on the complex social, environmental, and climate-related factors shaping health outcomes in northern communities. Her expertise spans environmental health, infectious and chronic disease prevention, and climate-sensitive health challenges, including tuberculosis, zoonotic diseases, and food and water security. Dr. Agyemang began her medical career in Ghana, where she focused on tuberculosis, HIV, and high-impact infectious diseases, before pursuing advanced training in Canada, where she earned a Master of Public Health and completed her residency at the University of Alberta. Her international background and deep respect for Inuit knowledge systems and community-driven solutions shape her equity-focused approach to public health leadership.",
 };
 
+const NFOR_HANSON_NCHANJI_AUTHOR: AuthorProfile = {
+  name: "Nfor Hanson Nchanji",
+  role: "Author",
+  avatar: "/assets/june/Nfor Hanson Nchanji.png",
+  bio: "Nfor Hanson Nchanji is an award-winning media entrepreneur and digital strategist with a BSc. in Journalism and Mass Communication, an MBA in International Relations and Diplomacy. His expertise in geopolitical analysis and strategic communication has driven impactful consultant work for global NGOs, including the UNDP, International Crisis Group, Civitas Maxima, and PPLAAF. He worked with HD Centre in Geneva as a Mediation Advisor. Hanson is passionate about integrating digital engagement and AI to maximize organizational reach and social impact.",
+};
+
 const LLOYD_GEORGE_BANDA_AUTHOR: AuthorProfile = {
   name: "Lloyd George Banda, PhD",
   role: "Postdoctoral Research Fellow",
@@ -238,6 +245,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     [CHRISTELLE_NFOR_AUTHOR],
   "why-ebola-outbreaks-persist-shifting-the-focus-from-emergency-to-community":
     [EKUA_AGYEMANG_AUTHOR],
+  "when-ebola-and-rumours-cross-the-borders-medias-role-to-combat-misinformation-and-panic":
+    [NFOR_HANSON_NCHANJI_AUTHOR],
   "the-next-digital-divide-why-africa-risks-becoming-an-ai-consumer-rather-than-an-ai-creator":
     [
       {
@@ -341,6 +350,9 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   [normalizeTitleKey("The Fall of Kidal and the Unravelling of Mali’s Military Legitimacy")]: [
     LLOYD_GEORGE_BANDA_AUTHOR,
   ],
+  [normalizeTitleKey(
+    "When Ebola and Rumours Cross the Borders: Media's Role to Combat Misinformation and Panic",
+  )]: [NFOR_HANSON_NCHANJI_AUTHOR],
   [normalizeTitleKey("Africa’s Digital Infrastructure Is More Exposed Than It Appears")]: [
     {
       name: "Alvin Korkie",
