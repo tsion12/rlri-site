@@ -151,6 +151,13 @@ const NFOR_HANSON_NCHANJI_AUTHOR: AuthorProfile = {
   bio: "Nfor Hanson Nchanji is an award-winning media entrepreneur and digital strategist with a BSc. in Journalism and Mass Communication, an MBA in International Relations and Diplomacy. His expertise in geopolitical analysis and strategic communication has driven impactful consultant work for global NGOs, including the UNDP, International Crisis Group, Civitas Maxima, and PPLAAF. He worked with HD Centre in Geneva as a Mediation Advisor. Hanson is passionate about integrating digital engagement and AI to maximize organizational reach and social impact.",
 };
 
+const ALVIN_LONTUM_NDZEWIYI_AUTHOR: AuthorProfile = {
+  name: "Alvin Lontum Ndzewiyi",
+  role: "Author",
+  avatar: "/assets/june_26/Alvin Lontum Ndzewiyi.png",
+  bio: "Alvin Lontum Ndzewiyi is a dedicated researcher with a growing focus on evidence-based monitoring and evaluation. He demonstrates strong analytical skills in literature synthesis, data evaluation, and critical appraisal of scientific evidence. Alvin is proficient in organizing complex information into coherent insights, making him effective in both independent research and collaborative academic environments. He continues to build expertise in epidemiological research and scholarly writing, positioning himself as a promising contributor to policy development.",
+};
+
 const LLOYD_GEORGE_BANDA_AUTHOR: AuthorProfile = {
   name: "Lloyd George Banda, PhD",
   role: "Postdoctoral Research Fellow",
@@ -247,6 +254,7 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     [EKUA_AGYEMANG_AUTHOR],
   "when-ebola-and-rumours-cross-the-borders-medias-role-to-combat-misinformation-and-panic":
     [NFOR_HANSON_NCHANJI_AUTHOR],
+  "digital-privacy-a-time-bomb-in-african-schools": [ALVIN_LONTUM_NDZEWIYI_AUTHOR],
   "the-next-digital-divide-why-africa-risks-becoming-an-ai-consumer-rather-than-an-ai-creator":
     [
       {
@@ -353,6 +361,7 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   [normalizeTitleKey(
     "When Ebola and Rumours Cross the Borders: Media's Role to Combat Misinformation and Panic",
   )]: [NFOR_HANSON_NCHANJI_AUTHOR],
+  [normalizeTitleKey("Digital Privacy: A Time Bomb in African schools")]: [ALVIN_LONTUM_NDZEWIYI_AUTHOR],
   [normalizeTitleKey("Africa’s Digital Infrastructure Is More Exposed Than It Appears")]: [
     {
       name: "Alvin Korkie",
