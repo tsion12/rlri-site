@@ -150,7 +150,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     supportProgram: "02",
     tags: ["Digital Rights", "Education", "Child Protection"],
     policyBriefHref: null,
-    recordingHref: null,
+    recordingHref: "https://youtu.be/YD2DqNYMBiY",
   },
 ];
 
