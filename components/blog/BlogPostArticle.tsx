@@ -250,6 +250,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     [CHRISTELLE_NFOR_AUTHOR],
   "what-central-african-laws-say-about-sexual-and-reproductive-health-and-rights-and-what-they-do-not":
     [CHRISTELLE_NFOR_AUTHOR],
+  "access-denied-why-women-in-rural-communities-of-fako-and-meme-in-cameroons-southwest-cannot-access-basic-reproductive-healthcare":
+    [CHRISTELLE_NFOR_AUTHOR],
   "why-ebola-outbreaks-persist-shifting-the-focus-from-emergency-to-community":
     [EKUA_AGYEMANG_AUTHOR],
   "when-ebola-and-rumours-cross-the-borders-medias-role-to-combat-misinformation-and-panic":
@@ -362,6 +364,12 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     "When Ebola and Rumours Cross the Borders: Media's Role to Combat Misinformation and Panic",
   )]: [NFOR_HANSON_NCHANJI_AUTHOR],
   [normalizeTitleKey("Digital Privacy: A Time Bomb in African schools")]: [ALVIN_LONTUM_NDZEWIYI_AUTHOR],
+  [normalizeTitleKey(
+    "Access Denied: Why Women in Rural Communities of Fako and Meme in Cameroon's Southwest Cannot Access Basic Reproductive Healthcare",
+  )]: [CHRISTELLE_NFOR_AUTHOR],
+  [normalizeTitleKey(
+    "Access Denied: Why Women in Rural Communities of Fako and Meme in Cameroon’s Southwest Cannot Access Basic Reproductive Healthcare",
+  )]: [CHRISTELLE_NFOR_AUTHOR],
   [normalizeTitleKey("Africa’s Digital Infrastructure Is More Exposed Than It Appears")]: [
     {
       name: "Alvin Korkie",
