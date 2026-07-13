@@ -151,6 +151,13 @@ const NFOR_HANSON_NCHANJI_AUTHOR: AuthorProfile = {
   bio: "Nfor Hanson Nchanji is an award-winning media entrepreneur and digital strategist with a BSc. in Journalism and Mass Communication, an MBA in International Relations and Diplomacy. His expertise in geopolitical analysis and strategic communication has driven impactful consultant work for global NGOs, including the UNDP, International Crisis Group, Civitas Maxima, and PPLAAF. He worked with HD Centre in Geneva as a Mediation Advisor. Hanson is passionate about integrating digital engagement and AI to maximize organizational reach and social impact.",
 };
 
+const NYAKNO_BENSON_AUTHOR: AuthorProfile = {
+  name: "Nyakno Benson",
+  role: "Speaker, Teaching for Views Webinar (June 2026)",
+  avatar: "/assets/june_26/Nyakno Benson.png",
+  bio: "Nyakno Benson is an educator, creative entrepreneur, educational content creator, and advocate for innovative learning. With over 12 years of experience in education, she is passionate about making learning engaging, inclusive, and practical for children. She currently serves as a classroom teacher and Social Media Manager at Clover Hall International School, where she creates educational content and supports child-centered learning initiatives. She is also the Educational Content Creator for Lean On Me Foundation, developing learning resources, lesson schemes, educational videos, and digital content that promote access to quality education. As the Founder of Yarkys Emporium, a creative brand that blends art, craft and innovation to transform how children learn, she designs creative educational resources, delivers teacher training, transforms learning spaces, and leads arts-based programs that empower children through creativity, entrepreneurship, sustainability, and hands-on learning experiences.",
+};
+
 const ALVIN_LONTUM_NDZEWIYI_AUTHOR: AuthorProfile = {
   name: "Alvin Lontum Ndzewiyi",
   role: "Author",
@@ -257,6 +264,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "when-ebola-and-rumours-cross-the-borders-medias-role-to-combat-misinformation-and-panic":
     [NFOR_HANSON_NCHANJI_AUTHOR],
   "digital-privacy-a-time-bomb-in-african-schools": [ALVIN_LONTUM_NDZEWIYI_AUTHOR],
+  "when-the-camera-enters-the-classroom-how-the-search-for-likes-is-redefining-the-teacher-student-dynamic":
+    [NYAKNO_BENSON_AUTHOR],
   "the-next-digital-divide-why-africa-risks-becoming-an-ai-consumer-rather-than-an-ai-creator":
     [
       {
@@ -364,6 +373,12 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     "When Ebola and Rumours Cross the Borders: Media's Role to Combat Misinformation and Panic",
   )]: [NFOR_HANSON_NCHANJI_AUTHOR],
   [normalizeTitleKey("Digital Privacy: A Time Bomb in African schools")]: [ALVIN_LONTUM_NDZEWIYI_AUTHOR],
+  [normalizeTitleKey(
+    'When the Camera Enters the Classroom: How the Search for "Likes" Is Redefining the Teacher Student Dynamic',
+  )]: [NYAKNO_BENSON_AUTHOR],
+  [normalizeTitleKey(
+    "When the Camera Enters the Classroom: How the Search for “Likes” Is Redefining the Teacher Student Dynamic",
+  )]: [NYAKNO_BENSON_AUTHOR],
   [normalizeTitleKey(
     "Access Denied: Why Women in Rural Communities of Fako and Meme in Cameroon's Southwest Cannot Access Basic Reproductive Healthcare",
   )]: [CHRISTELLE_NFOR_AUTHOR],
@@ -540,6 +555,10 @@ export function BlogPostArticle({ post }: { post: WpPostWithSource }) {
 
         {post.slug === "rethinking-wash-governance-in-africa-insights-from-webinar-speaker-agbor" ? (
           <WebinarProgramSupportLine program="05" className="mt-5" />
+        ) : null}
+        {post.slug ===
+        "when-the-camera-enters-the-classroom-how-the-search-for-likes-is-redefining-the-teacher-student-dynamic" ? (
+          <WebinarProgramSupportLine program="02" className="mt-5" />
         ) : null}
 
       </header>

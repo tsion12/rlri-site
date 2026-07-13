@@ -5,6 +5,8 @@ import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSup
 
 const RECORDING_HREF = "https://youtu.be/YD2DqNYMBiY";
 const RECORDING_EMBED_HREF = "https://www.youtube.com/embed/YD2DqNYMBiY";
+const WEBINAR_REFLECTION_BLOG_HREF =
+  "/blog/africa/when-the-camera-enters-the-classroom-how-the-search-for-likes-is-redefining-the-teacher-student-dynamic";
 
 const SPEAKERS = [
   {
@@ -87,6 +89,50 @@ export function AfricaEventTeachingForViewsPage() {
               allowFullScreen
             />
           </div>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-200/80 bg-white py-16 dark:border-zinc-800 dark:bg-zinc-950 sm:py-20">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-teal-700 dark:text-teal-400">
+            Digital Futures
+          </p>
+          <h2 className="mt-4 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+            Webinar reflection
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            Nyakno Benson, a speaker on this webinar, reflects on how classroom cameras and the search for
+            &ldquo;likes&rdquo; are reshaping the teacher–student dynamic — and what schools can do to keep
+            learning learner-centred.
+          </p>
+          <Link
+            href={WEBINAR_REFLECTION_BLOG_HREF}
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
+          >
+            Read the blog
+          </Link>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-200/80 bg-white py-16 dark:border-zinc-800 dark:bg-zinc-950 sm:py-20">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-teal-700 dark:text-teal-400">
+            Digital Futures
+          </p>
+          <h2 className="mt-4 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+            Webinar reflection
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            Nyakno Benson, a speaker on this webinar, reflects on how classroom cameras and the search for
+            &ldquo;likes&rdquo; are reshaping the teacher–student dynamic — and what schools can do to keep
+            learning learner-centred.
+          </p>
+          <Link
+            href={WEBINAR_REFLECTION_BLOG_HREF}
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
+          >
+            Read the blog
+          </Link>
         </div>
       </section>
 
