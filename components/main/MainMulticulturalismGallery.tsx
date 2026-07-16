@@ -111,7 +111,6 @@ export function MainMulticulturalismGallery({
                       fill
                       className="object-cover transition duration-500 group-hover:scale-[1.02]"
                       sizes="(max-width: 768px) 100vw, 70vw"
-                      priority={index === 0}
                     />
                     <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-zinc-950/35 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
                     <span className="pointer-events-none absolute bottom-4 right-4 rounded-full border border-white/25 bg-black/35 px-3 py-1 text-[11px] font-semibold text-white/90 opacity-0 backdrop-blur-sm transition group-hover:opacity-100">

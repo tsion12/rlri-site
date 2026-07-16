@@ -1,5 +1,4 @@
 import type { TranslationKey } from "@/lib/i18n/messages/en";
-import type { MainGalleryFile } from "@/lib/main-gallery";
 import { mainRoutes } from "@/lib/main-routes";
 
 export type MainInstituteEventTiming = "upcoming" | "past";
@@ -8,7 +7,8 @@ export type MainInstituteEvent = {
   id: string;
   timing: MainInstituteEventTiming;
   sortDate: string;
-  image: MainGalleryFile;
+  /** Filename inside `public/assets/main-gallery/` (not necessarily part of the home gallery). */
+  image: string;
   titleKey: TranslationKey;
   summaryKey: TranslationKey;
   whenKey: TranslationKey;
@@ -38,7 +38,7 @@ export const MAIN_INSTITUTE_UPCOMING_EVENTS: MainInstituteEvent[] = [
     id: "arctic-security-conference-2026",
     timing: "upcoming",
     sortDate: "2026-08-26",
-    image: "REAL LIFE INSTITUTE-1.jpg",
+    image: "Rethinking Arctic Security from Iqaluit-conference.jpeg",
     titleKey: "pages.events.items.arcticConference.title",
     summaryKey: "pages.events.items.arcticConference.summary",
     whenKey: "pages.events.items.arcticConference.when",
@@ -51,7 +51,7 @@ export const MAIN_INSTITUTE_UPCOMING_EVENTS: MainInstituteEvent[] = [
     id: "unity-race-2026",
     timing: "upcoming",
     sortDate: "2026-07-01",
-    image: "REAL LIFE INSTITUTE DAY 1-1.jpg",
+    image: "Iqaluit Unity Race.jpeg",
     titleKey: "pages.events.items.unityRace.title",
     summaryKey: "pages.events.items.unityRace.summary",
     whenKey: "pages.events.items.unityRace.when",
@@ -64,7 +64,7 @@ export const MAIN_INSTITUTE_UPCOMING_EVENTS: MainInstituteEvent[] = [
     id: "community-soccer-2026",
     timing: "upcoming",
     sortDate: "2026-06-15",
-    image: "REAL LIFE INSTITUTE 1-4.jpg",
+    image: "Community Soccer initiative.jpeg",
     titleKey: "pages.events.items.communitySoccer.title",
     summaryKey: "pages.events.items.communitySoccer.summary",
     whenKey: "pages.events.items.communitySoccer.when",
@@ -77,7 +77,7 @@ export const MAIN_INSTITUTE_UPCOMING_EVENTS: MainInstituteEvent[] = [
     id: "summer-celebrations-2026",
     timing: "upcoming",
     sortDate: "2026-06-01",
-    image: "REAL LIFE INSTITUTE DAY 1-11.jpg",
+    image: "Celebrate Canada pictures 3.jpeg",
     titleKey: "pages.events.items.summerCelebrations.title",
     summaryKey: "pages.events.items.summerCelebrations.summary",
     whenKey: "pages.events.items.summerCelebrations.when",

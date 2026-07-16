@@ -59,7 +59,7 @@ export async function MainArcticSecurityPage({ locale }: Props) {
           src={ARCTIC_SECURITY_IMAGES.hero}
           alt={t("pages.arcticSecurity.heroImageAlt")}
           fill
-          priority
+          preload
           className="object-cover"
           sizes="100vw"
         />

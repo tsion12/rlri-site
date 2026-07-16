@@ -171,7 +171,7 @@ export function MainAboutValuePillars({
   pillars,
   coreLabel,
 }: Props) {
-  const heroImage = mainGallerySrc("REAL LIFE INSTITUTE 1-9 (1).jpg");
+  const heroImage = mainGallerySrc("Ready to join us.jpg");
 
   return (
     <section

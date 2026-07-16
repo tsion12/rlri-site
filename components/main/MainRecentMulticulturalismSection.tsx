@@ -26,7 +26,6 @@ export function MainRecentMulticulturalismSection({ t }: Props) {
             fill
             className="object-contain p-4 sm:p-6"
             sizes="(max-width: 1024px) 100vw, 42rem"
-            priority
           />
         </div>
 

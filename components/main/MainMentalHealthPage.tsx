@@ -7,8 +7,8 @@ import { MainLink } from "@/components/main/MainLink";
 
 type Props = { locale: Locale };
 
-const HERO_IMAGE = "REAL LIFE INSTITUTE DAY 1-11.jpg";
-const APPROACH_IMAGE = "REAL LIFE INSTITUTE 1-4.jpg";
+const HERO_IMAGE = "Supporting Well-Being Across the North.jpg";
+const APPROACH_IMAGE = "Holistic, Community-Driven Mental Health.jpg";
 const BANNER_IMAGE = "REAL LIFE INSTITUTE 1-7 (2).jpg";
 
 export async function MainMentalHealthPage({ locale }: Props) {
@@ -25,7 +25,7 @@ export async function MainMentalHealthPage({ locale }: Props) {
           src={mainGallerySrc(HERO_IMAGE)}
           alt=""
           fill
-          priority
+          preload
           className="object-cover"
           sizes="100vw"
         />

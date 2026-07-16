@@ -634,6 +634,10 @@ export const fr = {
       applyBody:
         "Envoyez votre CV à jobs_hr@reallifeinstitute.org. Les candidatures ferment le 15 mai 2026. Nous accueillons des candidats de tous horizons passionnés par la communauté et l'inclusion.",
       applyNow: "Postuler",
+      // TODO(fr): French translations needed for the three alt strings below (English placeholders).
+      heroImageAlt: "Student volunteer in a Real Life Institute t-shirt wearing a Canada lanyard",
+      heroBadgeImageAlt: "RLRI volunteer in a red team shirt visiting a museum exhibit",
+      applyImageAlt: "RLRI volunteers serving food together under an event tent",
     },
     faq: {
       title: "Foire aux questions",

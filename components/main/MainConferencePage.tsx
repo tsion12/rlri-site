@@ -86,7 +86,7 @@ export async function MainConferencePage({ locale }: Props) {
           src={CONFERENCE_HERO_IMAGE}
           alt={t("pages.conference.heroImageAlt")}
           fill
-          priority
+          preload
           className="object-cover"
           sizes="100vw"
         />

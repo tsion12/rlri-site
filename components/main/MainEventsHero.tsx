@@ -69,7 +69,7 @@ export function MainEventsHero({
                   src={image.src}
                   alt=""
                   fill
-                  priority={index < 4}
+                  preload={index === 0}
                   sizes="100vw"
                   className="object-cover"
                 />

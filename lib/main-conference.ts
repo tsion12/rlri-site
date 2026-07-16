@@ -3,7 +3,9 @@ import { mainGallerySrc } from "@/lib/main-gallery";
 
 /** 1st Annual Iqaluit Arctic Security Conference — August 26–28, 2026. */
 
-export const CONFERENCE_HERO_IMAGE = mainGallerySrc("REAL LIFE INSTITUTE-1.jpg");
+export const CONFERENCE_HERO_IMAGE = mainGallerySrc(
+  "Rethinking Arctic Security from Iqaluit-conference.jpeg",
+);
 
 export type ConferencePanelist = {
   name: string;

@@ -304,7 +304,7 @@ export const iu = {
         "At the Real Life Research Institute, we recognize that Arctic security is strengthened when policies and interventions are grounded in local realities and informed by inclusive, evidence-based research. Our approach emphasizes the importance of connecting Northern communities with researchers, institutions, and decision-makers across Canada to ensure that Arctic security reflects lived experiences in the North. Our Research & Northern–Southern Dialogue program contributes to Arctic security by bridging community knowledge and policy processes—facilitating collaboration, strengthening understanding, and supporting more responsive and locally grounded solutions.",
       pillarResearchBody:
         "In Northern communities like Iqaluit, creating spaces for dialogue between communities and external researchers is essential to building trust, reducing disconnects, and ensuring that research contributes meaningfully to community well-being and resilience. To advance this work, we deliver ongoing initiatives that foster collaboration, knowledge exchange, and partnerships between Northern and Southern actors, strengthening both community resilience and the policy relevance of Arctic security efforts.",
-      heroImageAlt: "Community members gathered for Arctic security programming in Iqaluit",
+      heroImageAlt: "Two runners climbing a tundra road during the Love & Unity Run in Iqaluit",
       pillar1SoccerAlt: "Community soccer game in Iqaluit",
       pillar1RaceAlt: "Participants at the Iqaluit Unity Race",
       pillar2ImageAlt: "Multicultural community gathering and celebration in the North",
@@ -515,7 +515,7 @@ export const iu = {
       heroFormat: "Hybrid — in person & online",
       heroNotifyCta: "Get notified",
       heroEventsCta: "View all events",
-      heroImageAlt: "Community dialogue gathering in Iqaluit",
+      heroImageAlt: "Conference participants gathered in front of a map of Iqaluit",
       aboutEyebrow: "About the conference",
       aboutTitle:
         "Repositioning Iqaluit as a hub for community-informed Arctic security dialogue",
@@ -635,6 +635,9 @@ export const iu = {
       applyBody:
         "Send your resume to jobs_hr@reallifeinstitute.org. Applications close May 15, 2026. We welcome applicants from all backgrounds who are passionate about community and inclusion.",
       applyNow: "Apply now",
+      heroImageAlt: "Student volunteer in a Real Life Institute t-shirt wearing a Canada lanyard",
+      heroBadgeImageAlt: "RLRI volunteer in a red team shirt visiting a museum exhibit",
+      applyImageAlt: "RLRI volunteers serving food together under an event tent",
     },
     faq: {
       title: "Apervigivaktut Apervaktaujut",

@@ -20,16 +20,14 @@ export type MainHeroSlide = {
 };
 
 const MAIN_HERO_IMAGE_FILES = [
-  "REAL LIFE INSTITUTE DAY 1-1.jpg",
-  "REAL LIFE INSTITUTE DAY 1-11.jpg",
-  "REAL LIFE INSTITUTE DAY 1-20.jpg",
-  "REAL LIFE INSTITUTE 1-4.jpg",
-  "WhatsApp Image 2025-08-23 at 19.07.50 (1).jpeg",
-  "REAL LIFE INSTITUTE DAY 1-30(1).jpg",
-  "REAL LIFE INSTITUTE 1-22 (1).jpg",
-  "REAL LIFE INSTITUTE DAY 1-31.jpg",
-  "REAL LIFE INSTITUTE DAY 1-14.jpg",
-  "REAL LIFE INSTITUTE 1-10 (1).jpg",
+  "Live from the run 1.jpg",
+  "man running while smiling.jpg",
+  "Iqaluit Unity Race.jpeg",
+  "Live from the run 13.jpg",
+  "Celebrate Canada pictures 3.jpeg",
+  "Live from the run 24.jpg",
+  "Welcome to Real Life Research Institute.jpg",
+  "Live from the run 2.jpg",
 ] as const;
 
 const MAIN_HERO_COPY = {
