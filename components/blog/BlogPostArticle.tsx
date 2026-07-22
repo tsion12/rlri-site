@@ -130,6 +130,15 @@ const ERNEST_LEQUIMBOH_AUTHOR: AuthorProfile = {
   bio: "Ernest Lequimboh is an Award-Winning Author of 10 Investments You Must Make Before 40 and a Senior Policy Advisor at the Real Life Research Institute (RLRI), where he contributes to research and policy work at the intersection of artificial intelligence, governance, and inclusive public leadership. He brings experience in policy analysis and legislative modernization, a researcher with an academic foundation in Women and Gender Studies, Law, and Public Policy, alongside advanced studies in artificial intelligence and DevOps. His forthcoming paper critically examines AI Governance Capacity.",
 };
 
+/** Augustin Mudekereza Kasenge — same bio as June 2026 Ebola webinar speaker profile. */
+const AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR: AuthorProfile = {
+  name: "Augustin Mudekereza Kasenge",
+  role: "Researcher, Angaza Institute–ISDR/Bukavu",
+  linkedin: "https://www.linkedin.com/in/augustin-mudekereza-kasenge-5583961b3/",
+  avatar: "/assets/june/Augustin Mudekereza Kasenge.png",
+  bio: "Augustin Mudekereza Kasenge is a university lecturer, researcher, and expert in local governance, decentralisation, and public-private partnerships based in the Democratic Republic of Congo. With over fifteen years of experience in applied research, community project coordination, and humanitarian action, his work focuses on natural resource governance, climate change, gender, and urban dynamics in South Kivu. He holds a Master's degree in Development Studies from ISDR/Bukavu and is a researcher at the Centre for Conflict Analysis and Governance at the Angaza Institute. As former Provincial Executive Secretary of the Red Cross DRC/South Kivu, he coordinated emergency responses to crises including Cholera and Ebola outbreaks, floods, and armed conflict, making him a key voice on the intersection of humanitarian action, governance, and public health in the DRC.",
+};
+
 const CHRISTELLE_NFOR_AUTHOR: AuthorProfile = {
   name: "Christelle Nfor Mugha",
   role: "Author",
@@ -255,6 +264,9 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
         bio: "María Ayuk is a Postdoctoral Researcher and Associate Lecturer at Otto‑von‑Guericke University Magdeburg. Her research focuses on environmental and climate policy, forestry, sustainable development, knowledge transfer, and peace and security governance. She is a Member of the Baobab Sahel Climate‑Conflict project at the University of Cape Town, contributing to interdisciplinary research on climate‑related insecurity in the Sahel. An alumna of the George C. Marshall European Center for Security Studies, she brings an integrated perspective to the intersections of environmental change, security, and international cooperation.",
       },
     ],
+  "epidemie-debola-entre-riposte-en-contexte-de-polycrise-et-instrument-de-pouvoir-en-rdc": [
+    AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR,
+  ],
 };
 
 /** Normalize titles so WP punctuation/spacing variants still match overrides. */
@@ -335,6 +347,12 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
       linkedin: "https://www.linkedin.com/in/korkiecom/",
     },
   ],
+  [normalizeTitleKey(
+    "Epidémie d’Ebola : entre riposte en contexte de polycrise et instrument de pouvoir en RDC.",
+  )]: [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
+  [normalizeTitleKey(
+    "Epidémie d'Ebola : entre riposte en contexte de polycrise et instrument de pouvoir en RDC.",
+  )]: [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
 };
 
 function DownloadIcon() {
@@ -496,7 +514,9 @@ export function BlogPostArticle({ post }: { post: WpPostWithSource }) {
           </div>
         )}
 
-        {post.slug === "rethinking-wash-governance-in-africa-insights-from-webinar-speaker-agbor" ? (
+        {post.slug === "rethinking-wash-governance-in-africa-insights-from-webinar-speaker-agbor" ||
+        post.slug ===
+          "epidemie-debola-entre-riposte-en-contexte-de-polycrise-et-instrument-de-pouvoir-en-rdc" ? (
           <WebinarProgramSupportLine program="05" className="mt-5" />
         ) : null}
 
