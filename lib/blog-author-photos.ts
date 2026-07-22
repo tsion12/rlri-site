@@ -16,6 +16,7 @@ const AUTHOR_PHOTO_BY_NAME: Record<string, string> = {
   "solomon kimaita": "/assets/april/Solomon.webp",
   "alvin lontum ndzewiyi": "/assets/june_26/Alvin Lontum Ndzewiyi.png",
   "nyakno benson": "/assets/june_26/Nyakno Benson.png",
+  "augustin mudekereza kasenge": "/assets/june/Augustin Mudekereza Kasenge.png",
 };
 
 function normalizeAuthorNameKey(name: string): string {

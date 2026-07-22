@@ -158,6 +158,14 @@ const NYAKNO_BENSON_AUTHOR: AuthorProfile = {
   bio: "Nyakno Benson is an educator, creative entrepreneur, educational content creator, and advocate for innovative learning. With over 12 years of experience in education, she is passionate about making learning engaging, inclusive, and practical for children. She currently serves as a classroom teacher and Social Media Manager at Clover Hall International School, where she creates educational content and supports child-centered learning initiatives. She is also the Educational Content Creator for Lean On Me Foundation, developing learning resources, lesson schemes, educational videos, and digital content that promote access to quality education. As the Founder of Yarkys Emporium, a creative brand that blends art, craft and innovation to transform how children learn, she designs creative educational resources, delivers teacher training, transforms learning spaces, and leads arts-based programs that empower children through creativity, entrepreneurship, sustainability, and hands-on learning experiences.",
 };
 
+/** Augustin Mudekereza Kasenge — same bio as June 2026 Ebola DRC webinar speaker profile. */
+const AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR: AuthorProfile = {
+  name: "Augustin Mudekereza Kasenge",
+  role: "Speaker, Ebola DRC Webinar (June 2026)",
+  avatar: "/assets/june/Augustin Mudekereza Kasenge.png",
+  bio: "Augustin Mudekereza Kasenge is a university lecturer, researcher, and expert in local governance, decentralisation, and public-private partnerships based in the Democratic Republic of Congo. With over fifteen years of experience in applied research, community project coordination, and humanitarian action, his work focuses on natural resource governance, climate change, gender, and urban dynamics in South Kivu. He holds a Master's degree in Development Studies from ISDR/Bukavu and is a researcher at the Centre for Conflict Analysis and Governance at the Angaza Institute. As former Provincial Executive Secretary of the Red Cross DRC/South Kivu, he coordinated emergency responses to crises including Cholera and Ebola outbreaks, floods, and armed conflict, making him a key voice on the intersection of humanitarian action, governance, and public health in the DRC.",
+};
+
 const ALVIN_LONTUM_NDZEWIYI_AUTHOR: AuthorProfile = {
   name: "Alvin Lontum Ndzewiyi",
   role: "Author",
@@ -266,6 +274,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "digital-privacy-a-time-bomb-in-african-schools": [ALVIN_LONTUM_NDZEWIYI_AUTHOR],
   "when-the-camera-enters-the-classroom-how-the-search-for-likes-is-redefining-the-teacher-student-dynamic":
     [NYAKNO_BENSON_AUTHOR],
+  "epidemie-debola-entre-riposte-en-contexte-de-polycrise-et-instrument-de-pouvoir-en-rdc":
+    [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
   "the-next-digital-divide-why-africa-risks-becoming-an-ai-consumer-rather-than-an-ai-creator":
     [
       {
@@ -379,6 +389,18 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   [normalizeTitleKey(
     "When the Camera Enters the Classroom: How the Search for “Likes” Is Redefining the Teacher Student Dynamic",
   )]: [NYAKNO_BENSON_AUTHOR],
+  [normalizeTitleKey(
+    "Epidémie d'Ebola : entre riposte en contexte de polycrise et instrument de pouvoir en RDC.",
+  )]: [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
+  [normalizeTitleKey(
+    "Epidémie d’Ebola : entre riposte en contexte de polycrise et instrument de pouvoir en RDC.",
+  )]: [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
+  [normalizeTitleKey(
+    "Epidémie d'Ebola : entre riposte en contexte de polycrise et instrument de pouvoir en RDC",
+  )]: [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
+  [normalizeTitleKey(
+    "Epidémie d’Ebola : entre riposte en contexte de polycrise et instrument de pouvoir en RDC",
+  )]: [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
   [normalizeTitleKey(
     "Access Denied: Why Women in Rural Communities of Fako and Meme in Cameroon's Southwest Cannot Access Basic Reproductive Healthcare",
   )]: [CHRISTELLE_NFOR_AUTHOR],
@@ -553,7 +575,9 @@ export function BlogPostArticle({ post }: { post: WpPostWithSource }) {
           </div>
         )}
 
-        {post.slug === "rethinking-wash-governance-in-africa-insights-from-webinar-speaker-agbor" ? (
+        {post.slug === "rethinking-wash-governance-in-africa-insights-from-webinar-speaker-agbor" ||
+        post.slug ===
+          "epidemie-debola-entre-riposte-en-contexte-de-polycrise-et-instrument-de-pouvoir-en-rdc" ? (
           <WebinarProgramSupportLine program="05" className="mt-5" />
         ) : null}
         {post.slug ===
