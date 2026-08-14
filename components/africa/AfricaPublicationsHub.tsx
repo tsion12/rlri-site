@@ -64,6 +64,24 @@ const typeCardClass =
 const countPillClass =
   "inline-block w-fit rounded-full border border-zinc-200/90 bg-zinc-50 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-400";
 
+/* ── Editorial process ───────────────────────────────────────── */
+const EDITORIAL_ASSURANCES = [
+  {
+    title: "Blind peer review",
+    description: "Every manuscript is assigned to a Topic-Specific Editor for blind review and editorial feedback.",
+  },
+  {
+    title: "DOI registration",
+    description: "Approved outputs receive a DOI and complete metadata for long-term scholarly visibility.",
+  },
+  {
+    title: "Global dissemination",
+    description: "The Managing Editor handles final layout, publication, and distribution to our networks.",
+  },
+] as const;
+
+const EDITORIAL_CONTACT = "contact-africa@reallifeinstitute.org";
+
 /* ── Post card ─────────────────────────────────────────────────── */
 function LatestPostCard({ post }: { post: WpPostWithSource }) {
   const excerpt = post.excerpt ? stripHtml(post.excerpt.rendered).slice(0, 120).trim() : "";
@@ -147,10 +165,16 @@ export function AfricaPublicationsHub({ latestPosts }: { latestPosts: WpPostWith
               Publication types
             </Link>
             <span className="text-zinc-400"> · </span>
+            <Link href="#editorial-process" className="font-medium text-teal-800 underline-offset-2 hover:underline dark:text-teal-300">
+              Editorial process
+            </Link>
             {latestPosts.length > 0 ? (
-              <Link href="#latest-blog" className="font-medium text-teal-800 underline-offset-2 hover:underline dark:text-teal-300">
-                Latest from the blog
-              </Link>
+              <>
+                <span className="text-zinc-400"> · </span>
+                <Link href="#latest-blog" className="font-medium text-teal-800 underline-offset-2 hover:underline dark:text-teal-300">
+                  Latest from the blog
+                </Link>
+              </>
             ) : null}
           </p>
         </div>
@@ -186,6 +210,78 @@ export function AfricaPublicationsHub({ latestPosts }: { latestPosts: WpPostWith
                 </span>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="editorial-process"
+        className="scroll-mt-20 border-b border-zinc-200/80 bg-white py-16 dark:border-zinc-800 dark:bg-zinc-950 sm:py-20 lg:py-24"
+        aria-labelledby="editorial-process-heading"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-center lg:gap-16">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-400">
+                Editorial process
+              </p>
+              <h2
+                id="editorial-process-heading"
+                className="mt-3 text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl"
+              >
+                From submission to global dissemination
+              </h2>
+              <p className="mt-3 max-w-xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Everything we publish moves through the same five-stage editorial workflow — from intake and screening by
+                the Assistant Editor, to thematic peer review, to final approval and release by the Managing Editor.
+              </p>
+
+              <ul className="mt-8 space-y-5">
+                {EDITORIAL_ASSURANCES.map(({ title, description }) => (
+                  <li key={title} className="flex gap-3">
+                    <span
+                      className="mt-2 size-1.5 shrink-0 rounded-full bg-teal-600 dark:bg-teal-400"
+                      aria-hidden
+                    />
+                    <div>
+                      <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={`mailto:${EDITORIAL_CONTACT}?subject=Manuscript%20submission%20%E2%80%94%20RLRI%20Africa%20Programs`}
+                  className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-600"
+                >
+                  Submit a manuscript
+                </a>
+                <Link
+                  href={africaRoutes.career}
+                  className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600"
+                >
+                  Join the editorial team
+                </Link>
+              </div>
+            </div>
+
+            <figure className="mx-auto w-full max-w-sm lg:max-w-none">
+              <div className="overflow-hidden rounded-3xl border border-zinc-200/90 bg-white shadow-sm dark:border-zinc-800">
+                <Image
+                  src="/assets/publications/editorial-workflow.png"
+                  alt="RLRI editorial workflow in five steps: submission of the manuscript by email to the Assistant Editor; initial screening for scope, relevance, and completeness; thematic review by a Topic-Specific Editor through blind peer review; editorial approval of the revised manuscript; and publication and dissemination with DOI registration and layout by the Managing Editor."
+                  width={723}
+                  height={1024}
+                  className="h-auto w-full"
+                  sizes="(max-width: 1024px) 24rem, 26rem"
+                />
+              </div>
+              <figcaption className="mt-4 text-xs leading-relaxed text-zinc-500 dark:text-zinc-500">
+                The five stages every RLRI manuscript passes through before publication.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>

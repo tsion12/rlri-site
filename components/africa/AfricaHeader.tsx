@@ -171,30 +171,38 @@ export function AfricaHeader() {
               </NavLink>
             ))}
 
-            <div className="relative pl-0.5" ref={pubRef}>
+            <div className="relative flex items-center pl-0.5" ref={pubRef}>
+              <Link
+                href={africaRoutes.publications}
+                className={`${au.header.navItem} ${pubActive ? au.header.navItemActive : au.header.navItemIdle}`}
+              >
+                Publications
+              </Link>
               <button
                 type="button"
                 id={`${pubId}-btn`}
                 aria-expanded={pubOpen}
                 aria-controls={`${pubId}-menu`}
                 aria-haspopup="true"
-                className={`${au.header.navItem} inline-flex items-center gap-1.5 ${
-                  pubActive ? au.header.navItemActive : au.header.navItemIdle
+                aria-label="Publications submenu"
+                className={`-ml-1 flex h-8 w-6 items-center justify-center rounded-md transition-colors ${
+                  pubActive
+                    ? "text-zinc-700 hover:bg-zinc-200/60 dark:text-zinc-200 dark:hover:bg-zinc-700/60"
+                    : "text-zinc-500 hover:bg-zinc-200/50 dark:text-zinc-400 dark:hover:bg-zinc-800/60"
                 }`}
                 onClick={() => {
                   setPubOpen((o) => !o);
                   setAboutOpen(false);
                 }}
               >
-                Publications
                 <svg
-                  width="14"
-                  height="14"
+                  width="12"
+                  height="12"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
-                  className={`opacity-70 transition-transform duration-200 ${pubOpen ? "rotate-180" : ""}`}
+                  strokeWidth="2.5"
+                  className={`transition-transform duration-200 ${pubOpen ? "rotate-180" : ""}`}
                   aria-hidden
                 >
                   <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -207,6 +215,14 @@ export function AfricaHeader() {
                   role="menu"
                   className={au.header.dropdown}
                 >
+                  <Link
+                    role="menuitem"
+                    href={africaRoutes.publications}
+                    className={au.header.dropdownItem}
+                    onClick={() => setPubOpen(false)}
+                  >
+                    Overview
+                  </Link>
                   {publications.map((p) => (
                     <Link
                       key={p.label}
@@ -302,8 +318,14 @@ export function AfricaHeader() {
               </div>
             </div>
             <div>
-              <p className={au.footer.sectionTitle}>Publications</p>
-              <div className="mt-2 flex flex-col gap-0.5">
+              <Link
+                href={africaRoutes.publications}
+                className={`${mobileRow} ${navItemActive(pathname, africaRoutes.publications) ? mobileRowActive : ""}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                Publications
+              </Link>
+              <div className="mt-1 flex flex-col gap-0.5 pl-3">
                 {publications.map((p) => (
                   <Link
                     key={p.label}
