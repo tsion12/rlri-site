@@ -15,6 +15,7 @@ export const africaRoutes = {
   eventClimateAdaptation: "/africa/events/rethinking-climate-adaptation-in-africa",
   eventEbolaDrc: "/africa/events/ebola-responses-drc-conflict-aid-misinformation",
   eventTeachingForViews: "/africa/events/teaching-for-views-social-media-african-classrooms",
+  eventChokepoints: "/africa/events/chokepoints-hormuz-bab-el-mandeb-horn-of-africa",
   programs: "/africa/programs",
   publications: "/africa/publications",
   blogs: "/africa/publications/blogs",

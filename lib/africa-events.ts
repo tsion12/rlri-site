@@ -152,6 +152,26 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     policyBriefHref: null,
     recordingHref: "https://youtu.be/YD2DqNYMBiY",
   },
+  {
+    id: "chokepoints-hormuz-bab-el-mandeb-2026",
+    title:
+      "Chokepoints and Consequences: How Hormuz and Bab el-Mandeb Are Reshaping the Horn of Africa's Economy and Security",
+    locationDate: "Location: Online | Friday, August 28, 2026",
+    timezoneLine:
+      "Ottawa (EDT): 9:00 am – 10:30 am | South Africa (SAST): 3:00 pm – 4:30 pm | Kenya / Ethiopia (EAT): 4:00 pm – 5:30 pm | Cameroon/Nigeria (WAT): 2:00 pm – 3:30 pm",
+    summary:
+      "Disruptions and naval blockades in the Strait of Hormuz and the Bab el-Mandeb Strait ripple directly into the Horn of Africa, driving fuel price spikes, food insecurity, trade delays, and security vulnerabilities. This webinar offers a political economy analysis of how maritime volatility affects import-dependent economies, port revenues, regional trade routes, and cross-border security dynamics.",
+    isoDate: "2026-08-28T09:00:00-04:00",
+    durationMinutes: 90,
+    time: "9:00 AM – 10:30 AM (Ottawa, EDT)",
+    format: "Online Webinar",
+    href: africaRoutes.eventChokepoints,
+    registerHref: null,
+    supportProgram: "04",
+    tags: ["Maritime Security", "Horn of Africa", "Trade & Economy"],
+    policyBriefHref: null,
+    recordingHref: null,
+  },
 ];
 
 function toMillis(isoDate: string) {
