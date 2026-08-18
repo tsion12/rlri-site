@@ -166,7 +166,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     time: "9:00 AM – 10:30 AM (Ottawa, EDT)",
     format: "Online Webinar",
     href: africaRoutes.eventChokepoints,
-    registerHref: null,
+    registerHref: "https://forms.gle/7cyFuhn7CPAdqEAv5",
     supportProgram: "04",
     tags: ["Maritime Security", "Horn of Africa", "Trade & Economy"],
     policyBriefHref: null,

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { africaRoutes } from "@/lib/africa-routes";
 import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSupportLine";
 
+const REGISTRATION_HREF = "https://forms.gle/7cyFuhn7CPAdqEAv5";
+
 const SPEAKERS = [
   {
     name: "Dr. Eric J. Irungu",
@@ -46,9 +48,14 @@ export function AfricaEventChokepointsPage() {
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <span className="inline-flex min-h-11 cursor-default items-center justify-center rounded-lg border border-zinc-200 bg-zinc-100 px-6 text-sm font-semibold text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
-              Registration link coming soon
-            </span>
+            <a
+              href={REGISTRATION_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
+            >
+              Register now
+            </a>
             <Link
               href={africaRoutes.events}
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600"
