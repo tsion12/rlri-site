@@ -181,6 +181,12 @@ const LLOYD_GEORGE_BANDA_AUTHOR: AuthorProfile = {
   bio: "Lloyd George Banda is a political economist with expertise in applied econometrics, development economics, comparative politics, and public policy. He serves as a Postdoctoral Research Fellow on the BAOBAB synthesis team Climate Vulnerabilities, Conflicts, and Livelihood Dynamics in the Sahel (Climate Sahel Team). He holds a PhD in Political Science from Stellenbosch University. He has a strong background on governance and the effects of government policy on development outcomes at both the domestic and international levels. This work is geographically anchored in Sub-Saharan Africa and aligned with United Nations Sustainable Development Goal 16 (Peace, Justice, and Strong Institutions) and the interaction thereof with the three pillars of prosperity: environmental equilibrium, economic viability, and social equity. To support this research, Lloyd draws on a mixed-methods approach, combining qualitative inquiry with quantitative techniques such as economic modelling and computational analysis, using tools including Stata, AMOS, Python, and SPSS.",
 };
 
+const GEORGE_LIVINGSTONE_AUTHOR: AuthorProfile = {
+  name: "George Livingstone",
+  role: "Author",
+  linkedin: "https://www.linkedin.com/in/george-livingstone-9a7a4a100/",
+};
+
 const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "shaping-development-policies-in-the-sahel-through-evidence-based-synthesis-progress-from-a-baobab-clare-programme-funded-team":
     [
@@ -290,6 +296,7 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "the-fall-of-kidal-and-the-unravelling-of-malis-military-legitimacy": [LLOYD_GEORGE_BANDA_AUTHOR],
   "shrinking-aid-rising-instability-the-future-of-peacebuilding-in-sub-saharan-africa": [SOLOMON_KIMAITA_AUTHOR],
   "when-ai-makes-decisions-whos-really-in-charge": [ERNEST_LEQUIMBOH_AUTHOR],
+  "proliferation-of-transnational-trafficking-in-arms-in-sub-saharan-africa": [GEORGE_LIVINGSTONE_AUTHOR],
   "aid-for-trade-and-development-cuts-how-donor-policy-shifts-are-deepening-the-climate-conflict-crisis-in-the-sahel":
     [
       {
@@ -414,6 +421,12 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
       linkedin: "https://www.linkedin.com/in/korkiecom/",
     },
   ],
+  [normalizeTitleKey(
+    "Proliferation of Transnational Trafficking in Arms in Sub-Saharan Africa.",
+  )]: [GEORGE_LIVINGSTONE_AUTHOR],
+  [normalizeTitleKey(
+    "Proliferation of Transnational Trafficking in Arms in Sub-Saharan Africa",
+  )]: [GEORGE_LIVINGSTONE_AUTHOR],
 };
 
 function DownloadIcon() {

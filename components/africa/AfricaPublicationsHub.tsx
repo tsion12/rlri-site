@@ -34,7 +34,7 @@ const PUB_TYPES = [
         <path d="M9 4.804A7.968 7.968 0 0 0 5.354 8H4a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h.585A8 8 0 0 0 9 16.197V17h2v-.803A8 8 0 0 0 15.415 13H16a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2h-1.354A7.968 7.968 0 0 0 11 4.804V4H9v.804Z" />
       </svg>
     ),
-    countLabel: "1 story",
+    countLabel: "5 stories",
   },
   {
     id: "policy-briefs",
