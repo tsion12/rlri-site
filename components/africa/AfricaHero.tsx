@@ -13,6 +13,7 @@ type HeroEventHighlight = {
   eventDateISO?: string | null;
   eventEndISO?: string | null;
   registerHref?: string | null;
+  joinHref?: string | null;
   link?: string;
 };
 
@@ -121,6 +122,7 @@ export function AfricaHero({ featuredPost, upcomingEvent }: Props) {
                     endISO={upcomingEvent.eventEndISO}
                     title={upcomingEvent.title}
                     registerHref={upcomingEvent.registerHref}
+                    joinHref={upcomingEvent.joinHref}
                   />
                 </div>
               ) : null}
@@ -133,6 +135,7 @@ export function AfricaHero({ featuredPost, upcomingEvent }: Props) {
                   endISO={upcomingEvent.eventEndISO}
                   eventHref={featuredAnnouncementHref}
                   registerHref={upcomingEvent.registerHref}
+                  joinHref={upcomingEvent.joinHref}
                 />
               ) : (
                 <Link href={featuredAnnouncementHref} className="mt-3 inline-flex text-sm font-semibold text-emerald-800 hover:underline dark:text-emerald-300">

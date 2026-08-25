@@ -36,6 +36,7 @@ type Props = {
   endISO: string;
   title: string;
   registerHref?: string | null;
+  joinHref?: string | null;
   variant?: Variant;
   showTitle?: boolean;
 };
@@ -89,6 +90,7 @@ export function EventWebinarStatus({
   endISO,
   title,
   registerHref,
+  joinHref,
   variant = "banner",
   showTitle = true,
 }: Props) {
@@ -143,6 +145,8 @@ export function EventWebinarStatus({
       ? "inline-flex min-h-10 items-center justify-center rounded-lg bg-white px-5 text-sm font-semibold text-teal-800 transition hover:bg-teal-50"
       : "inline-flex min-h-9 items-center justify-center rounded-lg bg-teal-700 px-4 text-xs font-semibold text-white transition hover:bg-teal-600";
 
+  const liveJoinHref = joinHref ?? registerHref;
+
   if (phase === "live") {
     if (compact && !showTitle) {
       return <div className="flex items-center justify-between gap-2">{liveBadge}</div>;
@@ -154,8 +158,8 @@ export function EventWebinarStatus({
         {showTitle ? <p className={titleClass}>{title}</p> : null}
         <div className={`${compact ? "mt-1.5" : "mt-3"} flex flex-wrap items-center gap-3`}>
           {liveBadge}
-          {registerHref && !compact ? (
-            <a href={registerHref} target="_blank" rel="noopener noreferrer" className={joinButtonClass}>
+          {liveJoinHref && !compact ? (
+            <a href={liveJoinHref} target="_blank" rel="noopener noreferrer" className={joinButtonClass}>
               Join webinar
             </a>
           ) : null}

@@ -17,6 +17,8 @@ export type AfricaWebinarEvent = {
   format: string;
   href: string;
   registerHref: string | null;
+  /** Live session link (e.g. Zoom); used for Join buttons when the webinar is live. */
+  joinHref?: string | null;
   supportProgram: WebinarProgramOrdinal;
   tags: string[];
   policyBriefHref: string | null;
@@ -31,6 +33,7 @@ export type AfricaEventHighlight = {
   eventDateISO: string;
   eventEndISO: string;
   registerHref: string | null;
+  joinHref?: string | null;
 };
 
 const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
@@ -167,6 +170,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     format: "Online Webinar",
     href: africaRoutes.eventChokepoints,
     registerHref: "https://forms.gle/7cyFuhn7CPAdqEAv5",
+    joinHref: "https://us06web.zoom.us/j/82865065750?pwd=XfUcu73YMIOrIbA2XhWUooHn8O63An.1",
     supportProgram: "04",
     tags: ["Maritime Security", "Horn of Africa", "Trade & Economy"],
     policyBriefHref: null,
@@ -198,5 +202,6 @@ export function getUpcomingAfricaEventHighlight(now = new Date()): AfricaEventHi
     eventDateISO: next.isoDate,
     eventEndISO: getEventEndIso(next),
     registerHref: next.registerHref,
+    joinHref: next.joinHref ?? null,
   };
 }

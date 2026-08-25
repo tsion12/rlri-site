@@ -19,18 +19,22 @@ function formatCalendarParts(isoDate: string) {
 
 function UpcomingEventActions({
   registerHref,
+  joinHref,
   detailsHref,
   live,
 }: {
   registerHref: string | null;
+  joinHref?: string | null;
   detailsHref: string;
   live?: boolean;
 }) {
+  const actionHref = live ? joinHref ?? registerHref : registerHref;
+
   return (
     <div className="mt-6 flex flex-wrap gap-3">
-      {registerHref ? (
+      {actionHref ? (
         <a
-          href={registerHref}
+          href={actionHref}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
@@ -63,6 +67,7 @@ function FeaturedEventCard({ event, live }: { event: AfricaWebinarEvent; live: b
           endISO={getEventEndIso(event)}
           title={event.title}
           registerHref={event.registerHref}
+          joinHref={event.joinHref}
         />
       </div>
 
@@ -99,7 +104,12 @@ function FeaturedEventCard({ event, live }: { event: AfricaWebinarEvent; live: b
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{event.timezoneLine}</p>
             <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{event.summary}</p>
             <WebinarProgramSupportLine program={event.supportProgram} className="mt-4" />
-            <UpcomingEventActions registerHref={event.registerHref} detailsHref={event.href} live={live} />
+            <UpcomingEventActions
+              registerHref={event.registerHref}
+              joinHref={event.joinHref}
+              detailsHref={event.href}
+              live={live}
+            />
           </div>
         </div>
       </div>
@@ -161,7 +171,11 @@ export function AfricaEventsSchedule({ events }: { events: AfricaWebinarEvent[] 
                             <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{event.summary}</p>
                             <WebinarProgramSupportLine program={event.supportProgram} className="mt-3" />
                             <div className="mt-auto pt-5">
-                              <UpcomingEventActions registerHref={event.registerHref} detailsHref={event.href} />
+                              <UpcomingEventActions
+                                registerHref={event.registerHref}
+                                joinHref={event.joinHref}
+                                detailsHref={event.href}
+                              />
                             </div>
                           </article>
                         </li>

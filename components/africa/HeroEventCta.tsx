@@ -8,15 +8,17 @@ type Props = {
   endISO: string;
   eventHref: string;
   registerHref?: string | null;
+  joinHref?: string | null;
 };
 
-export function HeroEventCta({ startISO, endISO, eventHref, registerHref }: Props) {
+export function HeroEventCta({ startISO, endISO, eventHref, registerHref, joinHref }: Props) {
   const phase = useEventWebinarPhase(startISO, endISO);
+  const liveJoinHref = joinHref ?? registerHref;
 
-  if (phase === "live" && registerHref) {
+  if (phase === "live" && liveJoinHref) {
     return (
       <a
-        href={registerHref}
+        href={liveJoinHref}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-3 inline-flex text-sm font-semibold text-emerald-800 hover:underline dark:text-emerald-300"

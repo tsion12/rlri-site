@@ -4,6 +4,10 @@ import { africaRoutes } from "@/lib/africa-routes";
 import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSupportLine";
 
 const REGISTRATION_HREF = "https://forms.gle/7cyFuhn7CPAdqEAv5";
+const ZOOM_JOIN_HREF =
+  "https://us06web.zoom.us/j/82865065750?pwd=XfUcu73YMIOrIbA2XhWUooHn8O63An.1";
+const ZOOM_MEETING_ID = "828 6506 5750";
+const ZOOM_PASSCODE = "771750";
 
 const SPEAKERS = [
   {
@@ -62,12 +66,47 @@ export function AfricaEventChokepointsPage() {
             >
               Register now
             </a>
+            <a
+              href={ZOOM_JOIN_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-teal-700/30 bg-teal-50 px-6 text-sm font-semibold text-teal-800 transition hover:border-teal-700/50 hover:bg-teal-100 dark:border-teal-700/40 dark:bg-teal-950/30 dark:text-teal-300 dark:hover:bg-teal-950/50"
+            >
+              Join on Zoom
+            </a>
             <Link
               href={africaRoutes.events}
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600"
             >
               Back to events
             </Link>
+          </div>
+
+          <div className="mt-8 max-w-2xl rounded-2xl border border-zinc-200/90 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900/70">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-400">
+              Zoom meeting
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+              Friday, August 28, 2026 · 9:00 AM Eastern Time (US and Canada)
+            </p>
+            <dl className="mt-4 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
+              <div className="flex flex-wrap gap-x-2">
+                <dt className="font-semibold text-zinc-900 dark:text-zinc-50">Meeting ID:</dt>
+                <dd>{ZOOM_MEETING_ID}</dd>
+              </div>
+              <div className="flex flex-wrap gap-x-2">
+                <dt className="font-semibold text-zinc-900 dark:text-zinc-50">Passcode:</dt>
+                <dd>{ZOOM_PASSCODE}</dd>
+              </div>
+            </dl>
+            <a
+              href={ZOOM_JOIN_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex text-sm font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-300"
+            >
+              Open Zoom join link
+            </a>
           </div>
         </div>
       </section>
