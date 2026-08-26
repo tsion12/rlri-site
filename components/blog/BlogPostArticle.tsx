@@ -297,6 +297,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "shrinking-aid-rising-instability-the-future-of-peacebuilding-in-sub-saharan-africa": [SOLOMON_KIMAITA_AUTHOR],
   "when-ai-makes-decisions-whos-really-in-charge": [ERNEST_LEQUIMBOH_AUTHOR],
   "proliferation-of-transnational-trafficking-in-arms-in-sub-saharan-africa": [GEORGE_LIVINGSTONE_AUTHOR],
+  "chokepoints-and-consequences-how-disruptions-at-hormuz-and-bab-el-mandeb-are-affecting-the-horn-of-africas-economy-and-security":
+    [SOLOMON_KIMAITA_AUTHOR],
   "aid-for-trade-and-development-cuts-how-donor-policy-shifts-are-deepening-the-climate-conflict-crisis-in-the-sahel":
     [
       {
@@ -427,6 +429,12 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   [normalizeTitleKey(
     "Proliferation of Transnational Trafficking in Arms in Sub-Saharan Africa",
   )]: [GEORGE_LIVINGSTONE_AUTHOR],
+  [normalizeTitleKey(
+    "Chokepoints and Consequences: How Disruptions at Hormuz and Bab el-Mandeb Are Affecting the Horn of Africa's Economy and Security",
+  )]: [SOLOMON_KIMAITA_AUTHOR],
+  [normalizeTitleKey(
+    "Chokepoints and Consequences: How Disruptions at Hormuz and Bab el-Mandeb Are Affecting the Horn of Africa’s Economy and Security",
+  )]: [SOLOMON_KIMAITA_AUTHOR],
 };
 
 function DownloadIcon() {
