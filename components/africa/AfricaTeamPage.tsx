@@ -70,6 +70,15 @@ const TEAM: Member[] = [
     linkedin: "https://www.linkedin.com/in/ruvimbo-kwaramba-8208a2198/",
   },
   {
+    id: "wisdom",
+    initials: "WT",
+    name: "Wisdom Tokame",
+    role: "Research Associate (Ghana)",
+    bio: "Wisdom Tokame is a Research Associate at the Real Life Research Institute (RLRI), where he supports peacebuilding, governance, and inclusive dialogue research projects, with a particular focus on Ghana and West Africa. Working closely with senior researchers and editors, he contributes to research initiatives, editorial reviews, and program implementation. His work examines governance, human security, and development challenges through a fragility-resilience lens, generating evidence-based insights that support African-led approaches to peacebuilding and sustainable development. Prior to joining RLRI, Wisdom contributed to peacebuilding, governance, and development projects in Ghana and elsewhere on the continent, including support for the Fund for Peace’s Fragile States Index (FSI) reports through country-level research, fragility assessments, and data analysis across multiple African countries. Wisdom holds an MPhil in Development Policy and Planning and a BA in Philosophy and Social Sciences from the Kwame Nkrumah University of Science and Technology and Spiritan University College respectively.",
+    photo: "/assets/Team/Wisdom.webp",
+    linkedin: "https://www.linkedin.com/in/wisdom-tokame",
+  },
+  {
     id: "nfor",
     initials: "NM",
     name: "Nfor Christelle Mugha",
