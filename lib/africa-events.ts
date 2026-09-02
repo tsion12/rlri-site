@@ -152,7 +152,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     registerHref: "https://forms.gle/nMUV9DLcBfuufU4Q7",
     supportProgram: "02",
     tags: ["Digital Rights", "Education", "Child Protection"],
-    policyBriefHref: null,
+    policyBriefHref: africaRoutes.policyBriefs,
     recordingHref: "https://youtu.be/YD2DqNYMBiY",
   },
   {

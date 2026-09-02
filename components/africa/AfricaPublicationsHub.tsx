@@ -51,7 +51,7 @@ const PUB_TYPES = [
         />
       </svg>
     ),
-    countLabel: "Coming soon",
+    countLabel: "2 briefs",
   },
 ] as const;
 

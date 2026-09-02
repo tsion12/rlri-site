@@ -9,7 +9,20 @@ export type AfricaPolicyBrief = {
   program: AfricaProgramKey;
 };
 
+export const CLASSROOM_CONTENT_RISKS_POLICY_BRIEF_HREF =
+  "/assets/publications/policy-brief-02-classroom-content-risks-june-2026.pdf";
+
 const AFRICA_POLICY_BRIEFS: AfricaPolicyBrief[] = [
+  {
+    title:
+      "How Prepared Are African Education Systems for Classroom Content Risks? Perspectives from Cameroon, Kenya and Zimbabwe",
+    description:
+      "Policy Brief 02 from the June 2026 Digital Futures webinar. Field research in Cameroon, Kenya, and Zimbabwe examines the gap between children's digital-rights laws and classroom practice, and sets out school-level rules on consent, recording, takedown, and educator accountability.",
+    href: CLASSROOM_CONTENT_RISKS_POLICY_BRIEF_HREF,
+    date: "June 2026",
+    format: "PDF",
+    program: "digital-futures",
+  },
   {
     title:
       "IMPROVING WATER AND SANITATION SERVICE DELIVERY IN CAMEROON, ETHIOPIA, KENYA, AND ZIMBABWE: WHAT IS WORKING, WHAT ISN'T, AND WHY?",

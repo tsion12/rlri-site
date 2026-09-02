@@ -4,7 +4,7 @@ import { AfricaPolicyBriefsPage } from "@/components/africa/AfricaPublicationsSu
 export const metadata: Metadata = {
   title: "Policy Briefs | Africa Program – Real Life Research Institute",
   description:
-    "Concise, evidence-based policy analyses from the Real Life Research Institute Africa Programs — coming soon.",
+    "Concise, evidence-based policy analyses from the Real Life Research Institute Africa Programs.",
 };
 
 export default function PolicyBriefsPage() {

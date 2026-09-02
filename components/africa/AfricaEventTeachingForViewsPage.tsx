@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { africaRoutes } from "@/lib/africa-routes";
+import { CLASSROOM_CONTENT_RISKS_POLICY_BRIEF_HREF } from "@/lib/africa-policy-briefs";
 import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSupportLine";
+import { PolicyBriefTrackingLinks } from "@/components/africa/PolicyBriefTrackingLinks";
 
 const RECORDING_HREF = "https://youtu.be/YD2DqNYMBiY";
 const RECORDING_EMBED_HREF = "https://www.youtube.com/embed/YD2DqNYMBiY";
@@ -64,6 +66,14 @@ export function AfricaEventTeachingForViewsPage() {
             >
               Watch recording
             </a>
+            <a
+              href={CLASSROOM_CONTENT_RISKS_POLICY_BRIEF_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-teal-700/30 bg-teal-50 px-6 text-sm font-semibold text-teal-800 transition hover:border-teal-700/50 hover:bg-teal-100 dark:border-teal-700/40 dark:bg-teal-950/30 dark:text-teal-300 dark:hover:bg-teal-950/50"
+            >
+              Read policy brief
+            </a>
             <Link
               href={africaRoutes.events}
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600"
@@ -95,22 +105,22 @@ export function AfricaEventTeachingForViewsPage() {
       <section className="border-b border-zinc-200/80 bg-white py-16 dark:border-zinc-800 dark:bg-zinc-950 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-teal-700 dark:text-teal-400">
-            Digital Futures
+            Policy Brief 02 · June 2026
           </p>
           <h2 className="mt-4 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-            Webinar reflection
+            How prepared are African education systems for classroom content risks?
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Nyakno Benson, a speaker on this webinar, reflects on how classroom cameras and the search for
-            &ldquo;likes&rdquo; are reshaping the teacher–student dynamic — and what schools can do to keep
-            learning learner-centred.
+            Drawing on field research in Cameroon, Kenya, and Zimbabwe, and on this webinar, the brief
+            examines the gap between children&apos;s digital-rights laws and everyday classroom practice. It
+            recommends school-level rules on consent, recording, takedown, reporting, digital ethics, and
+            accountability so classrooms remain sanctuaries of learning rather than stages for content
+            exposure.
           </p>
-          <Link
-            href={WEBINAR_REFLECTION_BLOG_HREF}
-            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
-          >
-            Read the blog
-          </Link>
+          <PolicyBriefTrackingLinks
+            href={CLASSROOM_CONTENT_RISKS_POLICY_BRIEF_HREF}
+            briefTitle="How Prepared Are African Education Systems for Classroom Content Risks? Perspectives from Cameroon, Kenya and Zimbabwe"
+          />
         </div>
       </section>
 
