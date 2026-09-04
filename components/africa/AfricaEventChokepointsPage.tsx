@@ -3,11 +3,10 @@ import Link from "next/link";
 import { africaRoutes } from "@/lib/africa-routes";
 import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSupportLine";
 
-const REGISTRATION_HREF = "https://forms.gle/7cyFuhn7CPAdqEAv5";
-const ZOOM_JOIN_HREF =
-  "https://us06web.zoom.us/j/82865065750?pwd=XfUcu73YMIOrIbA2XhWUooHn8O63An.1";
-const ZOOM_MEETING_ID = "828 6506 5750";
-const ZOOM_PASSCODE = "771750";
+const RECORDING_HREF = "https://youtu.be/0i1c4y_FGBU";
+const RECORDING_EMBED_HREF = "https://www.youtube.com/embed/0i1c4y_FGBU";
+const WEBINAR_REFLECTION_BLOG_HREF =
+  "/blog/africa/chokepoints-and-consequences-how-disruptions-at-hormuz-and-bab-el-mandeb-are-affecting-the-horn-of-africas-economy-and-security";
 
 const SPEAKERS = [
   {
@@ -59,20 +58,12 @@ export function AfricaEventChokepointsPage() {
 
           <div className="mt-6 flex flex-wrap gap-3">
             <a
-              href={REGISTRATION_HREF}
+              href={RECORDING_HREF}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
             >
-              Register now
-            </a>
-            <a
-              href={ZOOM_JOIN_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-teal-700/30 bg-teal-50 px-6 text-sm font-semibold text-teal-800 transition hover:border-teal-700/50 hover:bg-teal-100 dark:border-teal-700/40 dark:bg-teal-950/30 dark:text-teal-300 dark:hover:bg-teal-950/50"
-            >
-              Join on Zoom
+              Watch recording
             </a>
             <Link
               href={africaRoutes.events}
@@ -81,33 +72,45 @@ export function AfricaEventChokepointsPage() {
               Back to events
             </Link>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-8 max-w-2xl rounded-2xl border border-zinc-200/90 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900/70">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-400">
-              Zoom meeting
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-              Friday, August 28, 2026 · 9:00 AM Eastern Time (US and Canada)
-            </p>
-            <dl className="mt-4 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
-              <div className="flex flex-wrap gap-x-2">
-                <dt className="font-semibold text-zinc-900 dark:text-zinc-50">Meeting ID:</dt>
-                <dd>{ZOOM_MEETING_ID}</dd>
-              </div>
-              <div className="flex flex-wrap gap-x-2">
-                <dt className="font-semibold text-zinc-900 dark:text-zinc-50">Passcode:</dt>
-                <dd>{ZOOM_PASSCODE}</dd>
-              </div>
-            </dl>
-            <a
-              href={ZOOM_JOIN_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex text-sm font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-300"
-            >
-              Open Zoom join link
-            </a>
+      <section className="border-b border-zinc-200/80 bg-zinc-50 py-12 dark:border-zinc-800 dark:bg-zinc-950 sm:py-16">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">Webinar recording</h2>
+          <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            Watch the full session from Friday, August 28, 2026.
+          </p>
+          <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-950 shadow-sm dark:border-zinc-800">
+            <iframe
+              className="aspect-video w-full"
+              src={RECORDING_EMBED_HREF}
+              title="Chokepoints and Consequences: How Hormuz and Bab el-Mandeb Are Reshaping the Horn of Africa's Economy and Security — webinar recording"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
           </div>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-200/80 bg-white py-16 dark:border-zinc-800 dark:bg-zinc-950 sm:py-20">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-teal-700 dark:text-teal-400">
+            Peacebuilding
+          </p>
+          <h2 className="mt-4 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+            Webinar reflection
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            Solomon Kimaita, moderator of this webinar, examines how disruptions at Hormuz and Bab el-Mandeb
+            are affecting fuel prices, food security, and regional stability in the Horn of Africa.
+          </p>
+          <Link
+            href={WEBINAR_REFLECTION_BLOG_HREF}
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
+          >
+            Read the blog
+          </Link>
         </div>
       </section>
 

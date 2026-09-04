@@ -174,7 +174,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     supportProgram: "04",
     tags: ["Maritime Security", "Horn of Africa", "Trade & Economy"],
     policyBriefHref: null,
-    recordingHref: null,
+    recordingHref: "https://youtu.be/0i1c4y_FGBU",
   },
 ];
 
