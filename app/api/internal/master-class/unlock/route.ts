@@ -33,13 +33,12 @@ export async function POST(req: Request) {
   }
 
   const passcode = String(form.get("passcode") ?? "");
-  const token = masterClassSessionToken();
-  if (!token || !passcodeMatches(passcode)) {
+  if (!passcodeMatches(passcode)) {
     return redirectToHub(req, "?error=1");
   }
 
   const res = redirectToHub(req);
-  res.cookies.set(MASTER_CLASS_COOKIE, token, {
+  res.cookies.set(MASTER_CLASS_COOKIE, masterClassSessionToken(), {
     ...cookieBase(),
     maxAge: 60 * 60 * 24 * 90,
   });

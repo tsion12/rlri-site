@@ -2,7 +2,7 @@
  * Hub copy, 4D cards, journey, and courses — edit here.
  *
  * Preview: npm run dev → http://localhost:3000/internal/ai-master-class
- * Passcode: MASTER_CLASS_PASSCODE in .env.local (required in production). Local fallback: `rlri-learn`.
+ * Passcode: MASTER_CLASS_PASSCODE in .env.local, or `rlri-learn` if unset.
  * Quizzes: ./checkpoints.ts   Team/offices: ./team.ts
  */
 import type { Course, JourneyStageId } from "./types";
