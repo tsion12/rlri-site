@@ -4,6 +4,18 @@ const path = require("path");
 
 const nextConfig = {
   outputFileTracingRoot: path.join(__dirname),
+  async headers() {
+    return [
+      {
+        source: "/internal/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/api/internal/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
