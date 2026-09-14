@@ -11,7 +11,7 @@ export const masterClassMeta = {
   title: "Ethical AI · Claude Master Class",
   kicker: "Internal learning hub",
   mission:
-    "Learn to work with Claude the RLRI way — clearly, carefully, and in service of the communities we partner with.",
+    "Four courses, a short quiz after each one, and a list of what’s still on your plate. Use Claude on real RLRI work — and check every output before it leaves your desk.",
   passMark: 0.8,
 } as const;
 
@@ -54,22 +54,22 @@ export const journeyStages: {
   {
     id: "kickoff",
     title: "Kickoff",
-    detail: "Why this class, why now, and how we will learn together.",
+    detail: "Why we are doing this, and how to use the hub.",
   },
   {
     id: "foundations",
     title: "Foundations",
-    detail: "Accounts, Claude 101, and the 4D fluency frame.",
+    detail: "Create an account, finish Claude 101, and learn the 4Ds.",
   },
   {
     id: "hands-on",
     title: "Hands-on with AI experts",
-    detail: "Practice with guidance — prompts, review, and real drafts.",
+    detail: "Practice prompts on real drafts, with a human reviewing the output.",
   },
   {
     id: "applied",
     title: "Applied to RLRI",
-    detail: "Bring it into briefs, blogs, fieldwork notes, and partner work.",
+    detail: "Use Claude on briefs, blogs, and partner work — then check every claim."
   },
 ];
 
@@ -81,7 +81,7 @@ export const courses: Course[] = [
     id: "claude-account",
     title: "Create a free Claude account",
     duration: "10 min",
-    blurb: "Get set up so you can practice alongside the rest of the cohort.",
+    blurb: "Sign up at claude.ai with your work email, then come back and tick this off.",
     href: "https://claude.ai",
     badge: "Account ready",
   },
@@ -89,7 +89,7 @@ export const courses: Course[] = [
     id: "claude-101",
     title: "Claude 101",
     duration: "~1 hr",
-    blurb: "A friendly tour of chatting, iterating, and getting useful work out of Claude.",
+    blurb: "Watch the intro, try a few prompts, then mark it complete.",
     href: "https://anthropic.skilljar.com",
     badge: "Claude 101",
   },
@@ -97,7 +97,7 @@ export const courses: Course[] = [
     id: "fluency-foundations",
     title: "AI Fluency: Framework & Foundations",
     duration: "Self-paced",
-    blurb: "The 4Ds — Delegation, Description, Discernment, Diligence — as a daily habit.",
+    blurb: "Learn the 4Ds, then use them on the next brief you write.",
     href: "https://anthropic.skilljar.com/ai-fluency-framework-foundations",
     badge: "4D fluent",
   },
@@ -105,7 +105,7 @@ export const courses: Course[] = [
     id: "fluency-nonprofits",
     title: "AI Fluency for Nonprofits",
     duration: "Self-paced",
-    blurb: "How mission-driven teams use AI without losing voice, care, or accountability.",
+    blurb: "How we use AI in nonprofit work without putting people or data at risk.",
     href: "https://anthropic.skilljar.com/ai-fluency-for-nonprofits",
     badge: "Nonprofit fluent",
   },

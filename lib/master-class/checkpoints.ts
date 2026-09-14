@@ -1,8 +1,5 @@
 /**
- * Checkpoint quizzes — one per course, five questions each.
- *
- * `docs/checkpoint-questions.docx` was not in the repo, so these are
- * editable placeholders. Swap prompt / options / answer / explanation anytime.
+ * One quiz per course, five questions each.
  * `answer` is the 0-based index of the correct option.
  */
 import type { Checkpoint } from "./types";
@@ -297,5 +294,3 @@ export const checkpoints: Checkpoint[] = [
     ],
   },
 ];
-
-export const questionsArePlaceholders = true;

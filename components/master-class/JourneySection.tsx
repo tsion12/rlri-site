@@ -18,7 +18,8 @@ export function JourneySection() {
           The journey
         </h2>
         <p className="mt-3 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Four beats from kickoff to work that shows up in RLRI briefs and blogs. You are here: {currentTitle}.
+          Right now the cohort is in {currentTitle}: accounts, Claude 101, and the 4Ds. Use the list below, then open
+          the matching courses.
         </p>
         <ol className="mt-10 flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory md:grid md:grid-cols-4 md:overflow-visible md:pb-0">
           {journeyStages.map((stage, index) => {

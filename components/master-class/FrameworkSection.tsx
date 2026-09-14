@@ -10,7 +10,8 @@ export function FrameworkSection() {
         The 4D framework
       </h2>
       <p className="mt-3 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-        Four habits to keep Claude useful — and us accountable. Hover or focus a card; the idea is the same in the field.
+        Use these four habits on every Claude session: decide what stays human, brief clearly, check the output, and
+        keep people and data safe.
       </p>
       <ul className="mt-10 grid gap-4 sm:grid-cols-2">
         {framework4d.map((item, index) => (

@@ -11,11 +11,7 @@ export type MasterClassOffice = (typeof MASTER_CLASS_OFFICES)[number];
 export type MasterClassLearner = {
   id: string;
   name: string;
-  initials: string;
   office: MasterClassOffice;
-  role: string;
-  /** Seeded 0–1 completion so the board looks inhabited before anyone plays. */
-  seedCompletion: number;
 };
 
 export type JourneyStageId = "kickoff" | "foundations" | "hands-on" | "applied";

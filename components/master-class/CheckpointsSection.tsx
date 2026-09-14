@@ -81,18 +81,19 @@ export function CheckpointsSection({
   return (
     <section
       className="border-y border-zinc-200/70 bg-zinc-50/90 py-16 dark:border-zinc-800/80 dark:bg-zinc-900/35 sm:py-20"
+      id="checkpoints"
       aria-labelledby="checkpoints-heading"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-teal-700 dark:text-teal-400">
-          Check your understanding
+          After each course
         </p>
         <h2 id="checkpoints-heading" className="mt-3 text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Checkpoints
+          Quizzes
         </h2>
         <p className="mt-3 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-          One short quiz per course. Instant feedback, a running score, and {Math.round(masterClassMeta.passMark * 100)}% to pass.
-          You can retake anytime.
+          Five questions each. You need {Math.round(masterClassMeta.passMark * 100)}% to pass. You can retake as often as
+          you like.
         </p>
 
         <div

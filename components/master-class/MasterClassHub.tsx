@@ -1,8 +1,8 @@
 "use client";
 
-import { questionsArePlaceholders } from "@/lib/master-class/checkpoints";
 import { masterClassMeta } from "@/lib/master-class/content";
 import {
+  nextStepLabel,
   overallCompletion,
   progressFor,
   recordQuizScore,
@@ -46,6 +46,9 @@ export function MasterClassHub() {
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
               {masterClassMeta.mission}
             </p>
+            <p className="mt-3 max-w-xl text-sm font-medium text-teal-800 dark:text-teal-300">
+              {hydrated ? nextStepLabel(progress, canTrack) : "Choose your name so this page can remember what you finish."}
+            </p>
             <div className="mt-6 flex flex-wrap items-end gap-4">
               <div>
                 <label htmlFor="learner-select" className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
@@ -77,12 +80,6 @@ export function MasterClassHub() {
                 </button>
               </form>
             </div>
-            {questionsArePlaceholders ? (
-              <p className="mt-4 max-w-xl text-sm text-zinc-500">
-                Quiz copy is placeholder — <code className="font-mono text-xs">docs/checkpoint-questions.docx</code> was
-                not in the repo. Edit <code className="font-mono text-xs">lib/master-class/checkpoints.ts</code>.
-              </p>
-            ) : null}
           </div>
           <div className="justify-self-start rounded-3xl border border-zinc-200/80 bg-white/80 p-6 shadow-sm dark:border-zinc-800/80 dark:bg-zinc-900/50 lg:justify-self-end">
             <ProgressRing
@@ -91,8 +88,8 @@ export function MasterClassHub() {
             />
             <p className="mt-3 max-w-[12rem] text-center text-xs leading-relaxed text-zinc-500">
               {learner
-                ? `${learner.name.split(" ")[0]} · courses + checkpoints`
-                : "Pick your name to start the ring"}
+                ? `${progress.completedCourseIds.length + progress.passedQuizIds.length} of 8 steps`
+                : "Pick your name to track progress"}
             </p>
           </div>
         </div>
@@ -100,6 +97,17 @@ export function MasterClassHub() {
 
       <FrameworkSection />
       <JourneySection />
+      <EngagementSection
+        key={learnerId ?? "anon"}
+        progress={progress}
+        canTrack={canTrack}
+        onPost={(text) => {
+          if (!learnerId) return;
+          setStore(
+            withProgress(store, learnerId, (p) => ({ ...p, showAndTell: text || null })),
+          );
+        }}
+      />
       <CoursesSection
         progress={progress}
         canTrack={canTrack}
@@ -116,16 +124,6 @@ export function MasterClassHub() {
           setStore(
             withProgress(store, learnerId, (p) => recordQuizScore(p, courseId, score, passed)),
           );
-        }}
-      />
-      <EngagementSection
-        key={learnerId ?? "anon"}
-        store={store}
-        progress={progress}
-        canTrack={canTrack}
-        onPost={(text) => {
-          if (!learnerId) return;
-          setStore(withProgress(store, learnerId, (p) => ({ ...p, showAndTell: text })));
         }}
       />
     </>

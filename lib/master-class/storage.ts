@@ -160,6 +160,19 @@ export function toggleCourse(progress: LearnerProgress, courseId: CourseId): Lea
   };
 }
 
+export function nextStepLabel(progress: LearnerProgress, named: boolean) {
+  if (!named) return "Choose your name so this page can remember what you finish.";
+  for (const course of courses) {
+    if (!progress.completedCourseIds.includes(course.id)) {
+      return `Next: open “${course.title}”, then mark it complete.`;
+    }
+    if (!progress.passedQuizIds.includes(course.id)) {
+      return `Next: take the quiz for “${course.title}”.`;
+    }
+  }
+  return "You’re through the list. Try Claude on a real RLRI draft this week.";
+}
+
 export function recordQuizScore(
   progress: LearnerProgress,
   courseId: CourseId,
