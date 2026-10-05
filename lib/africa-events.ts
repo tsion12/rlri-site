@@ -176,6 +176,27 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     policyBriefHref: null,
     recordingHref: "https://youtu.be/0i1c4y_FGBU",
   },
+  {
+    id: "waste-to-wealth-recycling-2026",
+    title:
+      "Turning Waste into Wealth: How Creative Recycling Can Drive Environmental Sustainability in African Schools",
+    locationDate: "Location: Online | Friday, October 30, 2026",
+    timezoneLine:
+      "Ottawa (EDT): 9:00 am – 10:30 am | South Africa (SAST): 3:00 pm – 4:30 pm | Kenya / Ethiopia (EAT): 4:00 pm – 5:30 pm | Cameroon/Nigeria (WAT): 2:00 pm – 3:30 pm",
+    summary:
+      "Across Africa, rapid urbanization and weak waste management have turned schools into focal points for plastic, paper, and organic waste, often disposed of through toxic open burning. This webinar explores how creative recycling and circular-economy initiatives can transform campus waste into functional infrastructure, teach students green-economy entrepreneurial skills, and turn schools into centers for environmental stewardship.",
+    isoDate: "2026-10-30T09:00:00-04:00",
+    durationMinutes: 90,
+    time: "9:00 AM – 10:30 AM (Ottawa, EDT)",
+    format: "Online Webinar",
+    href: africaRoutes.eventWasteToWealth,
+    registerHref:
+      "https://docs.google.com/forms/d/e/1FAIpQLSe7DrKLf75_w2PFDWRVGh4E360RH6NgL0YmbeiUOw2OrlPLfg/viewform?usp=publish-editor",
+    supportProgram: "03",
+    tags: ["Environmental Sustainability", "Circular Economy", "Education"],
+    policyBriefHref: null,
+    recordingHref: null,
+  },
 ];
 
 function toMillis(isoDate: string) {
