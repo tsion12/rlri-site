@@ -158,6 +158,12 @@ const NYAKNO_BENSON_AUTHOR: AuthorProfile = {
   bio: "Nyakno Benson is an educator, creative entrepreneur, educational content creator, and advocate for innovative learning. With over 12 years of experience in education, she is passionate about making learning engaging, inclusive, and practical for children. She currently serves as a classroom teacher and Social Media Manager at Clover Hall International School, where she creates educational content and supports child-centered learning initiatives. She is also the Educational Content Creator for Lean On Me Foundation, developing learning resources, lesson schemes, educational videos, and digital content that promote access to quality education. As the Founder of Yarkys Emporium, a creative brand that blends art, craft and innovation to transform how children learn, she designs creative educational resources, delivers teacher training, transforms learning spaces, and leads arts-based programs that empower children through creativity, entrepreneurship, sustainability, and hands-on learning experiences.",
 };
 
+const NYAKNO_BENSON_BLOG_AUTHOR: AuthorProfile = {
+  ...NYAKNO_BENSON_AUTHOR,
+  role: "Author",
+  bio: "Nyakno Benson is an educator, creative entrepreneur, educational content creator, and advocate for innovative learning. With over 12 years of experience in education, she is passionate about making learning engaging, inclusive, and practical for children. She is also the Educational Content Creator for Lean On Me Foundation, developing learning resources, lesson schemes, educational videos, and digital content that promote access to quality education. As the Founder of Yarkys Emporium, a creative brand that blends art, craft and innovation to transform how children learn, she designs creative educational resources, delivers teacher training, transforms learning spaces, and leads arts-based programs that empower children through creativity, entrepreneurship, sustainability, and hands-on learning experiences.",
+};
+
 /** Augustin Mudekereza Kasenge — same bio as June 2026 Ebola DRC webinar speaker profile. */
 const AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR: AuthorProfile = {
   name: "Augustin Mudekereza Kasenge",
@@ -280,6 +286,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "digital-privacy-a-time-bomb-in-african-schools": [ALVIN_LONTUM_NDZEWIYI_AUTHOR],
   "when-the-camera-enters-the-classroom-how-the-search-for-likes-is-redefining-the-teacher-student-dynamic":
     [NYAKNO_BENSON_AUTHOR],
+  "turning-waste-into-wealth-how-creative-recycling-can-drive-environmental-sustainability-in-african-schools":
+    [NYAKNO_BENSON_BLOG_AUTHOR],
   "epidemie-debola-entre-riposte-en-contexte-de-polycrise-et-instrument-de-pouvoir-en-rdc":
     [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
   "the-next-digital-divide-why-africa-risks-becoming-an-ai-consumer-rather-than-an-ai-creator":
@@ -398,6 +406,9 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   [normalizeTitleKey(
     "When the Camera Enters the Classroom: How the Search for “Likes” Is Redefining the Teacher Student Dynamic",
   )]: [NYAKNO_BENSON_AUTHOR],
+  [normalizeTitleKey(
+    "Turning Waste into Wealth: How Creative Recycling Can Drive Environmental Sustainability in African Schools",
+  )]: [NYAKNO_BENSON_BLOG_AUTHOR],
   [normalizeTitleKey(
     "Epidémie d'Ebola : entre riposte en contexte de polycrise et instrument de pouvoir en RDC.",
   )]: [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
