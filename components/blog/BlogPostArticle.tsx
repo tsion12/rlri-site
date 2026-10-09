@@ -304,6 +304,8 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "the-fall-of-kidal-and-the-unravelling-of-malis-military-legitimacy": [LLOYD_GEORGE_BANDA_AUTHOR],
   "shrinking-aid-rising-instability-the-future-of-peacebuilding-in-sub-saharan-africa": [SOLOMON_KIMAITA_AUTHOR],
   "when-ai-makes-decisions-whos-really-in-charge": [ERNEST_LEQUIMBOH_AUTHOR],
+  "why-misinformation-spreads-faster-than-facts-and-how-ai-could-help-counter-it":
+    [ERNEST_LEQUIMBOH_AUTHOR],
   "proliferation-of-transnational-trafficking-in-arms-in-sub-saharan-africa": [GEORGE_LIVINGSTONE_AUTHOR],
   "chokepoints-and-consequences-how-disruptions-at-hormuz-and-bab-el-mandeb-are-affecting-the-horn-of-africas-economy-and-security":
     [SOLOMON_KIMAITA_AUTHOR],
@@ -390,6 +392,9 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   )]: [SOLOMON_KIMAITA_AUTHOR],
   [normalizeTitleKey("When AI Makes Decisions, Who's Really in Charge?")]: [ERNEST_LEQUIMBOH_AUTHOR],
   [normalizeTitleKey("When AI Makes Decisions, Who’s Really in Charge?")]: [ERNEST_LEQUIMBOH_AUTHOR],
+  [normalizeTitleKey(
+    "Why Misinformation Spreads Faster Than Facts, and How AI Could Help Counter It",
+  )]: [ERNEST_LEQUIMBOH_AUTHOR],
   [normalizeTitleKey("The Fall of Kidal and the Unravelling of Mali's Military Legitimacy")]: [
     LLOYD_GEORGE_BANDA_AUTHOR,
   ],
