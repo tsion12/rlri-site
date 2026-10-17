@@ -1,4 +1,5 @@
 import { parse, type HTMLElement } from "node-html-parser";
+import { applyFigureSources } from "./blog-figure-sources";
 
 function normalizeText(s: string): string {
   return s.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
@@ -224,10 +225,16 @@ export function stripEmbeddedAuthorsBio(html: string): string {
 }
 
 /** Full blog body pipeline: WP cleanup, optional authors-bio removal, then hardening. */
-export function finalizeBlogBodyHtml(html: string, options?: { stripAuthorsBio?: boolean }): string {
+export function finalizeBlogBodyHtml(
+  html: string,
+  options?: { stripAuthorsBio?: boolean; slug?: string },
+): string {
   let out = stripBlogWordPressHtml(html);
   if (options?.stripAuthorsBio) {
     out = stripEmbeddedAuthorsBio(out);
+  }
+  if (options?.slug) {
+    out = applyFigureSources(out, options.slug);
   }
   return stripUnsafeBodyTags(out);
 }

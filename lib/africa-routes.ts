@@ -17,6 +17,8 @@ export const africaRoutes = {
   eventTeachingForViews: "/africa/events/teaching-for-views-social-media-african-classrooms",
   eventChokepoints: "/africa/events/chokepoints-hormuz-bab-el-mandeb-horn-of-africa",
   eventWasteToWealth: "/africa/events/turning-waste-into-wealth-creative-recycling-african-schools",
+  eventCongoBasinHealth:
+    "/africa/events/linking-climate-adaptation-health-access-baka-bantu-congo-basin",
   programs: "/africa/programs",
   publications: "/africa/publications",
   blogs: "/africa/publications/blogs",

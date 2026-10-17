@@ -197,6 +197,26 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     policyBriefHref: null,
     recordingHref: null,
   },
+  {
+    id: "congo-basin-climate-health-2026",
+    title:
+      "Linking Climate Adaptation and Health Access for Baka and Bantu Indigenous Communities in the Congo Basin",
+    locationDate: "Location: Online | Friday, 27 November 2026",
+    timezoneLine:
+      "Ottawa (EST): 9:00 am – 10:30 am | South Africa (SAST): 4:00 pm – 5:30 pm | Kenya / Ethiopia (EAT): 5:00 pm – 6:30 pm | Cameroon/Nigeria (WAT): 3:00 pm – 4:30 pm",
+    summary:
+      "This webinar explores how integrating climate adaptation and health systems can address the compounded vulnerabilities of indigenous forest-dependent Baka and Bantu communities in Eastern Cameroon, highlighting community-led monitoring, livelihood support, and grassroots health access.",
+    isoDate: "2026-11-27T09:00:00-05:00",
+    durationMinutes: 90,
+    time: "9:00 AM – 10:30 AM (Ottawa, EST)",
+    format: "Online Webinar",
+    href: africaRoutes.eventCongoBasinHealth,
+    registerHref: null,
+    supportProgram: "03",
+    tags: ["Climate Adaptation", "Health Access", "Indigenous Rights"],
+    policyBriefHref: null,
+    recordingHref: null,
+  },
 ];
 
 function toMillis(isoDate: string) {

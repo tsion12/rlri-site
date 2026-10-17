@@ -499,6 +499,7 @@ export function BlogPostArticle({ post }: { post: WpPostWithSource }) {
       authorsForSection.some((author) => author.bio || author.linkedin || author.avatar));
   const bodyHtml = finalizeBlogBodyHtml(post.content.rendered, {
     stripAuthorsBio: showAuthorsSection && authorsForSection.some((author) => author.bio),
+    slug: post.slug,
   });
   const excerptHtml = post.excerpt?.rendered?.trim() ?? "";
   const excerptPlain = excerptHtml ? cleanWpExcerptText(excerptHtml) : "";
