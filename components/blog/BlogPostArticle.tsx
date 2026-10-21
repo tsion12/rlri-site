@@ -193,6 +193,17 @@ const GEORGE_LIVINGSTONE_AUTHOR: AuthorProfile = {
   linkedin: "https://www.linkedin.com/in/george-livingstone-9a7a4a100/",
 };
 
+const ORU_ALLENS_AGBOR_AUTHOR: AuthorProfile = {
+  name: "Oru Allens Agbor",
+  role: "Author",
+  linkedin: "https://www.linkedin.com/in/oru-allens-agbor-127673209/",
+};
+
+const ORU_ALLENS_AGBOR_WASH_SPEAKER: AuthorProfile = {
+  ...ORU_ALLENS_AGBOR_AUTHOR,
+  role: "Featured Speaker, WASH Webinar (February 2026)",
+};
+
 const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "shaping-development-policies-in-the-sahel-through-evidence-based-synthesis-progress-from-a-baobab-clare-programme-funded-team":
     [
@@ -243,11 +254,10 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     },
   ],
   "rethinking-wash-governance-in-africa-insights-from-webinar-speaker-agbor": [
-    {
-      name: "Oru Allens Agbor",
-      role: "Featured Speaker, WASH Webinar (February 2026)",
-      linkedin: "https://www.linkedin.com/in/oru-allens-agbor-127673209/",
-    },
+    ORU_ALLENS_AGBOR_WASH_SPEAKER,
+  ],
+  "rethinking-inclusive-peacebuilding-in-africa-a-paradiplomacyperspective": [
+    ORU_ALLENS_AGBOR_AUTHOR,
   ],
   "empowering-roots-why-the-world-trade-organization-wto-agreement-on-fisheries-subsidies-matters-for-small-scale-fisheries":
     [
@@ -414,6 +424,12 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   [normalizeTitleKey(
     "Turning Waste into Wealth: How Creative Recycling Can Drive Environmental Sustainability in African Schools",
   )]: [NYAKNO_BENSON_BLOG_AUTHOR],
+  [normalizeTitleKey(
+    "Rethinking Inclusive Peacebuilding in Africa: A Paradiplomacy Perspective",
+  )]: [ORU_ALLENS_AGBOR_AUTHOR],
+  [normalizeTitleKey(
+    "Rethinking Inclusive Peacebuilding in Africa: A ParadiplomacyPerspective",
+  )]: [ORU_ALLENS_AGBOR_AUTHOR],
   [normalizeTitleKey(
     "Epidémie d'Ebola : entre riposte en contexte de polycrise et instrument de pouvoir en RDC.",
   )]: [AUGUSTIN_MUDEKEREZA_KASENGE_AUTHOR],
