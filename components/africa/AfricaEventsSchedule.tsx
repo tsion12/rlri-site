@@ -138,10 +138,14 @@ export function AfricaEventsSchedule({ events }: { events: AfricaWebinarEvent[] 
     <>
       <section id="upcoming" className="border-b border-zinc-200/80 bg-zinc-50 py-20 dark:border-zinc-800 dark:bg-zinc-950 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 flex items-center gap-3">
+          <div className="mb-3 flex items-center gap-3">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-400">Upcoming</p>
             <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
           </div>
+          <p className="mb-8 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            Our next live session is featured below. Register to receive the joining link, add it to your
+            calendar, and bring your questions for the speakers.
+          </p>
           {featured ? (
             <>
               <FeaturedEventCard event={featured} live={featuredLive} />
@@ -187,7 +191,8 @@ export function AfricaEventsSchedule({ events }: { events: AfricaWebinarEvent[] 
             </>
           ) : (
             <div className="rounded-2xl border border-zinc-200 bg-white p-6 text-sm text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
-              No upcoming webinar is currently scheduled. Please check back soon for the next event.
+              No live webinar is on the calendar right now — we are planning the next one. Browse the past
+              sessions below for recordings, and check back soon for upcoming dates.
             </div>
           )}
         </div>
@@ -195,10 +200,14 @@ export function AfricaEventsSchedule({ events }: { events: AfricaWebinarEvent[] 
 
       <section id="past" className="bg-white py-20 dark:bg-zinc-950 sm:py-24 lg:py-28">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 flex items-center gap-3">
+          <div className="mb-3 flex items-center gap-3">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">Past events</p>
             <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
           </div>
+          <p className="mb-8 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            A growing archive of the conversations we have hosted. Most sessions include a full recording, and
+            several link to the policy brief or research that came out of the discussion.
+          </p>
 
           {past.length === 0 ? (
             <p className="text-sm text-zinc-600 dark:text-zinc-400">Past webinars will appear here after they conclude.</p>

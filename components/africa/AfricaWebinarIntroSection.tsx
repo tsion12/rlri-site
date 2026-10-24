@@ -21,24 +21,47 @@ export function AfricaWebinarIntroSection() {
               How our webinars work
             </h2>
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-              RLRI Africa Programs hosts pan-African online sessions that bring together researchers, policy
-              practitioners, and community voices. Each webinar is announced here with registration details,
-              live participation guidance, and recordings after the event.
+              Every webinar follows the same simple rhythm so you always know what to expect — whether
+              you are planning to join a live conversation or catching up on one that has already happened.
             </p>
-            <ul className="mt-6 space-y-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-              <li className="flex gap-3">
-                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-teal-600 dark:bg-teal-400" aria-hidden />
-                Check upcoming dates and register before the session opens.
+            <ol className="mt-6 space-y-5">
+              <li className="flex gap-4">
+                <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-teal-700 text-xs font-semibold text-white dark:bg-teal-600">
+                  1
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Before — register</p>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    Upcoming sessions are announced here with their topic, speakers, and time zones. Register
+                    ahead of the date and we will send you the joining link.
+                  </p>
+                </div>
               </li>
-              <li className="flex gap-3">
-                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-teal-600 dark:bg-teal-400" aria-hidden />
-                Join live for discussion, Q&amp;A, and shared resources from speakers.
+              <li className="flex gap-4">
+                <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-teal-700 text-xs font-semibold text-white dark:bg-teal-600">
+                  2
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">During — join live</p>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    Hear directly from researchers and practitioners, take part in the Q&amp;A, and pick up
+                    resources shared by speakers during the session.
+                  </p>
+                </div>
               </li>
-              <li className="flex gap-3">
-                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-teal-600 dark:bg-teal-400" aria-hidden />
-                Return to past events for recordings and related policy briefs when available.
+              <li className="flex gap-4">
+                <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-teal-700 text-xs font-semibold text-white dark:bg-teal-600">
+                  3
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">After — revisit</p>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    Missed it? Every past event keeps its recording and, where available, a related policy
+                    brief so the discussion stays accessible long after the live date.
+                  </p>
+                </div>
               </li>
-            </ul>
+            </ol>
           </div>
           <AfricaVideoEmbed
             src={africaVideos.webinarIntro}
