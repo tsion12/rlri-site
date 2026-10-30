@@ -211,7 +211,7 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     time: "9:00 AM – 10:30 AM (Ottawa, EST)",
     format: "Online Webinar",
     href: africaRoutes.eventCongoBasinHealth,
-    registerHref: null,
+    registerHref: "https://forms.gle/j6ykGeRLHTaXkZ8p8",
     supportProgram: "03",
     tags: ["Climate Adaptation", "Health Access", "Indigenous Rights"],
     policyBriefHref: null,

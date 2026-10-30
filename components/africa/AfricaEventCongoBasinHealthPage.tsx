@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { africaRoutes, programsAnchor } from "@/lib/africa-routes";
 
+const REGISTER_URL = "https://forms.gle/j6ykGeRLHTaXkZ8p8";
+
 const PROGRAM_LINK =
   "font-medium text-teal-800 underline underline-offset-2 transition hover:text-teal-600 dark:text-teal-300 dark:hover:text-teal-200";
 
@@ -31,9 +33,14 @@ export function AfricaEventCongoBasinHealthPage() {
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <span className="inline-flex min-h-11 cursor-default items-center justify-center rounded-lg border border-zinc-200 bg-zinc-100 px-6 text-sm font-semibold text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
-              Registration link coming soon
-            </span>
+            <a
+              href={REGISTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-teal-700 px-6 text-sm font-semibold text-white transition hover:bg-teal-600"
+            >
+              Register now
+            </a>
             <Link
               href={africaRoutes.events}
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600"
