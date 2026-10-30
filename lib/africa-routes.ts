@@ -20,6 +20,9 @@ export const africaRoutes = {
   eventCongoBasinHealth:
     "/africa/events/linking-climate-adaptation-health-access-baka-bantu-congo-basin",
   programs: "/africa/programs",
+  /** Learning Hub (paid courses & certificates). Passcode-gated until launch. */
+  learn: "/africa/learn",
+  learnMasterClass: "/africa/learn/ethical-ai-claude-master-class",
   publications: "/africa/publications",
   blogs: "/africa/publications/blogs",
   stories: "/africa/publications/stories",
