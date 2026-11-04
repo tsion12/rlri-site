@@ -115,12 +115,8 @@ export async function AfricaAboutPage() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-teal-700 dark:text-teal-400">
                 Who we are
               </p>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-                Innovating Truth,{" "}
-                <span className="text-teal-700 dark:text-teal-400">Impacting Lives.</span>
-              </h2>
 
-              <div className="mt-10 text-[1.025rem] leading-relaxed text-zinc-600 dark:text-zinc-400">
+              <div className="mt-6 text-[1.025rem] leading-relaxed text-zinc-600 dark:text-zinc-400">
                 <p>
                   The Real Life Research Institute – Africa Programs shares the same vision as its parent organization,{" "}
                   <Link
