@@ -204,6 +204,12 @@ const ORU_ALLENS_AGBOR_WASH_SPEAKER: AuthorProfile = {
   role: "Featured Speaker, WASH Webinar (February 2026)",
 };
 
+const PRUDENCE_CHEPNGENO_AUTHOR: AuthorProfile = {
+  name: "Prudence Chepngeno",
+  role: "Author",
+  bio: "Prudence Chepngeno is a conflict, security, and digital peacebuilding practitioner. She works at the intersection of artificial intelligence, conflict analysis, and governance, focusing on building frameworks that center gender in peacebuilding and security processes.",
+};
+
 const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
   "shaping-development-policies-in-the-sahel-through-evidence-based-synthesis-progress-from-a-baobab-clare-programme-funded-team":
     [
@@ -273,12 +279,9 @@ const AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
       },
     ],
   "when-ai-becomes-a-weapon-what-african-governments-must-do-to-protect-women-online":
-    [
-      {
-        name: "Prudence Chepngeno",
-        role: "Author",
-      },
-    ],
+    [PRUDENCE_CHEPNGENO_AUTHOR],
+  "beyond-digital-design-why-communities-must-co-design-peace-technologies-in-africa":
+    [PRUDENCE_CHEPNGENO_AUTHOR],
   "inclusive-dialogue-in-action-reflections-on-pope-leo-xivs-apostolic-visit-to-africa":
     [CHRISTELLE_NFOR_AUTHOR],
   "rethinking-climate-adaptation-in-africa-why-local-knowledge-and-information-integrity-cannot-be-separated":
@@ -394,6 +397,9 @@ const TITLE_AUTHOR_OVERRIDES: Record<string, AuthorProfile[]> = {
     AUTHOR_OVERRIDES[
       "when-ai-becomes-a-weapon-what-african-governments-must-do-to-protect-women-online"
     ],
+  [normalizeTitleKey(
+    "Beyond Digital Design: Why Communities Must Co-Design Peace Technologies in Africa",
+  )]: [PRUDENCE_CHEPNGENO_AUTHOR],
   [normalizeTitleKey(
     "From Data Cables to Conflict Corridors: How Middle East Instability is Reshaping Africa's Security and Political Landscape",
   )]: [SOLOMON_KIMAITA_AUTHOR],
