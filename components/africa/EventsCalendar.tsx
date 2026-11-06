@@ -5,6 +5,8 @@ import { useMemo, useState } from "react";
 import type { AfricaWebinarEvent, WebinarProgramOrdinal } from "@/lib/africa-events";
 import { getEventEndMs } from "@/lib/africa-event-schedule";
 import { PROGRAM_META, PROGRAM_ORDINALS } from "@/lib/africa-program-meta";
+import { africaEmails } from "@/lib/africa-routes";
+import { lastFridayKey, tentativeWebinarForMonth } from "@/lib/africa-webinar-cadence";
 import { AddToCalendarButton } from "@/components/africa/AddToCalendarButton";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -89,13 +91,23 @@ export function EventsCalendar({
     return keys[0] ?? null;
   }, [eventsByDay, monthPrefix]);
 
-  const activeKey =
-    selectedKey && selectedKey.startsWith(monthPrefix) && eventsByDay.has(selectedKey)
-      ? selectedKey
-      : firstEventKeyInMonth;
-  const activeEvents = activeKey ? eventsByDay.get(activeKey) ?? [] : [];
-
   const today = todayKey(nowMs);
+
+  // Webinars recur on the last Friday of each month. Surface upcoming months
+  // that have no confirmed topic yet (hidden while a program filter is active,
+  // since a "topic TBA" slot belongs to no single program).
+  const lastFriKey = lastFridayKey(view.year, view.month);
+  const recurringKey =
+    !programFilter && !eventsByDay.has(lastFriKey) && lastFriKey >= today ? lastFriKey : null;
+
+  const canSelect = (key: string) => eventsByDay.has(key) || key === recurringKey;
+  const activeKey =
+    selectedKey && selectedKey.startsWith(monthPrefix) && canSelect(selectedKey)
+      ? selectedKey
+      : firstEventKeyInMonth ?? recurringKey;
+  const activeEvents = activeKey ? eventsByDay.get(activeKey) ?? [] : [];
+  const showSaveTheDate = activeKey != null && activeKey === recurringKey && activeEvents.length === 0;
+  const tentativeEvent = showSaveTheDate ? tentativeWebinarForMonth(view.year, view.month) : null;
 
   function shiftMonth(delta: number) {
     setSelectedKey(null);
@@ -148,6 +160,7 @@ export function EventsCalendar({
           {cells.map((cell) => {
             const dayEvents = eventsByDay.get(cell.key) ?? [];
             const hasEvents = dayEvents.length > 0;
+            const isRecurring = cell.key === recurringKey;
             const isActive = cell.key === activeKey;
             const isToday = cell.key === today;
             const isPastDay = cell.key < today;
@@ -160,7 +173,7 @@ export function EventsCalendar({
                 ? "text-zinc-400 dark:text-zinc-500"
                 : "text-zinc-700 dark:text-zinc-200";
 
-            if (!hasEvents) {
+            if (!hasEvents && !isRecurring) {
               return (
                 <div key={cell.key} className={`${base} ${tone}`}>
                   <span className={isToday ? "font-semibold text-teal-700 dark:text-teal-300" : ""}>
@@ -170,6 +183,38 @@ export function EventsCalendar({
                     <span className="absolute inset-x-3 bottom-1.5 h-px rounded bg-teal-500/70" />
                   ) : null}
                 </div>
+              );
+            }
+
+            if (!hasEvents && isRecurring) {
+              return (
+                <button
+                  key={cell.key}
+                  type="button"
+                  onClick={() => setSelectedKey(cell.key)}
+                  aria-pressed={isActive}
+                  aria-label={`Monthly webinar day — topic to be announced — on ${cell.key}`}
+                  className={`${base} ${tone} cursor-pointer ${
+                    isActive
+                      ? "bg-teal-700 text-white dark:bg-teal-600 dark:text-white"
+                      : "bg-teal-50/70 hover:bg-teal-100/80 dark:bg-teal-500/10 dark:hover:bg-teal-500/20"
+                  }`}
+                >
+                  <span
+                    className={
+                      isToday && !isActive ? "font-semibold text-teal-700 dark:text-teal-300" : undefined
+                    }
+                  >
+                    {cell.day}
+                  </span>
+                  <span className="absolute inset-x-0 bottom-1.5 flex justify-center">
+                    <span
+                      className={`size-1.5 rounded-full border ${
+                        isActive ? "border-white/90" : "border-teal-500 dark:border-teal-400"
+                      }`}
+                    />
+                  </span>
+                </button>
               );
             }
 
@@ -204,18 +249,59 @@ export function EventsCalendar({
           })}
         </div>
 
-        <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2">
-          {PROGRAM_ORDINALS.map((ordinal) => (
-            <li key={ordinal} className="flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400">
-              <span className={`size-2 rounded-full ${PROGRAM_META[ordinal].dotClass}`} />
-              {PROGRAM_META[ordinal].shortName}
-            </li>
-          ))}
-        </ul>
+        <div className="mt-5 space-y-3">
+          <p className="flex items-center gap-1.5 text-[11px] font-semibold text-teal-700 dark:text-teal-300">
+            <svg aria-hidden="true" viewBox="0 0 20 20" className="size-3.5" fill="currentColor">
+              <path d="M6 2a1 1 0 0 1 1 1v1h6V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 0 1 1-1Zm11 6H3v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z" />
+            </svg>
+            We go live on the last Friday of every month.
+          </p>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2">
+            {PROGRAM_ORDINALS.map((ordinal) => (
+              <li key={ordinal} className="flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+                <span className={`size-2 rounded-full ${PROGRAM_META[ordinal].dotClass}`} />
+                {PROGRAM_META[ordinal].shortName}
+              </li>
+            ))}
+            {!programFilter ? (
+              <li className="flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+                <span className="size-2 rounded-full border border-teal-500 dark:border-teal-400" />
+                Webinar day · topic TBA
+              </li>
+            ) : null}
+          </ul>
+        </div>
       </div>
 
       <div className="rounded-3xl border border-zinc-200/80 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-900/40 sm:p-6">
-        {activeEvents.length === 0 ? (
+        {showSaveTheDate && tentativeEvent ? (
+          <div className="relative overflow-hidden">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-100 px-2.5 py-1 text-[11px] font-semibold text-teal-800 dark:bg-teal-500/15 dark:text-teal-300">
+              <span className="size-1.5 rounded-full border border-teal-600 dark:border-teal-400" />
+              Save the date
+            </span>
+            <p className="mt-3 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+              {tentativeEvent.locationDate} · {tentativeEvent.time}
+            </p>
+            <h4 className="mt-1 text-base font-semibold leading-snug tracking-tight text-zinc-900 dark:text-zinc-50">
+              Next month&apos;s webinar — topic to be announced
+            </h4>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+              {tentativeEvent.summary}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <AddToCalendarButton event={tentativeEvent} variant="solid" />
+              <a
+                href={`mailto:${africaEmails.programsCoord}?subject=${encodeURIComponent(
+                  "Webinar topic suggestion",
+                )}`}
+                className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-4 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600"
+              >
+                Suggest a topic
+              </a>
+            </div>
+          </div>
+        ) : activeEvents.length === 0 ? (
           <div className="flex h-full min-h-40 flex-col items-center justify-center text-center">
             <p className="text-sm font-medium text-zinc-600 dark:text-zinc-300">No sessions this month</p>
             <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
