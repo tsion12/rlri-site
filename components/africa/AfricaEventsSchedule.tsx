@@ -1,12 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import type { AfricaWebinarEvent } from "@/lib/africa-events";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { AfricaWebinarEvent, WebinarProgramOrdinal } from "@/lib/africa-events";
 import { africaRoutes } from "@/lib/africa-routes";
 import { categorizeAfricaEvents, getEventEndIso } from "@/lib/africa-event-schedule";
+import { PROGRAM_META, PROGRAM_ORDINALS } from "@/lib/africa-program-meta";
 import { WebinarProgramSupportLine } from "@/components/africa/WebinarProgramSupportLine";
 import { EventWebinarStatus } from "@/components/africa/EventWebinarStatus";
+import { AddToCalendarButton } from "@/components/africa/AddToCalendarButton";
+import { EventsCalendar } from "@/components/africa/EventsCalendar";
+
+type EventsView = "list" | "calendar";
 
 function formatCalendarParts(isoDate: string) {
   const date = new Date(isoDate);
@@ -17,18 +22,63 @@ function formatCalendarParts(isoDate: string) {
   };
 }
 
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+function SpeakerRow({ event }: { event: AfricaWebinarEvent }) {
+  if (!event.speakers || event.speakers.length === 0) return null;
+  return (
+    <div className="mt-5">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
+        Featuring
+      </p>
+      <ul className="mt-3 flex flex-wrap gap-4">
+        {event.speakers.map((speaker) => (
+          <li key={speaker.name} className="flex items-center gap-2.5">
+            {speaker.photo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={speaker.photo}
+                alt=""
+                className="size-10 rounded-full object-cover ring-2 ring-white dark:ring-zinc-800"
+              />
+            ) : (
+              <span
+                aria-hidden="true"
+                className="flex size-10 items-center justify-center rounded-full bg-teal-700/10 text-xs font-semibold text-teal-800 dark:bg-teal-400/15 dark:text-teal-300"
+              >
+                {initials(speaker.name)}
+              </span>
+            )}
+            <span className="text-sm">
+              <span className="block font-medium text-zinc-900 dark:text-zinc-100">{speaker.name}</span>
+              {speaker.role ? (
+                <span className="block text-xs text-zinc-500 dark:text-zinc-400">{speaker.role}</span>
+              ) : null}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function UpcomingEventActions({
-  registerHref,
-  joinHref,
-  detailsHref,
+  event,
   live,
+  addToCalendar = false,
 }: {
-  registerHref: string | null;
-  joinHref?: string | null;
-  detailsHref: string;
+  event: AfricaWebinarEvent;
   live?: boolean;
+  addToCalendar?: boolean;
 }) {
-  const actionHref = live ? joinHref ?? registerHref : registerHref;
+  const actionHref = live ? event.joinHref ?? event.registerHref : event.registerHref;
 
   return (
     <div className="mt-6 flex flex-wrap gap-3">
@@ -46,12 +96,27 @@ function UpcomingEventActions({
           Registration link coming soon
         </span>
       )}
+      {addToCalendar && !live ? <AddToCalendarButton event={event} variant="outline" /> : null}
       <Link
-        href={detailsHref}
+        href={event.href}
         className="inline-flex min-h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-sm font-semibold text-zinc-800 transition hover:border-teal-700/40 hover:text-teal-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600"
       >
         View details
       </Link>
+    </div>
+  );
+}
+
+function FeaturedCountdownBanner({ event }: { event: AfricaWebinarEvent }) {
+  return (
+    <div className="mb-8 rounded-2xl bg-linear-to-r from-teal-700 via-teal-800 to-teal-900 p-4 text-white shadow-sm sm:p-5">
+      <EventWebinarStatus
+        startISO={event.isoDate}
+        endISO={getEventEndIso(event)}
+        title={event.title}
+        registerHref={event.registerHref}
+        joinHref={event.joinHref}
+      />
     </div>
   );
 }
@@ -61,16 +126,6 @@ function FeaturedEventCard({ event, live }: { event: AfricaWebinarEvent; live: b
 
   return (
     <>
-      <div className="mb-8 rounded-2xl bg-linear-to-r from-teal-700 via-teal-800 to-teal-900 p-4 text-white shadow-sm sm:p-5">
-        <EventWebinarStatus
-          startISO={event.isoDate}
-          endISO={getEventEndIso(event)}
-          title={event.title}
-          registerHref={event.registerHref}
-          joinHref={event.joinHref}
-        />
-      </div>
-
       <div className="overflow-hidden rounded-4xl shadow-[0_24px_55px_-24px_rgba(15,23,42,0.35)]">
         <div className="grid lg:grid-cols-[280px_1fr]">
           <div className="relative flex flex-col items-center justify-center overflow-hidden bg-linear-to-br from-teal-600 via-teal-700 to-teal-900 px-8 py-10 text-center text-white">
@@ -103,13 +158,9 @@ function FeaturedEventCard({ event, live }: { event: AfricaWebinarEvent; live: b
             <p className="mt-3 text-sm font-medium text-zinc-700 dark:text-zinc-300">{event.locationDate}</p>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{event.timezoneLine}</p>
             <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{event.summary}</p>
+            <SpeakerRow event={event} />
             <WebinarProgramSupportLine program={event.supportProgram} className="mt-4" />
-            <UpcomingEventActions
-              registerHref={event.registerHref}
-              joinHref={event.joinHref}
-              detailsHref={event.href}
-              live={live}
-            />
+            <UpcomingEventActions event={event} live={live} addToCalendar />
           </div>
         </div>
       </div>
@@ -117,22 +168,86 @@ function FeaturedEventCard({ event, live }: { event: AfricaWebinarEvent; live: b
   );
 }
 
+const VIEW_PARAM = "view";
+const PROGRAM_PARAM = "program";
+
+function readStateFromUrl(): { view: EventsView; program: WebinarProgramOrdinal | null } {
+  if (typeof window === "undefined") return { view: "list", program: null };
+  const params = new URLSearchParams(window.location.search);
+  const view: EventsView = params.get(VIEW_PARAM) === "list" ? "list" : "calendar";
+  const rawProgram = params.get(PROGRAM_PARAM);
+  const program = PROGRAM_ORDINALS.includes(rawProgram as WebinarProgramOrdinal)
+    ? (rawProgram as WebinarProgramOrdinal)
+    : null;
+  return { view, program };
+}
+
+function writeStateToUrl(view: EventsView, program: WebinarProgramOrdinal | null) {
+  if (typeof window === "undefined") return;
+  const params = new URLSearchParams(window.location.search);
+  if (view === "list") params.set(VIEW_PARAM, "list");
+  else params.delete(VIEW_PARAM);
+  if (program) params.set(PROGRAM_PARAM, program);
+  else params.delete(PROGRAM_PARAM);
+  const query = params.toString();
+  const next = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
+  window.history.replaceState(null, "", next);
+}
+
 export function AfricaEventsSchedule({ events }: { events: AfricaWebinarEvent[] }) {
   const [nowMs, setNowMs] = useState(() => Date.now());
+  const [view, setView] = useState<EventsView>("calendar");
+  const [program, setProgram] = useState<WebinarProgramOrdinal | null>(null);
+
+  // Read the persisted view/filter from the URL once mounted (keeps SSR output stable).
+  useEffect(() => {
+    const applyUrlState = () => {
+      const fromUrl = readStateFromUrl();
+      setView(fromUrl.view);
+      setProgram(fromUrl.program);
+    };
+    applyUrlState();
+  }, []);
 
   useEffect(() => {
     const id = setInterval(() => setNowMs(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
 
+  const toolbarRef = useRef<HTMLDivElement>(null);
+
+  function updateView(next: EventsView) {
+    setView(next);
+    writeStateToUrl(next, program);
+    // Bring the toolbar (and the swapped content below it) into view so the change is obvious.
+    requestAnimationFrame(() => toolbarRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }
+
+  function updateProgram(next: WebinarProgramOrdinal | null) {
+    setProgram(next);
+    writeStateToUrl(view, next);
+  }
+
   const { upcoming, past } = useMemo(() => categorizeAfricaEvents(events, nowMs), [events, nowMs]);
-  const featured = upcoming[0] ?? null;
-  const moreUpcoming = upcoming.slice(1);
+
+  const filteredUpcoming = useMemo(
+    () => (program ? upcoming.filter((e) => e.supportProgram === program) : upcoming),
+    [upcoming, program],
+  );
+  const filteredPast = useMemo(
+    () => (program ? past.filter((e) => e.supportProgram === program) : past),
+    [past, program],
+  );
+
+  const featured = filteredUpcoming[0] ?? null;
+  const moreUpcoming = filteredUpcoming.slice(1);
 
   const featuredLive =
     featured != null &&
     nowMs >= new Date(featured.isoDate).getTime() &&
     nowMs < new Date(getEventEndIso(featured)).getTime();
+
+  const calendarInitialIso = featured?.isoDate ?? events[events.length - 1]?.isoDate ?? new Date().toISOString();
 
   return (
     <>
@@ -146,20 +261,75 @@ export function AfricaEventsSchedule({ events }: { events: AfricaWebinarEvent[] 
             Our next live session is featured below. Register to receive the joining link, add it to your
             calendar, and bring your questions for the speakers.
           </p>
+
+          <div
+            ref={toolbarRef}
+            className="mb-8 flex scroll-mt-24 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <label className="flex items-center gap-2 text-sm">
+              <span className="font-medium text-zinc-600 dark:text-zinc-300">Filter by program</span>
+              <select
+                value={program ?? ""}
+                onChange={(e) => updateProgram((e.target.value || null) as WebinarProgramOrdinal | null)}
+                className="min-h-10 rounded-lg border border-zinc-200 bg-white px-3 text-sm font-medium text-zinc-800 transition hover:border-teal-700/40 focus:border-teal-700 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+              >
+                <option value="">All programs</option>
+                {PROGRAM_ORDINALS.map((ordinal) => (
+                  <option key={ordinal} value={ordinal}>
+                    {PROGRAM_META[ordinal].shortName}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <div
+              role="group"
+              aria-label="Switch events view"
+              className="inline-flex rounded-lg border border-zinc-200 bg-white p-1 dark:border-zinc-700 dark:bg-zinc-900"
+            >
+              {(["list", "calendar"] as const).map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => updateView(option)}
+                  aria-pressed={view === option}
+                  className={`min-h-9 rounded-md px-4 text-sm font-semibold capitalize transition ${
+                    view === option
+                      ? "bg-teal-700 text-white"
+                      : "text-zinc-600 hover:text-teal-800 dark:text-zinc-300 dark:hover:text-teal-300"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {featured ? (
             <>
-              <FeaturedEventCard event={featured} live={featuredLive} />
+              <FeaturedCountdownBanner event={featured} />
 
-              {moreUpcoming.length > 0 ? (
-                <div className="mt-12">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                    Also coming up
-                  </p>
-                  <ul className="mt-6 grid gap-6 sm:grid-cols-2">
+              {view === "calendar" ? (
+                <EventsCalendar
+                  events={events}
+                  programFilter={program}
+                  initialIso={calendarInitialIso}
+                  nowMs={nowMs}
+                />
+              ) : (
+                <>
+                  <FeaturedEventCard event={featured} live={featuredLive} />
+
+                  {moreUpcoming.length > 0 ? (
+                    <div className="mt-12">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+                        Also coming up
+                      </p>
+                      <ul className="mt-6 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:thin]">
                     {moreUpcoming.map((event) => {
                       const dateParts = formatCalendarParts(event.isoDate);
                       return (
-                        <li key={event.id}>
+                        <li key={event.id} className="w-[min(85vw,20rem)] shrink-0 snap-start">
                           <article className="flex h-full flex-col rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60">
                             <p className="text-sm font-semibold text-teal-700 dark:text-teal-400">
                               {dateParts.day} {dateParts.month} {dateParts.year}
@@ -175,24 +345,39 @@ export function AfricaEventsSchedule({ events }: { events: AfricaWebinarEvent[] 
                             <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{event.summary}</p>
                             <WebinarProgramSupportLine program={event.supportProgram} className="mt-3" />
                             <div className="mt-auto pt-5">
-                              <UpcomingEventActions
-                                registerHref={event.registerHref}
-                                joinHref={event.joinHref}
-                                detailsHref={event.href}
-                              />
+                              <UpcomingEventActions event={event} />
                             </div>
                           </article>
                         </li>
                       );
                     })}
-                  </ul>
-                </div>
-              ) : null}
+                      </ul>
+                    </div>
+                  ) : null}
+                </>
+              )}
             </>
           ) : (
             <div className="rounded-2xl border border-zinc-200 bg-white p-6 text-sm text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
-              No live webinar is on the calendar right now — we are planning the next one. Browse the past
-              sessions below for recordings, and check back soon for upcoming dates.
+              {program ? (
+                <>
+                  No upcoming <span className="font-medium">{PROGRAM_META[program].shortName}</span> webinar is on the
+                  calendar right now.{" "}
+                  <button
+                    type="button"
+                    onClick={() => updateProgram(null)}
+                    className="font-semibold text-teal-700 underline underline-offset-2 hover:text-teal-600 dark:text-teal-300"
+                  >
+                    Clear filter
+                  </button>{" "}
+                  to see every session, or browse past recordings below.
+                </>
+              ) : (
+                <>
+                  No live webinar is on the calendar right now — we are planning the next one. Browse the past
+                  sessions below for recordings, and check back soon for upcoming dates.
+                </>
+              )}
             </div>
           )}
         </div>
@@ -209,11 +394,15 @@ export function AfricaEventsSchedule({ events }: { events: AfricaWebinarEvent[] 
             several link to the policy brief or research that came out of the discussion.
           </p>
 
-          {past.length === 0 ? (
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">Past webinars will appear here after they conclude.</p>
+          {filteredPast.length === 0 ? (
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              {program
+                ? `No past ${PROGRAM_META[program].shortName} webinars yet.`
+                : "Past webinars will appear here after they conclude."}
+            </p>
           ) : (
             <ul className="grid gap-6 sm:grid-cols-2">
-              {past.map(({ id, title, summary, isoDate, format, tags, href, policyBriefHref, recordingHref, supportProgram }) => {
+              {filteredPast.map(({ id, title, summary, isoDate, format, tags, href, policyBriefHref, recordingHref, supportProgram }) => {
                 const dateParts = formatCalendarParts(isoDate);
                 return (
                   <li key={id} className="flex">

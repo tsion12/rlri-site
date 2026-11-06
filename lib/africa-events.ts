@@ -3,6 +3,13 @@ import { categorizeAfricaEvents, getEventEndIso } from "@/lib/africa-event-sched
 
 export type WebinarProgramOrdinal = "01" | "02" | "03" | "04" | "05";
 
+export type AfricaWebinarSpeaker = {
+  name: string;
+  role?: string;
+  /** Path under /public (e.g. "/africa/speakers/jane-doe.jpg"). Optional until photos exist. */
+  photo?: string;
+};
+
 export type AfricaWebinarEvent = {
   id: string;
   title: string;
@@ -23,6 +30,8 @@ export type AfricaWebinarEvent = {
   tags: string[];
   policyBriefHref: string | null;
   recordingHref: string | null;
+  /** Optional confirmed panel; the speaker row is hidden until this is populated. */
+  speakers?: AfricaWebinarSpeaker[];
 };
 
 export type AfricaEventHighlight = {
@@ -225,6 +234,11 @@ function toMillis(isoDate: string) {
 
 export function getAfricaWebinarEvents() {
   return [...AFRICA_WEBINAR_EVENTS].sort((a, b) => toMillis(a.isoDate) - toMillis(b.isoDate));
+}
+
+/** Find the webinar whose detail page lives at `href` (used by detail routes for SEO). */
+export function getAfricaWebinarEventByHref(href: string): AfricaWebinarEvent | null {
+  return AFRICA_WEBINAR_EVENTS.find((event) => event.href === href) ?? null;
 }
 
 export function getCategorizedAfricaEvents(now = new Date()) {
