@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BlogPostArticle } from "@/components/blog/BlogPostArticle";
+import { BlogPostArticle, resolveBlogAuthorProfiles } from "@/components/blog/BlogPostArticle";
+import { JsonLd } from "@/components/JsonLd";
+import { blogArticleJsonLd } from "@/lib/blog-jsonld";
 import { getPost, isWpSource, stripHtml, type WpSource } from "@/lib/wp";
 
 type Props = {
@@ -31,5 +33,15 @@ export default async function BlogPostPage({ params }: Props) {
   const post = await getPost(source, slug);
   if (!post) notFound();
 
-  return <BlogPostArticle post={post} />;
+  const authors = resolveBlogAuthorProfiles(post)?.map((a) => ({
+    name: a.name,
+    linkedin: a.linkedin,
+  }));
+
+  return (
+    <>
+      <JsonLd data={blogArticleJsonLd(post, authors)} />
+      <BlogPostArticle post={post} />
+    </>
+  );
 }

@@ -7,6 +7,20 @@ import "./globals.css";
 
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
+const bingSiteVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION?.trim();
+
+/** Only emit verification meta tags for the providers that have a value set. */
+const verification: Metadata["verification"] | undefined =
+  googleSiteVerification || bingSiteVerification
+    ? {
+        ...(googleSiteVerification ? { google: googleSiteVerification } : {}),
+        ...(bingSiteVerification
+          ? { other: { "msvalidate.01": bingSiteVerification } }
+          : {}),
+      }
+    : undefined;
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,9 +33,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Real Life Research Institute",
+  title: "RLRI Africa Program | Real Life Research Institute",
   description:
     "An independent research institute turning evidence into policy and practice, with a Pan-African program spanning climate adaptation, public health, digital rights, and regional security.",
+  ...(verification ? { verification } : {}),
   icons: {
     icon: [
       { url: "/icon.png", sizes: "512x512", type: "image/png" },

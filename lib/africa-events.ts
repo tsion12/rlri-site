@@ -225,6 +225,28 @@ const AFRICA_WEBINAR_EVENTS: AfricaWebinarEvent[] = [
     tags: ["Climate Adaptation", "Health Access", "Indigenous Rights"],
     policyBriefHref: null,
     recordingHref: null,
+    speakers: [
+      {
+        name: "Nicodeme Tchamou",
+        role: "Speaker",
+        photo: "/assets/nov_27/nicodeme-tchamou.png",
+      },
+      {
+        name: "Nyong Harrison Ndukong",
+        role: "Speaker",
+        photo: "/assets/nov_27/nyong-harrison-ndukong.png",
+      },
+      {
+        name: "Dr. Ghislain Tikeng Agoum",
+        role: "Speaker",
+        photo: "/assets/nov_27/ghislain-tikeng-agoum.png",
+      },
+      {
+        name: "Abigail Peace Nathaniel",
+        role: "Moderator",
+        photo: "/assets/nov_27/abigail-peace-nathaniel.png",
+      },
+    ],
   },
 ];
 

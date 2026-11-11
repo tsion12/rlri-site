@@ -28,6 +28,8 @@ export type WpPost = {
   slug: string;
   /** ISO 8601 from WordPress REST API */
   date: string;
+  /** ISO 8601 last-modified timestamp from WordPress REST API, when fetched. */
+  modified?: string | null;
   title: { rendered: string };
   content: { rendered: string };
   excerpt?: { rendered: string };
@@ -238,6 +240,7 @@ function normalizePost(source: WpSource, post: WpApiPost): WpPostWithSource {
     id: post.id,
     slug: post.slug,
     date: post.date,
+    modified: post.modified ?? null,
     title: post.title,
     content: post.content ?? { rendered: "" },
     excerpt: post.excerpt,
@@ -419,7 +422,10 @@ async function fetchAfricaPostsRaw(
     }
     url.searchParams.set("per_page", String(perPage));
     url.searchParams.set("page", String(page));
-    url.searchParams.set("_fields", "id,slug,date,title,excerpt,categories,yoast_head_json");
+    url.searchParams.set(
+      "_fields",
+      "id,slug,date,modified,title,excerpt,categories,yoast_head_json",
+    );
     url.searchParams.set("_embed", "author,wp:term");
     const posts = await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString());
     if (!Array.isArray(posts) || posts.length === 0) break;

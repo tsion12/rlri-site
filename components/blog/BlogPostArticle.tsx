@@ -351,6 +351,17 @@ function normalizeTitleKey(raw: string): string {
 }
 
 /**
+ * Named human author(s) for a post, resolved from the same slug/title override
+ * maps the visible byline uses, or `null` when the post has no attributed
+ * person (the generic CMS account). Shared with the Article JSON-LD so the
+ * structured author matches what readers see.
+ */
+export function resolveBlogAuthorProfiles(post: WpPostWithSource): AuthorProfile[] | null {
+  const titleKey = normalizeTitleKey(stripHtml(post.title.rendered));
+  return AUTHOR_OVERRIDES[post.slug] ?? TITLE_AUTHOR_OVERRIDES[titleKey] ?? null;
+}
+
+/**
  * Title-keyed author lists (slug overrides in {@link AUTHOR_OVERRIDES} win first).
  * Keys are built from readable titles; must match {@link normalizeTitleKey}(post title).
  */

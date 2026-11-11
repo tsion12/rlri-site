@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/site";
 import { africaRoutes } from "@/lib/africa-routes";
 import { getAfricaWebinarEvents } from "@/lib/africa-events";
+import { blogPostPath, getAfricaPosts } from "@/lib/wp";
 
 /** Public, indexable routes. Gated (/africa/learn), internal, and dynamic
  * filter/query routes are intentionally excluded. */
@@ -25,7 +26,7 @@ const STATIC_PATHS: string[] = [
   "/blog",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticEntries: MetadataRoute.Sitemap = STATIC_PATHS.map((path) => ({
@@ -44,5 +45,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     }));
 
-  return [...staticEntries, ...eventEntries];
+  // Individual blog/journal posts come from the headless WordPress CMS. If the
+  // CMS is unreachable we fall back to the static + event entries rather than
+  // failing the whole sitemap (mirrors the blog page's graceful degradation).
+  let postEntries: MetadataRoute.Sitemap = [];
+  try {
+    const posts = await getAfricaPosts();
+    postEntries = posts.map((post) => ({
+      url: absoluteUrl(blogPostPath(post)),
+      lastModified: post.modified ? new Date(post.modified) : new Date(post.date),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    }));
+  } catch {
+    postEntries = [];
+  }
+
+  return [...staticEntries, ...eventEntries, ...postEntries];
 }

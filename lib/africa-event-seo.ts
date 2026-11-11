@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const SITE_NAME = "Real Life Research Institute — Africa Programs";
+const SITE_NAME = "RLRI Africa Program · Real Life Research Institute";
 const DEFAULT_OG_IMAGE = {
   url: "/assets/RLRL-AP-Logo.png",
   width: 1600,
