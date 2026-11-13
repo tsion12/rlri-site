@@ -58,14 +58,31 @@ export type WpPageHighlight = {
   eventDateISO?: string | null;
 };
 
+type WpMediaSize = {
+  source_url?: string;
+  mime_type?: string;
+  width?: number;
+};
+
+type WpFeaturedMedia = {
+  code?: string;
+  source_url?: string;
+  mime_type?: string;
+  media_details?: {
+    sizes?: Record<string, WpMediaSize>;
+  };
+};
+
 type WpApiPost = Omit<WpPost, "featuredImage"> & {
   categories?: number[];
+  featured_media?: number;
   _embedded?: {
     author?: Array<{
       name?: string;
       description?: string;
       avatar_urls?: Record<string, string>;
     }>;
+    "wp:featuredmedia"?: WpFeaturedMedia[];
     "wp:term"?: Array<
       Array<{
         id?: number;
@@ -107,6 +124,8 @@ const API: Record<WpSource, string> = {
 };
 
 const WP_REVALIDATE_SECONDS = 300;
+/** Drops post caches stored before PDF featured images were resolved to JPEG previews. */
+const POST_IMAGE_CACHE_KEY = "cover-previews";
 const WP_TIMEOUT_MS = 12000;
 const WP_POSTS_PER_PAGE = 50;
 const WP_RETRY_DELAYS_MS = [350, 900];
@@ -224,6 +243,39 @@ function parseAfricaProgramFromCategories(
   return null;
 }
 
+/** Next/Image can render these. PDF featured media is resolved to a JPEG preview instead. */
+const RENDERABLE_IMAGE_URL = /\.(avif|gif|jpe?g|png|webp)(?:[?#].*)?$/i;
+
+function isRenderableImageUrl(url: unknown): url is string {
+  return typeof url === "string" && RENDERABLE_IMAGE_URL.test(url.trim());
+}
+
+/**
+ * Yoast omits `og_image` when the featured item is a PDF. WordPress still
+ * stores JPEG previews on that media item (the "full" size is a .jpg even
+ * when its mime type is mislabeled as application/pdf).
+ */
+function featuredImageFromEmbeddedMedia(post: WpApiPost): string | null {
+  const media = post._embedded?.["wp:featuredmedia"]?.[0];
+  if (!media || media.code) return null;
+
+  if (media.mime_type?.startsWith("image/") && isRenderableImageUrl(media.source_url)) {
+    return media.source_url;
+  }
+
+  const sizes = Object.values(media.media_details?.sizes ?? {});
+  const best = sizes
+    .filter((size) => isRenderableImageUrl(size.source_url))
+    .sort((a, b) => (b.width ?? 0) - (a.width ?? 0))[0];
+  return best?.source_url ?? null;
+}
+
+function resolveFeaturedImage(post: WpApiPost): string | null {
+  const ogImage = post.yoast_head_json?.og_image?.[0]?.url;
+  if (isRenderableImageUrl(ogImage)) return ogImage;
+  return featuredImageFromEmbeddedMedia(post);
+}
+
 function normalizePost(source: WpSource, post: WpApiPost): WpPostWithSource {
   const terms = post._embedded?.["wp:term"] ?? [];
   const allTerms = terms.flatMap((group) => group ?? []);
@@ -244,7 +296,7 @@ function normalizePost(source: WpSource, post: WpApiPost): WpPostWithSource {
     title: post.title,
     content: post.content ?? { rendered: "" },
     excerpt: post.excerpt,
-    featuredImage: post.yoast_head_json?.og_image?.[0]?.url ?? null,
+    featuredImage: resolveFeaturedImage(post),
     theme: programLabel ?? category?.name?.trim() ?? null,
     programKey,
     programLabel,
@@ -379,7 +431,7 @@ async function wpFetchJsonWithAfricaFallback<T>(url: string): Promise<T | null> 
 async function fetchPostsForSource(source: WpSource): Promise<WpPostWithSource[]> {
   const url = new URL(`${API[source]}/posts`);
   url.searchParams.set("per_page", String(WP_POSTS_PER_PAGE));
-  url.searchParams.set("_embed", "author,wp:term");
+  url.searchParams.set("_embed", "author,wp:term,wp:featuredmedia");
   const posts = source === "africa"
     ? await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString())
     : await wpFetchJson<WpApiPost[]>(url.toString());
@@ -422,11 +474,13 @@ async function fetchAfricaPostsRaw(
     }
     url.searchParams.set("per_page", String(perPage));
     url.searchParams.set("page", String(page));
+    // `_links` has to stay in `_fields`. WordPress otherwise drops `_embed`,
+    // so featured media, author, and terms never arrive.
     url.searchParams.set(
       "_fields",
-      "id,slug,date,modified,title,excerpt,categories,yoast_head_json",
+      "id,slug,date,modified,title,excerpt,categories,featured_media,yoast_head_json,_links",
     );
-    url.searchParams.set("_embed", "author,wp:term");
+    url.searchParams.set("_embed", "author,wp:term,wp:featuredmedia");
     const posts = await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString());
     if (!Array.isArray(posts) || posts.length === 0) break;
     all.push(...posts);
@@ -514,7 +568,7 @@ async function getAfricaPostsUncached(): Promise<WpPostWithSource[]> {
 }
 
 export async function getAfricaPosts(): Promise<WpPostWithSource[]> {
-  const posts = await unstable_cache(getAfricaPostsUncached, ["africa-posts"], {
+  const posts = await unstable_cache(getAfricaPostsUncached, ["africa-posts", POST_IMAGE_CACHE_KEY], {
     revalidate: WP_REVALIDATE_SECONDS,
   })();
   // Avoid serving a stale empty list from a prior CMS outage.
@@ -550,9 +604,13 @@ async function getAfricaPostsPreviewUncached(limit: number): Promise<WpPostWithS
 }
 
 export async function getAfricaPostsPreview(limit = 3): Promise<WpPostWithSource[]> {
-  return unstable_cache(() => getAfricaPostsPreviewUncached(limit), ["africa-posts-preview", String(limit)], {
-    revalidate: WP_REVALIDATE_SECONDS,
-  })();
+  return unstable_cache(
+    () => getAfricaPostsPreviewUncached(limit),
+    ["africa-posts-preview", POST_IMAGE_CACHE_KEY, String(limit)],
+    {
+      revalidate: WP_REVALIDATE_SECONDS,
+    },
+  )();
 }
 
 /** Africa "Stories-AP" category posts, newest first. Safe on fetch failure (empty list). */
@@ -564,7 +622,7 @@ async function getAfricaStoriesUncached(): Promise<WpPostWithSource[]> {
 }
 
 export async function getAfricaStories(): Promise<WpPostWithSource[]> {
-  return unstable_cache(getAfricaStoriesUncached, ["africa-stories"], {
+  return unstable_cache(getAfricaStoriesUncached, ["africa-stories", POST_IMAGE_CACHE_KEY], {
     revalidate: WP_REVALIDATE_SECONDS,
   })();
 }
@@ -588,7 +646,7 @@ export async function getPost(
 ): Promise<WpPostWithSource | null> {
   const url = new URL(`${API[source]}/posts`);
   url.searchParams.set("slug", slug);
-  url.searchParams.set("_embed", "author,wp:term");
+  url.searchParams.set("_embed", "author,wp:term,wp:featuredmedia");
 
   const posts = source === "africa"
     ? await wpFetchJsonWithAfricaFallback<WpApiPost[]>(url.toString())
