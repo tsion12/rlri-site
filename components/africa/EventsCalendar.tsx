@@ -6,7 +6,7 @@ import type { AfricaWebinarEvent, WebinarProgramOrdinal } from "@/lib/africa-eve
 import { getEventEndMs } from "@/lib/africa-event-schedule";
 import { PROGRAM_META, PROGRAM_ORDINALS } from "@/lib/africa-program-meta";
 import { africaEmails } from "@/lib/africa-routes";
-import { lastFridayKey, tentativeWebinarForMonth } from "@/lib/africa-webinar-cadence";
+import { tentativeWebinarForMonth, webinarSlotForMonth } from "@/lib/africa-webinar-cadence";
 import { AddToCalendarButton } from "@/components/africa/AddToCalendarButton";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -93,12 +93,13 @@ export function EventsCalendar({
 
   const today = todayKey(nowMs);
 
-  // Webinars recur on the last Friday of each month. Surface upcoming months
-  // that have no confirmed topic yet (hidden while a program filter is active,
+  // Webinars recur on the last Friday of each month from February to November
+  // (the Friday before when that day is a holiday). Surface upcoming months
+  // that have no confirmed webinar yet (hidden while a program filter is active,
   // since a "topic TBA" slot belongs to no single program).
-  const lastFriKey = lastFridayKey(view.year, view.month);
+  const slot = webinarSlotForMonth(view.year, view.month);
   const recurringKey =
-    !programFilter && !eventsByDay.has(lastFriKey) && lastFriKey >= today ? lastFriKey : null;
+    !programFilter && slot && firstEventKeyInMonth == null && slot.key >= today ? slot.key : null;
 
   const canSelect = (key: string) => eventsByDay.has(key) || key === recurringKey;
   const activeKey =
@@ -254,7 +255,10 @@ export function EventsCalendar({
             <svg aria-hidden="true" viewBox="0 0 20 20" className="size-3.5" fill="currentColor">
               <path d="M6 2a1 1 0 0 1 1 1v1h6V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 0 1 1-1Zm11 6H3v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z" />
             </svg>
-            We go live on the last Friday of every month.
+            We go live on the last Friday of each month, February to November.
+          </p>
+          <p className="text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+            If that Friday is a holiday, the webinar is held the Friday before.
           </p>
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
             {PROGRAM_ORDINALS.map((ordinal) => (
@@ -300,6 +304,13 @@ export function EventsCalendar({
                 Suggest a topic
               </a>
             </div>
+          </div>
+        ) : activeEvents.length === 0 && !slot ? (
+          <div className="flex h-full min-h-40 flex-col items-center justify-center text-center">
+            <p className="text-sm font-medium text-zinc-600 dark:text-zinc-300">No webinars this month</p>
+            <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+              Our webinar series runs from February to November. Use the arrows to browse other months.
+            </p>
           </div>
         ) : activeEvents.length === 0 ? (
           <div className="flex h-full min-h-40 flex-col items-center justify-center text-center">
